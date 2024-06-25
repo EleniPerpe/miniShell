@@ -14,5 +14,6 @@
 
 int main ()
 {
-	printf("Hi Ramez :)");
+	printf("Hi Ramez :\n)");
+	printf("Hi Elenie :\n)");
 }
