@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/06/27 13:38:28 by eperperi         ###   ########.fr       */
+/*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
+/*   Updated: 2024/06/27 13:36:33 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-#include <stdio.h>
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-int	main(void)
-{
-	
-}
+# include "Libft/libft.h"
+# include "Get_next_line/get_next_line.h"
+
+#endif
