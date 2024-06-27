@@ -6,20 +6,21 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/06/27 14:43:06 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:13:38 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 void	init_shell_data(t_shell_data *data);
+void start_prompt(t_shell_data *shell_data);
 
 int	main(int argc, char **argv, char **env)
 {
-	char			*input_line;
 	t_shell_data	*shell_data;
 
 	(void)argv;
+	(void)argc;
 	(void)env;
 	if (argc != 1)
 	{
@@ -33,15 +34,26 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	}
 	init_shell_data(shell_data);
-	input_line = readline("minishell >");
-	if (input_line)
-	{
-		add_history(input_line);
-		printf("You entered : %s\n", input_line);
-		input_line = shell_data->prompt_line;
-		free(input_line);
-	}
+	start_prompt(shell_data);
+
 	return (0);
+}
+
+void start_prompt(t_shell_data *shell_data)
+{
+	char			*input_line;
+
+	while (1)
+	{
+		input_line = readline("minishell >");
+		if (input_line && (ft_strcmp(input_line, "") != 0))
+		{
+			add_history(input_line);
+			shell_data->prompt_line = input_line;
+			printf("You entered : %s\n", shell_data->prompt_line);
+			free(input_line);
+		}
+	}
 }
 
 void	init_shell_data(t_shell_data *data)

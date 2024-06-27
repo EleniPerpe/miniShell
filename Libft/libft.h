@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 18:52:31 by eperperi          #+#    #+#             */
-/*   Updated: 2024/04/24 11:27:39 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:04:28 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void		ft_putnbr_fd(int n, int fd);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 char		**ft_split(char const *s, char c);
+int			ft_strcmp(const char *s1, const char *s2);
 
 typedef struct s_list
 {
