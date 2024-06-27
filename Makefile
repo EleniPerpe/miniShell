@@ -6,7 +6,7 @@
 #    By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/06/26 14:24:05 by eperperi         ###   ########.fr        #
+#    Updated: 2024/06/27 14:38:43 by eperperi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ NAME	=	minishell
 
 CC			=	gcc -g #-fsanitize=address
 # LEAKS = -L../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next -I ../LeakSanitize
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -I$(HOME)/local/include
+LDFLAGS = -L$(HOME)/local/lib -lreadline -lhistory
 
 GREEN	=	\033[0;32m
 CYAN	=	\033[0;36m
@@ -35,7 +36,7 @@ LIB		 =	Libft/libft.a
 
 $(NAME): $(OBJ) $(GNL_OBJ) $(LIB)
 		@$(MAKE) -C Libft
-		@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIB) $(GNL_OBJ)
+		@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIB) $(GNL_OBJ) $(LDFLAGS) -l readline
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
