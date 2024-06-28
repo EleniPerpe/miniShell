@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/06/27 14:39:52 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/06/29 00:45:45 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,18 @@
 
 typedef struct s_line_data
 {
-	char	*redirctor; // NULL;
-	char	*after_redirctor;
-	char	**command; // "LS" , "-l";
-//	char	*expander; // "$PATH";
-	int		type; //redir:  2 3 4 .... command = 1 expander =
-	struct s_line_data *next;
+	char				*redirctor; // ">>" , "<<" , "<" , ">" , "|";
+	char				*after_redirctor; // "file";
+	char				**command; // "LS" , "-l";
+//	char				*expander; // "$PATH";
+	int					type; //redir:  2 3 4 .... command = 1 expander =
+	struct s_line_data	*next;
 }	t_line_data;
+
+void	start_prompt(void);
+void	ft_split_line(char *input_line, t_line_data **line_data);
+char	*ft_split_redirctor(char *input_line, t_line_data **line_data);
+char	*split_after_redirctor(char *input_line);
 
 #endif
 
