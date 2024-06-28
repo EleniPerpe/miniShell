@@ -12,12 +12,12 @@
 
 #include "../minishell.h"
 
-void	init_shell_data(t_shell_data *data);
-void start_prompt(t_shell_data *shell_data);
+// void	init_shell_data(t_shell_data *data);
+void start_prompt();
 
 int	main(int argc, char **argv, char **env)
 {
-	t_shell_data	*shell_data;
+	// char	*main_line;
 
 	(void)argv;
 	(void)argc;
@@ -27,21 +27,14 @@ int	main(int argc, char **argv, char **env)
 		printf("This program doesn't take any arguments!\n");
 		return (1);
 	}
-	shell_data = (t_shell_data *)malloc(sizeof(t_shell_data));
-	if (!shell_data)
-	{
-		perror("Failed to allocate memory");
-		return (1);
-	}
-	init_shell_data(shell_data);
-	start_prompt(shell_data);
+	start_prompt();
 
 	return (0);
 }
 
-void start_prompt(t_shell_data *shell_data)
+void start_prompt()
 {
-	char			*input_line;
+	char	*input_line;
 
 	while (1)
 	{
@@ -49,16 +42,9 @@ void start_prompt(t_shell_data *shell_data)
 		if (input_line && (ft_strcmp(input_line, "") != 0))
 		{
 			add_history(input_line);
-			shell_data->prompt_line = input_line;
-			printf("You entered : %s\n", shell_data->prompt_line);
+			printf("You entered : %s\n", input_line);
 			free(input_line);
 		}
 	}
 }
 
-void	init_shell_data(t_shell_data *data)
-{
-	data->prompt_line = NULL;
-	data->prompt_name = NULL;
-	data->shell_env = NULL;
-}

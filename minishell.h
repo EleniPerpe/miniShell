@@ -20,11 +20,25 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct s_shell_data
+// type:
+// command = 0;
+// expander = 1;
+//	<< = 2;
+//	>> = 3;
+//  > = 4;
+//  < = 5;
+//  | = 6;
+// after_redirector = 7;
+
+typedef struct s_line_data
 {
-	char	*prompt_name;
-	char	*prompt_line;
-	char	**shell_env;
-}	t_shell_data;
+	char	*redirctor; // NULL;
+	char	*after_redirctor;
+	char	**command; // "LS" , "-l";
+//	char	*expander; // "$PATH";
+	int		type; //redir:  2 3 4 .... command = 1 expander =
+	struct s_line_data *next;
+}	t_line_data;
 
 #endif
+
