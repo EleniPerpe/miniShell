@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/06/29 01:20:21 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/06/29 15:46:52 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	start_prompt(void)
 			ft_split_line(input_line, &line_data);
 		while(line_data) // print the linked list to check if it's working
 		{
-			printf("%s\n", line_data->redirctor);
+			printf("YES: %s\n", line_data->redirctor);
+			printf("YES: %s\n", line_data->after_redirctor);
 			line_data = line_data->next;
 		}
 		if (line_data) // free the linked list
@@ -39,6 +40,7 @@ void	start_prompt(void)
 
 int	main(int argc, char **argv, char **env)
 {
+
 	(void)argv;
 	(void)argc;
 	(void)env;
