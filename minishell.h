@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/06/29 00:45:45 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/06/29 15:37:38 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ typedef struct s_line_data
 
 void	start_prompt(void);
 void	ft_split_line(char *input_line, t_line_data **line_data);
-char	*ft_split_redirctor(char *input_line, t_line_data **line_data);
-char	*split_after_redirctor(char *input_line);
-
+int		 redirection_fill(char *line, int i, t_line_data **data);
+int		after_redirection_fill(char *line, int i, t_line_data **data);
 #endif
 
