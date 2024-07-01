@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/01 15:23:17 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:35:30 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 int	after_redirection_fill(char *line, int i, t_line_data **data);
 int check_redirection_cases(char *line, int i, t_line_data *new_line_data);
+int quote_token(char *line, int i, t_line_data **line_data);
+int	quotes_after_redireciton(char *line, int i, int j, t_line_data **data);
+int quotes_command(char *line, int i, t_line_data **data);
 
 // save some lines by using this function
 // it will return a void pointer to the allocated memory
@@ -89,7 +92,7 @@ int redirection_fill(char *line, int i, t_line_data **data)
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data)); //but ft_malloc return void pointer so we need to cast it to (t_line_data *) !very nice :)
 	i = check_redirection_cases(line, i, new_line_data); // I split the cases so now it's fine											
 	add_node_to_list(data, new_line_data);
-	i = after_redirection_fill(line, i, &new_line_data);
+	i = after_redirection_fill(line, i, &new_line_data);  // I don't know why the address
 	return (i );
 }
 
@@ -210,7 +213,7 @@ int	after_redirection_fill(char *line, int i, t_line_data **data)  //there is st
 	return (i + j);
 }
 
-int command_fill(char *line, int i, t_line_data **data)
+int command_fill(char *line, int i, t_line_data **data)  //very very nice :)
 {
 	t_line_data	*new_line_data;
 	char *tmp_commands; // to save the command and the flags in one string tp split it later
@@ -245,8 +248,8 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 {
 	int i;
 
-	char *path = env[0];
-	printf("PATH : %s\n", path);
+	char *path = env[0];          // we will need to pass the env in the pipe, that's why I pulled it for the function
+	printf("PATH : %s\n", path);  // this is just bullshit cause it was unused and for some reason with a (void)env, it wasn't satisfied :P
 	i = 0;
 	if(!input_line)
 		return ;
@@ -254,7 +257,11 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 	{
 		while(input_line[i] == ' ')
 			i++;
-		if(input_line[i] == '<' || input_line[i] == '>')
+		if (input_line[i] == '"' || input_line[i] == '\'')
+		{
+			i = quote_token(input_line, i, line_data);
+		}
+		else if(input_line[i] == '<' || input_line[i] == '>')
 		{
 			i = redirection_fill(input_line, i, line_data);
 		}
@@ -265,5 +272,83 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 		// to add later:
 		// else if (input_line[i] == '|')
 		// 		i = ft_split_pipe(input_line, line_data, i, '|', env);
+		i++;
 	}
+}
+int quote_token(char *line, int i, t_line_data **line_data)
+{
+	int j;
+	int flag;
+	char *tmp;
+	
+	flag = -1;
+	j = -1;
+	printf("Hello 1\n");
+	while (line[i] == ' ') // go back to check the previous token
+		i--;
+	if (line[i] == '<' || line[i] == '>') // flag it for later
+		flag = 7;						  // tht means is after_redirector
+	else
+		flag = 0;						  // that means it's a command
+	i++;
+	while (line[i] == ' ')  // go again to skip the spaces
+		i++;
+	if (line[i] == '\'')   // if it is, start counting in j, from the one after
+	{						// and for one less, so to leave and the last one out, 
+		i++;				// that's why I start j from -1
+		while (line[i] != '\'')
+			j++;
+	}
+	else if (line[i] == '"')
+	{
+		i++;
+		while (line[i] != '"')
+			j++;
+	}
+	tmp = (char *)ft_malloc(j + 1);
+	ft_memcpy(tmp, &line[i], j);
+	tmp[j] = '\0';
+	if (flag == 7)
+	{
+		quotes_after_redireciton(line, i, j - 1, line_data);
+	}
+	if (flag == 0)
+	{
+		quotes_command(tmp, i, line_data);
+	}
+	return (i + j + 1);
+}
+
+int	quotes_after_redireciton(char *line, int i, int j, t_line_data **data)  //there is still a seg fault here
+{
+	t_line_data	*new_line_data;
+
+	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
+	new_line_data->after_redirctor = (char *)ft_malloc(j + 1);
+	new_line_data->after_redirctor= ft_memcpy(new_line_data->after_redirctor, &line[i], j);
+	new_line_data->after_redirctor[j] = '\0';
+	new_line_data->type = 7;
+	new_line_data->next = NULL;
+	new_line_data->command = NULL;
+	new_line_data->redirctor = NULL;
+	add_node_to_list(data, new_line_data);
+	return (i);
+}
+
+int quotes_command(char *line, int i, t_line_data **data)  //very very nice :)
+{
+	t_line_data	*new_line_data;
+	int j;
+
+	j = ft_strlen(line);
+	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data)); // allocate memory for the new node
+	new_line_data->type = 0; // set the type of the node to command
+	// to get the length of the command and the flags to allocate memory for it
+	// in the while I removed != ' '  because there might be a space between the command and the flags
+	new_line_data->command = ft_split((char const *)line, ' '); // split the command and the flags and save it in the node
+	new_line_data->next = NULL;
+	new_line_data->redirctor = NULL;
+	new_line_data->after_redirctor = NULL;
+	add_node_to_list(data, new_line_data); // add the node to the linked list
+	return (i + j);
 }
