@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/01 18:00:24 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/01 19:10:03 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,7 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 		{
 			i = quote_token(input_line, i, line_data);
 		}
-		else if(input_line[i] == '<' || input_line[i] == '>')
+		if(input_line[i] == '<' || input_line[i] == '>')
 		{
 			i = redirection_fill(input_line, i, line_data);
 		}
@@ -272,7 +272,6 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 		// to add later:
 		// else if (input_line[i] == '|')
 		// 		i = ft_split_pipe(input_line, line_data, i, '|', env);
-		i++;
 	}
 }
 int quote_token(char *line, int i, t_line_data **line_data)
@@ -280,9 +279,10 @@ int quote_token(char *line, int i, t_line_data **line_data)
 	int j;
 	int flag;
 	char *tmp;
+	int quote_start;
 	
 	flag = -1;
-	j = -1;
+	j = 0;
 	printf("Hello 1\n");
 	while (line[i] == ' ' || line[i] == '"' || line[i] == '\'') // go back to check the previous token
 	{
@@ -306,33 +306,30 @@ int quote_token(char *line, int i, t_line_data **line_data)
 	if (line[i] == '\'')   // if it is, start counting in j, from the one after
 	{						// and for one less, so to leave and the last one out, 
 		i++;				// that's why I start j from -1
-		while (line[i] != '\'')
-		{
+		quote_start = i;
+		while (line[i + j] != '\'' && line[i + j] != '\0')
 			j++;
-			i++;
-		}
 	}
 	else if (line[i] == '"')
 	{
 		i++;
-		while (line[i] != '"')
-		{
+		quote_start = i;
+		while (line[i + j] != '"' && line[i + j] != '\0')
 			j++;
-			i++;
-		}
 	}
 	tmp = (char *)ft_malloc(j + 1);
-	ft_memcpy(tmp, &line[i - j - 1], j + 1);
+	ft_memcpy(tmp, &line[i], j);
 	tmp[j] = '\0';
+	printf("J : %d, Temp memcpy : %s\n", j, tmp);
 	if (flag == 7)
 	{
-		quotes_after_redireciton(line, i - j - 1, j + 1, line_data);
+		quotes_after_redireciton(line, i - j - 1, j, line_data);
 	}
 	if (flag == 0)
 	{
 		quotes_command(tmp, i - j - 1, line_data);
 	}
-	return (i + j + 1);
+	return (i);
 }
 
 int	quotes_after_redireciton(char *line, int i, int j, t_line_data **data)  //there is still a seg fault here
@@ -342,6 +339,7 @@ int	quotes_after_redireciton(char *line, int i, int j, t_line_data **data)  //th
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
 	new_line_data->after_redirctor = (char *)ft_malloc(j + 1);
 	new_line_data->after_redirctor= ft_memcpy(new_line_data->after_redirctor, &line[i], j);
+	printf("File name is : %s", new_line_data->after_redirctor);
 	new_line_data->after_redirctor[j] = '\0';
 	new_line_data->type = 7;
 	new_line_data->next = NULL;
