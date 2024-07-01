@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/01 19:10:03 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/01 19:24:30 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,7 +265,7 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 		{
 			i = redirection_fill(input_line, i, line_data);
 		}
-		else if (input_line[i] != ' ' && input_line[i] != '\0' && input_line[i] != '|')
+		else
 		{
 			i = command_fill(input_line, i, line_data);
 		}
