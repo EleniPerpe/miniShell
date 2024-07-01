@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/01 05:59:44 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/01 15:23:17 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../minishell.h"
 
 int	after_redirection_fill(char *line, int i, t_line_data **data);
+int check_redirection_cases(char *line, int i, t_line_data *new_line_data);
 
 // save some lines by using this function
 // it will return a void pointer to the allocated memory
@@ -85,13 +86,19 @@ int redirection_fill(char *line, int i, t_line_data **data)
 	int j;
 
 	j = 0;
-	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data)); // it was malloc(sizeof(t_line_data));
-														//but ft_malloc return void pointer so we need to cast it to (t_line_data *)
+	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data)); //but ft_malloc return void pointer so we need to cast it to (t_line_data *) !very nice :)
+	i = check_redirection_cases(line, i, new_line_data); // I split the cases so now it's fine											
+	add_node_to_list(data, new_line_data);
+	i = after_redirection_fill(line, i, &new_line_data);
+	return (i );
+}
+
+int check_redirection_cases(char *line, int i, t_line_data *new_line_data)
+{
 	if (line[i] == '<' && line[i + 1] == '<')
 	{
 		new_line_data->type = 2;
-		init_nodes_redirctor(&new_line_data, 2); // send the address of the pointer and the type of the redirctor
-											// to initialize the redirctor node in the new_line_data depending on the type
+		init_nodes_redirctor(&new_line_data, 2); // send the address of the pointer and the type of the redirctor !! very nice :)					
 		i += 2;
 	}
 	else if (line[i] == '>' && line[i + 1] == '>')
@@ -112,9 +119,7 @@ int redirection_fill(char *line, int i, t_line_data **data)
 		init_nodes_redirctor(&new_line_data, 5);
 		i++;
 	}
-	add_node_to_list(data, new_line_data);
-	i = after_redirection_fill(line, i, &new_line_data);
-	return (i );
+	return (i);
 }
 
 // ############################################################################################################
@@ -183,7 +188,7 @@ int redirection_fill(char *line, int i, t_line_data **data)
 // }
 // ############################################################################################################
 
-int	after_redirection_fill(char *line, int i, t_line_data **data)
+int	after_redirection_fill(char *line, int i, t_line_data **data)  //there is still a seg fault here
 {
 	t_line_data	*new_line_data;
 	int j;
@@ -236,11 +241,12 @@ if there is a redirctor it will call the ft_split_redirctor function
 if there is a pipe it will call the ft_split_pipe function .... etc
 */
 
-void ft_split_line(char *input_line, t_line_data **line_data)
+void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 {
 	int i;
 
-
+	char *path = env[0];
+	printf("PATH : %s\n", path);
 	i = 0;
 	if(!input_line)
 		return ;
@@ -252,10 +258,12 @@ void ft_split_line(char *input_line, t_line_data **line_data)
 		{
 			i = redirection_fill(input_line, i, line_data);
 		}
-		else
+		else if (input_line[i] != ' ' && input_line[i] != '\0' && input_line[i] != '|')
+		{
 			i = command_fill(input_line, i, line_data);
+		}
 		// to add later:
-		// else if (*input_line == '|')
-		// 		input_line = ft_split_pipe(input_line, line_data, "|");
+		// else if (input_line[i] == '|')
+		// 		i = ft_split_pipe(input_line, line_data, i, '|', env);
 	}
 }

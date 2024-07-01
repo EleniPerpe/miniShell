@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/01 05:39:29 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/01 15:19:28 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	start_prompt(void)
+void	start_prompt(char **env)
 {
 	char		*input_line;
 	t_line_data	*line_data; // a pointer to the first element of the linked list of nodes
@@ -26,7 +26,7 @@ void	start_prompt(void)
 		{
 			add_history(input_line);
 			printf("You entered : %s\n", input_line);
-			ft_split_line(input_line, &line_data);
+			ft_split_line(input_line, &line_data, env);
 		tmp = line_data; // Use a temporary pointer for iteration
 		while (tmp != NULL) // print the linked list to check if it's working
 		{
@@ -66,13 +66,13 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argv;
 	(void)argc;
-	(void)env;
+	// (void)env;
 	if (argc != 1)
 	{
 		printf("This program doesn't take any arguments!\n");
 		return (1);
 	}
-	start_prompt();
+	start_prompt(env);
 
 	return (0);
 }
