@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+         #
+#    By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/06/29 15:21:47 by eperperi         ###   ########.fr        #
+#    Updated: 2024/07/01 03:57:49 by rshatra          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME	=	minishell
 
-CC			=	gcc -g -fsanitize=address
+CC			=	gcc -g #-fsanitize=address
 # LEAKS = -L../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next -I ../LeakSanitize
 CFLAGS		=	-Wall -Wextra -Werror -I$(HOME)/local/include
 LDFLAGS = -L $(HOME)/local/lib -lreadline -lhistory

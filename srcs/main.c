@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/06/29 15:46:52 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/01 05:39:29 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	start_prompt(void)
 {
 	char		*input_line;
 	t_line_data	*line_data; // a pointer to the first element of the linked list of nodes
+	t_line_data	*tmp; // a temporary pointer to iterate through the linked list
 
 	line_data = NULL;
 	while (1)
@@ -26,14 +27,36 @@ void	start_prompt(void)
 			add_history(input_line);
 			printf("You entered : %s\n", input_line);
 			ft_split_line(input_line, &line_data);
-		while(line_data) // print the linked list to check if it's working
+		tmp = line_data; // Use a temporary pointer for iteration
+		while (tmp != NULL) // print the linked list to check if it's working
 		{
-			printf("YES: %s\n", line_data->redirctor);
-			printf("YES: %s\n", line_data->after_redirctor);
-			line_data = line_data->next;
+			if (tmp->redirctor != NULL)
+			printf("redirector is: %s\n", tmp->redirctor);
+			if (tmp->after_redirctor != NULL)
+			printf("File name is: %s\n", tmp->after_redirctor);
+			if (tmp->command != NULL)
+			{
+				int i = 0;
+				while (tmp->command[i] != NULL)
+				{
+					if (i == 0)
+						printf("Command is: %s\n", tmp->command[i]);
+					else
+						printf("argument number %d is: %s\n", i, tmp->command[i]);
+					i++;
+				}
+			}
+			tmp = tmp->next;
 		}
-		if (line_data) // free the linked list
-			free(line_data);
+
+		// Free the linked list
+		while (line_data != NULL)
+		{
+			tmp = line_data;
+			line_data = line_data->next;
+			free(tmp);
+		}
+		free(input_line);
 		}
 	}
 }

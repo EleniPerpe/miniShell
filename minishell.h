@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/06/29 15:37:38 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/01 05:21:44 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <unistd.h>
+# include <errno.h>
 
 // type:
 // command = 0;
@@ -42,7 +44,11 @@ typedef struct s_line_data
 
 void	start_prompt(void);
 void	ft_split_line(char *input_line, t_line_data **line_data);
-int		 redirection_fill(char *line, int i, t_line_data **data);
+int		redirection_fill(char *line, int i, t_line_data **data);
 int		after_redirection_fill(char *line, int i, t_line_data **data);
+void	init_nodes_redirctor(t_line_data **data, int type);
+void	*ft_malloc(size_t size);
+int		command_fill(char *line, int i, t_line_data **data);
+void	add_node_to_list(t_line_data **data, t_line_data *new_line_data);
 #endif
 
