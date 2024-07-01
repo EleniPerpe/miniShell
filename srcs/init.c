@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/01 16:35:30 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:00:24 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,12 +284,22 @@ int quote_token(char *line, int i, t_line_data **line_data)
 	flag = -1;
 	j = -1;
 	printf("Hello 1\n");
-	while (line[i] == ' ') // go back to check the previous token
+	while (line[i] == ' ' || line[i] == '"' || line[i] == '\'') // go back to check the previous token
+	{
+		printf("Digit : %c\n", line[i]);
 		i--;
+	}
+		printf("Digit : %c\n", line[i]);
 	if (line[i] == '<' || line[i] == '>') // flag it for later
-		flag = 7;						  // tht means is after_redirector
+	{	flag = 7;						  // tht means is after_redirector
+		printf("Flag : %d\n", flag);
+	}
 	else
-		flag = 0;						  // that means it's a command
+	{
+		flag = 0;						 // that means it's a command
+		printf("Flag : %d\n", flag);
+								 
+	}
 	i++;
 	while (line[i] == ' ')  // go again to skip the spaces
 		i++;
@@ -297,24 +307,30 @@ int quote_token(char *line, int i, t_line_data **line_data)
 	{						// and for one less, so to leave and the last one out, 
 		i++;				// that's why I start j from -1
 		while (line[i] != '\'')
+		{
 			j++;
+			i++;
+		}
 	}
 	else if (line[i] == '"')
 	{
 		i++;
 		while (line[i] != '"')
+		{
 			j++;
+			i++;
+		}
 	}
 	tmp = (char *)ft_malloc(j + 1);
-	ft_memcpy(tmp, &line[i], j);
+	ft_memcpy(tmp, &line[i - j - 1], j + 1);
 	tmp[j] = '\0';
 	if (flag == 7)
 	{
-		quotes_after_redireciton(line, i, j - 1, line_data);
+		quotes_after_redireciton(line, i - j - 1, j + 1, line_data);
 	}
 	if (flag == 0)
 	{
-		quotes_command(tmp, i, line_data);
+		quotes_command(tmp, i - j - 1, line_data);
 	}
 	return (i + j + 1);
 }
