@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/01 15:11:12 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:29:28 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ void	*ft_malloc(size_t size);
 int		command_fill(char *line, int i, t_line_data **data);
 void	add_node_to_list(t_line_data **data, t_line_data *new_line_data);
 int		ft_split_pipe(char *line, t_line_data **line_data, char p, int i, char **env);
+int		quote_token(char *line, int i, t_line_data **line_data);
+
 #endif
 
