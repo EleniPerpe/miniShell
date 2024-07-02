@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/02 15:31:16 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/02 16:49:06 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,8 +199,11 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 			i++;
 		if (input_line[i] == '"' || input_line[i] == '\'')  
 		{
-			// printf("I'm in the quotes menu.\n");
-			i = quote_token(input_line, i, line_data);
+			if ((input_line[i] == '"' && input_line[i + 1] == '"')				// checks the possibility of 2 continuous quotes and in 
+				|| (input_line[i] == '\'' && input_line[i + 1] == '\''))		// case there are, it does nothing like bash
+				i = i + 2;
+			else
+				i = quote_token(input_line, i, line_data);
 		}
 		else if(input_line[i] == '<' || input_line[i] == '>')
 		{

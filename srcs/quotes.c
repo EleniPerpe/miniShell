@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/02 15:58:03 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/02 16:43:46 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ int quote_token(char *line, int i, t_line_data **line_data)
 	i++;
 	while (line[i] == ' ')  				// go again to skip the spaces
 		i++;
-	j = check_quotes_cases(line, &i);		// counts according singles or doubles
+	j = check_quotes_cases(line, &i);
+	// printf("to j einai  : %d\n", j);		// need to fix the possibility of 2 continuous quotes to do nothing
+	// if (j == 0)								
+	// 	return (i + 2);
 	tmp = (char *)ft_malloc(j + 1);			// create the new string in the quotes
 	ft_memcpy(tmp, &line[i], j);
 	tmp[j] = '\0';
@@ -50,13 +53,17 @@ int check_quotes_cases(char *line, int *i)
 
 	j = 0;
 	if (line[*i] == '\'')					// if it's single, counts till the next single
-	{						 
+	{	
+		if (line[*i] == '\'' && line[*i + 1] == '\'')
+			return (0);					 
 		(*i)++;				
 		while (line[*i + j] != '\'' && line[*i + j] != '\0')
 			j++;
 	}
 	else if (line[*i] == '"')				// if it's double, counts till the next double
 	{
+		if (line[*i] == '"' && line[*i + 1] == '"')
+			return (0);		
 		(*i)++;
 		while (line[*i + j] != '"' && line[*i + j] != '\0')
 			j++;
