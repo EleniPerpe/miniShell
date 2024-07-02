@@ -6,7 +6,7 @@
 #    By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/07/02 14:36:29 by eperperi         ###   ########.fr        #
+#    Updated: 2024/07/02 15:36:08 by eperperi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME	=	minishell
 
-CC			=	gcc -g -fsanitize=address
+CC			=	gcc -g #-fsanitize=address
 # LEAKS = -L../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next -I ../LeakSanitize
 CFLAGS		=	-Wall -Wextra -Werror -I$(HOME)/local/include
 LDFLAGS = -L $(HOME)/local/lib -lreadline -lhistory
@@ -27,7 +27,7 @@ SRC_DIR	=	./srcs/
 OBJ_DIR	=	./objs/
 GNL_DIR =	./Get_next_line/
 
-SRC		 =	$(SRC_DIR)main.c $(SRC_DIR)init.c $(SRC_DIR)pipe.c
+SRC		 =	$(SRC_DIR)main.c $(SRC_DIR)init.c $(SRC_DIR)pipe.c $(SRC_DIR)quotes.c
 GNL_SRC  =	$(GNL_DIR)get_next_line.c $(GNL_DIR)get_next_line_utils.c
 
 OBJ		 =	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
