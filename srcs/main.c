@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/01 15:19:28 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:18:30 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ void	start_prompt(char **env)
 	char		*input_line;
 	t_line_data	*line_data; // a pointer to the first element of the linked list of nodes
 	t_line_data	*tmp; // a temporary pointer to iterate through the linked list
-
+	t_env *mini_env;	// our first list for the env (for now if it stays here)
+	
 	line_data = NULL;
+	
+	// I create the path here for now and let's see later
+	create_path(env, &mini_env);
 	while (1)
 	{
 		input_line = readline("minishell >");
@@ -31,9 +35,9 @@ void	start_prompt(char **env)
 		while (tmp != NULL) // print the linked list to check if it's working
 		{
 			if (tmp->redirctor != NULL)
-			printf("redirector is: %s\n", tmp->redirctor);
+				printf("redirector is: %s\n", tmp->redirctor);
 			if (tmp->after_redirctor != NULL)
-			printf("File name is: %s\n", tmp->after_redirctor);
+				printf("File name is: %s\n", tmp->after_redirctor);
 			if (tmp->command != NULL)
 			{
 				int i = 0;
@@ -48,7 +52,6 @@ void	start_prompt(char **env)
 			}
 			tmp = tmp->next;
 		}
-
 		// Free the linked list
 		while (line_data != NULL)
 		{

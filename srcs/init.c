@@ -6,18 +6,12 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/02 16:49:06 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:17:00 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../minishell.h"
-
-int	after_redirection_fill(char *line, int i, t_line_data **data);
-int check_redirection_cases(char *line, int i, t_line_data *new_line_data);
-int quote_token(char *line, int i, t_line_data **line_data);
-int	quotes_after_redireciton(char *line, int i, int j, t_line_data **data);
-int quotes_command(char *line, int i, t_line_data **data);
 
 // save some lines by using this function
 // it will return a void pointer to the allocated memory
@@ -81,77 +75,6 @@ void init_nodes_redirctor(t_line_data **data, int type)
 	new_line_data->next = NULL;
 	new_line_data->command = NULL;
 }
-// this function is too long and couldn't split it or make it shorter :(
-// tried to make it shorter by using the ft_malloc() , add_node_to_list() , init_nodes_redirctor functions
-int redirection_fill(char *line, int i, t_line_data **data)
-{
-	t_line_data	*new_line_data;
-	// int j;
-
-	// j = 0;
-	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data)); //but ft_malloc return void pointer so we need to cast it to (t_line_data *) !very nice :)
-	i = check_redirection_cases(line, i, new_line_data); // I split the cases so now it's fine											
-	add_node_to_list(data, new_line_data);
-	// have to add the quotes check also here
-	while (line[i] == ' ')
-		i++;
-	if (line[i] == '\'' || line[i] == '"')
-			i = quote_token(line, i, &new_line_data);
-	else
-		i = after_redirection_fill(line, i, &new_line_data);  // I don't know why the address
-	return (i );
-}
-
-int check_redirection_cases(char *line, int i, t_line_data *new_line_data)
-{
-	if (line[i] == '<' && line[i + 1] == '<')
-	{
-		new_line_data->type = 2;
-		init_nodes_redirctor(&new_line_data, 2); // send the address of the pointer and the type of the redirctor !! very nice :)					
-		i += 2;
-	}
-	else if (line[i] == '>' && line[i + 1] == '>')
-	{
-		new_line_data->type = 3;
-		init_nodes_redirctor(&new_line_data, 3);
-		i = i + 2;
-	}
-	else if (line[i] == '>' && !(line[i + 1] == '>'))
-	{
-		new_line_data->type = 4;
-		init_nodes_redirctor(&new_line_data, 4);
-		i++;
-	}
-	else if (line[i] == '<' && !(line[i + 1] == '<'))
-	{
-		new_line_data->type = 5;
-		init_nodes_redirctor(&new_line_data, 5);
-		i++;
-	}
-	return (i);
-}
-
-int	after_redirection_fill(char *line, int i, t_line_data **data)  //there is still a seg fault here
-{
-	t_line_data	*new_line_data;
-	int j;
-
-	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
-	j = 0;
-	while (line[i] == ' ')
-		i++;
-	while (line[i + j] != ' ' && line[i + j] != '\0')
-		j++;
-	new_line_data->after_redirctor = (char *)ft_malloc(j + 1);
-	new_line_data->after_redirctor= ft_memcpy(new_line_data->after_redirctor, &line[i], j);
-	new_line_data->after_redirctor[j] = '\0';
-	new_line_data->type = 7;
-	new_line_data->next = NULL;
-	new_line_data->command = NULL;
-	new_line_data->redirctor = NULL;
-	add_node_to_list(data, new_line_data);
-	return (i + j);
-}
 
 int command_fill(char *line, int i, t_line_data **data)  //very very nice :)
 {
@@ -187,9 +110,13 @@ if there is a pipe it will call the ft_split_pipe function .... etc
 void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 {
 	int i;
+	// t_env *mini_env;			// out first creation of the path linked list is here
 
 	char *path = env[0];          // we will need to pass the env in the pipe, that's why I pulled it for the function
 	printf("PATH : %s\n\n\n", path);  // this is just bullshit cause it was unused and for some reason with a (void)env, it wasn't satisfied :P
+	
+	// create_path(env, &mini_env);
+	
 	i = 0;
 	if(!input_line)
 		return ;
