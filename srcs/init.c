@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/01 19:24:30 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:19:43 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,19 @@ void init_nodes_redirctor(t_line_data **data, int type)
 int redirection_fill(char *line, int i, t_line_data **data)
 {
 	t_line_data	*new_line_data;
-	int j;
+	// int j;
 
-	j = 0;
+	// j = 0;
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data)); //but ft_malloc return void pointer so we need to cast it to (t_line_data *) !very nice :)
 	i = check_redirection_cases(line, i, new_line_data); // I split the cases so now it's fine											
 	add_node_to_list(data, new_line_data);
-	i = after_redirection_fill(line, i, &new_line_data);  // I don't know why the address
+	// have to add the quotes check also here
+	while (line[i] == ' ')
+		i++;
+	if (line[i] == '\'' || line[i] == '"')
+			i = quote_token(line, i, &new_line_data);
+	else
+		i = after_redirection_fill(line, i, &new_line_data);  // I don't know why the address
 	return (i );
 }
 
@@ -124,72 +130,6 @@ int check_redirection_cases(char *line, int i, t_line_data *new_line_data)
 	}
 	return (i);
 }
-
-// ############################################################################################################
-// this is the old version of the redirection_fill function
-
-// int redirection_fill(char *line, int i, t_line_data **data)
-// {
-// 	t_line_data	*new_line_data;
-// 	t_line_data *tmp;
-
-// 	tmp = NULL;
-// 	new_line_data = malloc(sizeof(t_line_data));
-// 	if (new_line_data == NULL)
-// 		return (-1);
-// 	if (line[i] == '<' && line[i + 1] == '<')
-// 	{
-// 		new_line_data->type = 2;
-// 		new_line_data->redirctor = ft_strdup("<<");
-// 		if (new_line_data->redirctor == NULL)
-// 			exit (EXIT_FAILURE); // it was return (-1); also need to handle leaks error_handle_free()
-// 		i += 2; // it was i = 1 + 2;
-// 	}
-// 	else if (line[i] == '>' && line[i + 1] == '>')
-// 	{
-// 		new_line_data->type = 3;
-// 		new_line_data->redirctor = malloc(3);
-// 		if (new_line_data->redirctor == NULL)
-// 			exit (EXIT_FAILURE); //leaks error_handle_free()
-// 		new_line_data->redirctor = ">>";
-// 		i = i + 2;
-// 	}
-// 	else if (line[i] == '>' && !(line[i + 1] == '>'))
-// 	{
-// 		new_line_data->type = 4;
-// 		new_line_data->redirctor = malloc(2);
-// 		if (new_line_data->redirctor == NULL)
-// 			exit (EXIT_FAILURE); //leaks error_handle_free()
-// 		new_line_data->redirctor = ">";
-// 		i++;
-// 	}
-// 	else if (line[i] == '<' && !(line[i + 1] == '<'))
-// 	{
-// 		new_line_data->type = 5;
-// 		new_line_data->redirctor = malloc(2);
-// 		if (new_line_data->redirctor == NULL)
-// 			exit (EXIT_FAILURE);
-// 		new_line_data->redirctor = "<";
-// 		i++;
-// 	}
-// 	new_line_data->next = NULL;
-// 	printf("check 3 done, we got it\n"); // check
-// 	if (*data == NULL)
-// 		*data = new_line_data;
-// 	else
-// 	{
-// 		tmp = *data;
-// 		while (tmp->next != NULL)
-// 			tmp = tmp->next;
-// 		tmp->next = new_line_data;
-// 	}
-// 		printf("check 999 done, we got it\n"); // check
-// 			printf("re is: %s\n",new_line_data->redirctor); // check
-
-// 	i = after_redirection_fill(line, i - 1, data);
-// 	return (i); // or return (i - 1);
-// }
-// ############################################################################################################
 
 int	after_redirection_fill(char *line, int i, t_line_data **data)  //there is still a seg fault here
 {
@@ -249,7 +189,7 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 	int i;
 
 	char *path = env[0];          // we will need to pass the env in the pipe, that's why I pulled it for the function
-	printf("PATH : %s\n", path);  // this is just bullshit cause it was unused and for some reason with a (void)env, it wasn't satisfied :P
+	printf("PATH : %s\n\n\n", path);  // this is just bullshit cause it was unused and for some reason with a (void)env, it wasn't satisfied :P
 	i = 0;
 	if(!input_line)
 		return ;
@@ -257,11 +197,12 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 	{
 		while(input_line[i] == ' ')
 			i++;
-		if (input_line[i] == '"' || input_line[i] == '\'')
+		if (input_line[i] == '"' || input_line[i] == '\'')  
 		{
+			// printf("I'm in the quotes menu.\n");
 			i = quote_token(input_line, i, line_data);
 		}
-		if(input_line[i] == '<' || input_line[i] == '>')
+		else if(input_line[i] == '<' || input_line[i] == '>')
 		{
 			i = redirection_fill(input_line, i, line_data);
 		}
@@ -279,57 +220,60 @@ int quote_token(char *line, int i, t_line_data **line_data)
 	int j;
 	int flag;
 	char *tmp;
-	int quote_start;
+	// int quote_start;
 	
 	flag = -1;
 	j = 0;
-	printf("Hello 1\n");
+	// printf("Hello 1\n");
 	while (line[i] == ' ' || line[i] == '"' || line[i] == '\'') // go back to check the previous token
 	{
-		printf("Digit : %c\n", line[i]);
+		// printf("Digit : %c\n", line[i]);
 		i--;
 	}
-		printf("Digit : %c\n", line[i]);
+		// printf("Digit : %c\n", line[i]);
 	if (line[i] == '<' || line[i] == '>') // flag it for later
 	{	flag = 7;						  // tht means is after_redirector
-		printf("Flag : %d\n", flag);
+		// printf("Flag : %d\n", flag);
 	}
 	else
 	{
 		flag = 0;						 // that means it's a command
-		printf("Flag : %d\n", flag);
+		// printf("Flag : %d\n", flag);
 								 
 	}
 	i++;
 	while (line[i] == ' ')  // go again to skip the spaces
 		i++;
-	if (line[i] == '\'')   // if it is, start counting in j, from the one after
-	{						// and for one less, so to leave and the last one out, 
-		i++;				// that's why I start j from -1
-		quote_start = i;
+	if (line[i] == '\'')
+	{						 
+		i++;				
+		// quote_start = i;
 		while (line[i + j] != '\'' && line[i + j] != '\0')
 			j++;
 	}
 	else if (line[i] == '"')
 	{
 		i++;
-		quote_start = i;
+		// quote_start = i;
 		while (line[i + j] != '"' && line[i + j] != '\0')
 			j++;
 	}
 	tmp = (char *)ft_malloc(j + 1);
 	ft_memcpy(tmp, &line[i], j);
 	tmp[j] = '\0';
-	printf("J : %d, Temp memcpy : %s\n", j, tmp);
+	// printf("J : %d, Temp memcpy : %s\n", j, tmp);
 	if (flag == 7)
 	{
-		quotes_after_redireciton(line, i - j - 1, j, line_data);
+		// printf("Flag is 7 and i is at position %dth.\n", i);
+		quotes_after_redireciton(tmp, i, j, line_data);
 	}
-	if (flag == 0)
+	else if (flag == 0)
 	{
+		// printf("Flag is 0.\n");
 		quotes_command(tmp, i - j - 1, line_data);
 	}
-	return (i);
+	// printf("i after quotes : %d\n", i + j + 1);
+	return (i + j + 1);
 }
 
 int	quotes_after_redireciton(char *line, int i, int j, t_line_data **data)  //there is still a seg fault here
@@ -338,8 +282,7 @@ int	quotes_after_redireciton(char *line, int i, int j, t_line_data **data)  //th
 
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
 	new_line_data->after_redirctor = (char *)ft_malloc(j + 1);
-	new_line_data->after_redirctor= ft_memcpy(new_line_data->after_redirctor, &line[i], j);
-	printf("File name is : %s", new_line_data->after_redirctor);
+	new_line_data->after_redirctor= ft_memcpy(new_line_data->after_redirctor, line, j);
 	new_line_data->after_redirctor[j] = '\0';
 	new_line_data->type = 7;
 	new_line_data->next = NULL;
