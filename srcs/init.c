@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/02 14:19:43 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:44:50 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,60 +220,43 @@ int quote_token(char *line, int i, t_line_data **line_data)
 	int j;
 	int flag;
 	char *tmp;
-	// int quote_start;
 	
 	flag = -1;
 	j = 0;
-	// printf("Hello 1\n");
+	// if (i == 0)     // I'm trying here to solve the case that is the first character
+	// 	i++;		   // to prevent it from going back and have seg fault
+	// else
+	// {
 	while (line[i] == ' ' || line[i] == '"' || line[i] == '\'') // go back to check the previous token
-	{
-		// printf("Digit : %c\n", line[i]);
 		i--;
-	}
-		// printf("Digit : %c\n", line[i]);
-	if (line[i] == '<' || line[i] == '>') // flag it for later
-	{	flag = 7;						  // tht means is after_redirector
-		// printf("Flag : %d\n", flag);
-	}
-	else
-	{
-		flag = 0;						 // that means it's a command
-		// printf("Flag : %d\n", flag);
-								 
-	}
+	// }
+	if (line[i] == '<' || line[i] == '>')  // if it's after_redirector, sets the flag to 7
+		flag = 7;
+	else								   // else it's a command, so sets it to 0
+		flag = 0;						
 	i++;
-	while (line[i] == ' ')  // go again to skip the spaces
+	while (line[i] == ' ')  				// go again to skip the spaces
 		i++;
-	if (line[i] == '\'')
+	if (line[i] == '\'')					// if it's single, counts till the next single
 	{						 
 		i++;				
-		// quote_start = i;
 		while (line[i + j] != '\'' && line[i + j] != '\0')
 			j++;
 	}
-	else if (line[i] == '"')
+	else if (line[i] == '"')				// if it's double, counts till the next double
 	{
 		i++;
-		// quote_start = i;
 		while (line[i + j] != '"' && line[i + j] != '\0')
 			j++;
 	}
-	tmp = (char *)ft_malloc(j + 1);
+	tmp = (char *)ft_malloc(j + 1);			// create the new string in the quotes
 	ft_memcpy(tmp, &line[i], j);
 	tmp[j] = '\0';
-	// printf("J : %d, Temp memcpy : %s\n", j, tmp);
-	if (flag == 7)
-	{
-		// printf("Flag is 7 and i is at position %dth.\n", i);
+	if (flag == 7)										// if it's a filename, goes to this function
 		quotes_after_redireciton(tmp, i, j, line_data);
-	}
-	else if (flag == 0)
-	{
-		// printf("Flag is 0.\n");
+	else if (flag == 0)									// else to the functions for the commands
 		quotes_command(tmp, i - j - 1, line_data);
-	}
-	// printf("i after quotes : %d\n", i + j + 1);
-	return (i + j + 1);
+	return (i + j + 1);									// returns the last position after the quotes and puts it in i
 }
 
 int	quotes_after_redireciton(char *line, int i, int j, t_line_data **data)  //there is still a seg fault here
@@ -282,8 +265,8 @@ int	quotes_after_redireciton(char *line, int i, int j, t_line_data **data)  //th
 
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
 	new_line_data->after_redirctor = (char *)ft_malloc(j + 1);
-	new_line_data->after_redirctor= ft_memcpy(new_line_data->after_redirctor, line, j);
-	new_line_data->after_redirctor[j] = '\0';
+	new_line_data->after_redirctor= ft_memcpy(new_line_data->after_redirctor, line, j); // it does put the whole string that
+	new_line_data->after_redirctor[j] = '\0';											// was in the quotes in the node
 	new_line_data->type = 7;
 	new_line_data->next = NULL;
 	new_line_data->command = NULL;
@@ -292,7 +275,7 @@ int	quotes_after_redireciton(char *line, int i, int j, t_line_data **data)  //th
 	return (i);
 }
 
-int quotes_command(char *line, int i, t_line_data **data)  //very very nice :)
+int quotes_command(char *line, int i, t_line_data **data) 
 {
 	t_line_data	*new_line_data;
 	int j;

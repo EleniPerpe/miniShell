@@ -6,7 +6,7 @@
 #    By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/07/01 15:19:55 by eperperi         ###   ########.fr        #
+#    Updated: 2024/07/02 14:36:29 by eperperi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME	=	minishell
 
-CC			=	gcc -g #-fsanitize=address
+CC			=	gcc -g -fsanitize=address
 # LEAKS = -L../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next -I ../LeakSanitize
 CFLAGS		=	-Wall -Wextra -Werror -I$(HOME)/local/include
 LDFLAGS = -L $(HOME)/local/lib -lreadline -lhistory
