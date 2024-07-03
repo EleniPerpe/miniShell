@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/02 18:18:30 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/03 08:54:53 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	start_prompt(char **env)
 	t_line_data	*line_data; // a pointer to the first element of the linked list of nodes
 	t_line_data	*tmp; // a temporary pointer to iterate through the linked list
 	t_env *mini_env;	// our first list for the env (for now if it stays here)
-	
+
 	line_data = NULL;
-	
+
 	// I create the path here for now and let's see later
 	create_path(env, &mini_env);
 	while (1)
@@ -31,6 +31,8 @@ void	start_prompt(char **env)
 			add_history(input_line);
 			printf("You entered : %s\n", input_line);
 			ft_split_line(input_line, &line_data, env);
+			standard_IO(line_data);
+			exec_command(line_data, env);
 		tmp = line_data; // Use a temporary pointer for iteration
 		while (tmp != NULL) // print the linked list to check if it's working
 		{
