@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/03 08:57:46 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/03 19:05:18 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	reset_IO(void);
 char	*find_path(char *cmd, char **env);
 void	exec_command(t_line_data *line_data, char **env);
 void	ft_free(char **paths_spleted, char *cmd, char *path);
+void	command_merage(t_line_data **data);
+void	merage_free_command(t_line_data **data, int len);
 
 #endif
 
