@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/02 18:17:00 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:11:52 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,9 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 
 	char *path = env[0];          // we will need to pass the env in the pipe, that's why I pulled it for the function
 	printf("PATH : %s\n\n\n", path);  // this is just bullshit cause it was unused and for some reason with a (void)env, it wasn't satisfied :P
-	
+
 	// create_path(env, &mini_env);
-	
+
 	i = 0;
 	if(!input_line)
 		return ;
@@ -124,9 +124,9 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 	{
 		while(input_line[i] == ' ')
 			i++;
-		if (input_line[i] == '"' || input_line[i] == '\'')  
+		if (input_line[i] == '"' || input_line[i] == '\'')
 		{
-			if ((input_line[i] == '"' && input_line[i + 1] == '"')				// checks the possibility of 2 continuous quotes and in 
+			if ((input_line[i] == '"' && input_line[i + 1] == '"')				// checks the possibility of 2 continuous quotes and in
 				|| (input_line[i] == '\'' && input_line[i + 1] == '\''))		// case there are, it does nothing like bash
 				i = i + 2;
 			else
@@ -144,4 +144,5 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 		// else if (input_line[i] == '|')
 		// 		i = ft_split_pipe(input_line, line_data, i, '|', env);
 	}
+	command_merage(line_data);
 }
