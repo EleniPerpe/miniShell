@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/03 22:06:58 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/04 15:33:00 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	start_prompt(char **env)
 
 	// I create the path here for now and let's see later
 	create_path(env, &mini_env);
+	printf("helloooo\n");
 	while (1)
 	{
 		input_line = readline("minishell >");
@@ -31,8 +32,8 @@ void	start_prompt(char **env)
 			add_history(input_line);
 			printf("You entered : %s\n", input_line);
 			ft_split_line(input_line, &line_data, env);
-			standard_IO(line_data);
-			exec_command(line_data, env);
+			// standard_IO(line_data);
+			// exec_command(line_data, env);
 		tmp = line_data; // Use a temporary pointer for iteration
 		while (tmp != NULL) // print the linked list to check if it's working
 		{
@@ -40,6 +41,8 @@ void	start_prompt(char **env)
 				printf("redirector is: %s\n", tmp->redirctor);
 			if (tmp->after_redirctor != NULL)
 				printf("File name is: %s\n", tmp->after_redirctor);
+			if (tmp->expander != NULL)
+				printf("expander is: %s\n", tmp->expander);
 			if (tmp->command != NULL)
 			{
 				int i = 0;

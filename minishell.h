@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/03 19:05:18 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/04 14:08:19 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_line_data
 	char				*redirctor; // ">>" , "<<" , "<" , ">" , "|";
 	char				*after_redirctor; // "file";
 	char				**command; // "LS" , "-l";
-//	char				*expander; // "$PATH";
+	char				*expander; // "$PATH";
 	int					type; //redir:  2 3 4 .... command = 1 expander =
 	struct s_line_data	*next;
 }	t_line_data;
@@ -66,6 +66,7 @@ void	exec_command(t_line_data *line_data, char **env);
 void	ft_free(char **paths_spleted, char *cmd, char *path);
 void	command_merage(t_line_data **data);
 void	merage_free_command(t_line_data **data, int len);
+int	expander_fill(char *line, int i, t_line_data **data, char **env);
 
 #endif
 
