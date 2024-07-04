@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/04 15:33:00 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:16:56 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	start_prompt(char **env)
 
 	// I create the path here for now and let's see later
 	create_path(env, &mini_env);
-	printf("helloooo\n");
+	// printf("helloooo\n");
 	while (1)
 	{
 		input_line = readline("minishell >");
