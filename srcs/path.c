@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:00:29 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/04 16:45:18 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/04 18:30:03 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	expander_fill(char *line, int i, t_line_data **data, char **env)
 	int env_position;
 	char *final_env;
 
+	printf("this is the i in the quotes : %d\n", i);
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
 	j = 0;
 	i++;
@@ -123,7 +124,7 @@ int	expander_fill(char *line, int i, t_line_data **data, char **env)
 	add_node_to_list(data, new_line_data);
 	// printf("Expander is : %s", new_line_data->expander);
 	free(expander);
-	// printf ("edw einai to i : %d\n", i);
+	printf ("edw einai to i : %d\n", i);
 	return (i);
 }
 
