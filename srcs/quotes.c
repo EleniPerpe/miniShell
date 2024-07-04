@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/02 16:43:46 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:18:25 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	quotes_after_redireciton(char *line, int i, int j, t_line_data **data);
 int quotes_command(char *line, int i, t_line_data **data);
 int check_quotes_cases(char *line, int *i);
 
-int quote_token(char *line, int i, t_line_data **line_data)
+int quote_token(char *line, int i, t_line_data **line_data, char **env)
 {
 	int j;
 	int flag;
@@ -25,7 +25,22 @@ int quote_token(char *line, int i, t_line_data **line_data)
 	flag = -1;
 	j = 0;
 	while (line[i] == ' ' || line[i] == '"' || line[i] == '\'') // go back to check the previous token
-		i--;	
+		i--;
+	if ((line[i] == '<' && line[i + 1] == '<' && line[i + 2] == '$') || (line[i] == '>' && line[i + 1] == '>' && line[i + 2] == '$')
+		|| (line[i] == '<' && line[i + 1] == '$') || (line[i] == '>' && line[i + 1] == '$'))
+		{
+			if (line[i + 1] != '$')
+			{
+				i += 2;
+				expander_fill(line, i, line_data, env);
+			}
+			else
+			{
+				i++;
+				expander_fill(line, i, line_data, env);
+			}
+			flag = 1;
+		}
 	if (line[i] == '<' || line[i] == '>')  // if it's after_redirector, sets the flag to 7
 		flag = 7;
 	else								   // else it's a command, so sets it to 0

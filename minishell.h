@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/04 14:08:19 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:16:23 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ typedef struct s_env
 
 void	start_prompt(char **env);
 void	ft_split_line(char *input_line, t_line_data **line_data, char **env);
-int		redirection_fill(char *line, int i, t_line_data **data);
+int		redirection_fill(char *line, int i, t_line_data **data, char **env);
 int		after_redirection_fill(char *line, int i, t_line_data **data);
 void	init_nodes_redirctor(t_line_data **data, int type);
 void	*ft_malloc(size_t size);
 int		command_fill(char *line, int i, t_line_data **data);
 void	add_node_to_list(t_line_data **data, t_line_data *new_line_data);
 int		ft_split_pipe(char *line, t_line_data **line_data, char p, int i, char **env);
-int		quote_token(char *line, int i, t_line_data **line_data);
+int		quote_token(char *line, int i, t_line_data **line_data, char **env);
 void	create_path(char **env, t_env **mini_env);
 void	standard_IO(t_line_data *line_data);
 void	reset_IO(void);
