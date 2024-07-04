@@ -6,13 +6,13 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/04 17:18:25 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/04 18:30:41 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	quotes_after_redireciton(char *line, int i, int j, t_line_data **data);
+int	quotes_after_redireciton(char *line, int j, t_line_data **data, char **env);
 int quotes_command(char *line, int i, t_line_data **data);
 int check_quotes_cases(char *line, int *i);
 
@@ -21,26 +21,12 @@ int quote_token(char *line, int i, t_line_data **line_data, char **env)
 	int j;
 	int flag;
 	char *tmp;
+	int temp_j;
 	
 	flag = -1;
 	j = 0;
 	while (line[i] == ' ' || line[i] == '"' || line[i] == '\'') // go back to check the previous token
 		i--;
-	if ((line[i] == '<' && line[i + 1] == '<' && line[i + 2] == '$') || (line[i] == '>' && line[i + 1] == '>' && line[i + 2] == '$')
-		|| (line[i] == '<' && line[i + 1] == '$') || (line[i] == '>' && line[i + 1] == '$'))
-		{
-			if (line[i + 1] != '$')
-			{
-				i += 2;
-				expander_fill(line, i, line_data, env);
-			}
-			else
-			{
-				i++;
-				expander_fill(line, i, line_data, env);
-			}
-			flag = 1;
-		}
 	if (line[i] == '<' || line[i] == '>')  // if it's after_redirector, sets the flag to 7
 		flag = 7;
 	else								   // else it's a command, so sets it to 0
@@ -49,16 +35,26 @@ int quote_token(char *line, int i, t_line_data **line_data, char **env)
 	while (line[i] == ' ')  				// go again to skip the spaces
 		i++;
 	j = check_quotes_cases(line, &i);
-	// printf("to j einai  : %d\n", j);		// need to fix the possibility of 2 continuous quotes to do nothing
-	// if (j == 0)								
-	// 	return (i + 2);
 	tmp = (char *)ft_malloc(j + 1);			// create the new string in the quotes
 	ft_memcpy(tmp, &line[i], j);
 	tmp[j] = '\0';
-	if (flag == 7)										// if it's a filename, goes to this function
-		quotes_after_redireciton(tmp, i, j, line_data);
+	if (tmp[0] == '$')
+	{
+		printf("Ayto einai to expander mas : %s kai ayto to tmp[0] %c kai to i %d:\n", tmp, tmp[0], i);
+		j = expander_fill(tmp, 0, line_data, env);
+	}
+	else if (flag == 7)
+	{
+		temp_j = quotes_after_redireciton(tmp, j, line_data, env);
+		if (temp_j == 0)
+			;
+		else
+			j = temp_j; 
+		
+	}									// if it's a filename, goes to this function
 	else if (flag == 0)									// else to the functions for the commands
 		quotes_command(tmp, i - j - 1, line_data);
+	printf("autos einai o arithmos exodou : %d\n", i + j + 1);
 	return (i + j + 1);									// returns the last position after the quotes and puts it in i
 }
 
@@ -86,10 +82,16 @@ int check_quotes_cases(char *line, int *i)
 	return (j);
 }
 
-int	quotes_after_redireciton(char *line, int i, int j, t_line_data **data)  //there is still a seg fault here
+int	quotes_after_redireciton(char *line, int j, t_line_data **data, char **env)  //there is still a seg fault here
 {
 	t_line_data	*new_line_data;
+	int i;
 
+	if (line[0] == '$')
+	{
+		i = expander_fill(line, j, data, env);
+		return (i);
+	}
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
 	new_line_data->after_redirctor = (char *)ft_malloc(j + 1);
 	new_line_data->after_redirctor= ft_memcpy(new_line_data->after_redirctor, line, j); // it does put the whole string that
@@ -99,7 +101,7 @@ int	quotes_after_redireciton(char *line, int i, int j, t_line_data **data)  //th
 	new_line_data->command = NULL;
 	new_line_data->redirctor = NULL;
 	add_node_to_list(data, new_line_data);
-	return (i);
+	return (0);
 }
 
 int quotes_command(char *line, int i, t_line_data **data) 
@@ -110,8 +112,6 @@ int quotes_command(char *line, int i, t_line_data **data)
 	j = ft_strlen(line);
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data)); // allocate memory for the new node
 	new_line_data->type = 0; // set the type of the node to command
-	// to get the length of the command and the flags to allocate memory for it
-	// in the while I removed != ' '  because there might be a space between the command and the flags
 	new_line_data->command = ft_split((char const *)line, ' '); // split the command and the flags and save it in the node
 	new_line_data->next = NULL;
 	new_line_data->redirctor = NULL;
