@@ -6,11 +6,13 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 07:00:37 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/03 08:20:00 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/08 15:40:11 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+
 
 void	standard_IO(t_line_data *line_data)
 {
@@ -32,7 +34,7 @@ void	standard_IO(t_line_data *line_data)
 			else if (!ft_strcmp(">", new_line_data->redirctor))
 			{
 				new_line_data = new_line_data->next;
-				fd = open(new_line_data->after_redirctor, O_WRONLY | O_CREAT | O_TRUNC, 0644);	//O_WRONLY: the file is opened for writing only.
+				fd = open(new_line_data->after_redirctor, O_WRONLY | O_CREAT | O_TRUNC, 0777);	//O_WRONLY: the file is opened for writing only.
 																						// O_CREAT: to create the file if it does not already exist.
 																						// O_TRUNC: clearing any existing content in the file.
 																						// 0644: the file permission.
@@ -42,7 +44,7 @@ void	standard_IO(t_line_data *line_data)
 			else if (!ft_strcmp(">>", new_line_data->redirctor))
 			{
 				new_line_data = new_line_data->next;
-				fd = open(new_line_data->after_redirctor, O_WRONLY | O_CREAT | O_APPEND, 0644); // O_APPEND: the file is opened in append mode.
+				fd = open(new_line_data->after_redirctor, O_WRONLY | O_CREAT | O_APPEND, 0777); // O_APPEND: the file is opened in append mode.
 				dup2(fd, STDOUT_FILENO);
 				close(fd);
 			}

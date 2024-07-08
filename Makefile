@@ -6,7 +6,7 @@
 #    By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/07/08 05:59:21 by rshatra          ###   ########.fr        #
+#    Updated: 2024/07/08 16:02:40 by rshatra          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ GNL_DIR =	./Get_next_line/
 
 SRC		 =	$(SRC_DIR)main.c $(SRC_DIR)init.c $(SRC_DIR)pipe.c $(SRC_DIR)quotes.c $(SRC_DIR)init_redirector.c \
 			$(SRC_DIR)path.c $(SRC_DIR)standard_IO.c $(SRC_DIR)exec.c $(SRC_DIR)process_manager.c
-GNL_SRC  =	$(GNL_DIR)get_next_line.c $(GNL_DIR)get_next_line_utils.c
+GNL_SRC  =	$(GNL_DIR)get_next_line.c $(GNL_DIR)get_next_line_utils.c $(SRC_DIR)heredoc_handle.c
 
 OBJ		 =	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 GNL_OBJ	 =	$(GNL_SRC:$(GNL_DIR)%.c=$(OBJ_DIR)%.o)
