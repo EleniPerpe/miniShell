@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/08 18:35:38 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/08 19:20:11 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 		// 		i = ft_split_pipe(input_line, line_data, i, '|', env);
 	}
 	// command_merage(line_data);
+
 	// in this step we already have the linked list of nodes
 	// now we must add it to the commands list
 	// to handle the pipes so each part will be in command node and will be executed in a different process
