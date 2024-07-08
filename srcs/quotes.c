@@ -6,17 +6,17 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/04 18:30:41 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/08 17:32:21 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	quotes_after_redireciton(char *line, int j, t_line_data **data, char **env);
+int	quotes_after_redireciton(char *line, int j, t_line_data **data);
 int quotes_command(char *line, int i, t_line_data **data);
 int check_quotes_cases(char *line, int *i);
 
-int quote_token(char *line, int i, t_line_data **line_data, char **env)
+int quote_token(char *line, int i, t_line_data **line_data)
 {
 	int j;
 	int flag;
@@ -38,14 +38,9 @@ int quote_token(char *line, int i, t_line_data **line_data, char **env)
 	tmp = (char *)ft_malloc(j + 1);			// create the new string in the quotes
 	ft_memcpy(tmp, &line[i], j);
 	tmp[j] = '\0';
-	if (tmp[0] == '$')
+	if (flag == 7)
 	{
-		printf("Ayto einai to expander mas : %s kai ayto to tmp[0] %c kai to i %d:\n", tmp, tmp[0], i);
-		j = expander_fill(tmp, 0, line_data, env);
-	}
-	else if (flag == 7)
-	{
-		temp_j = quotes_after_redireciton(tmp, j, line_data, env);
+		temp_j = quotes_after_redireciton(tmp, j, line_data);
 		if (temp_j == 0)
 			;
 		else
@@ -54,7 +49,6 @@ int quote_token(char *line, int i, t_line_data **line_data, char **env)
 	}									// if it's a filename, goes to this function
 	else if (flag == 0)									// else to the functions for the commands
 		quotes_command(tmp, i - j - 1, line_data);
-	printf("autos einai o arithmos exodou : %d\n", i + j + 1);
 	return (i + j + 1);									// returns the last position after the quotes and puts it in i
 }
 
@@ -82,16 +76,10 @@ int check_quotes_cases(char *line, int *i)
 	return (j);
 }
 
-int	quotes_after_redireciton(char *line, int j, t_line_data **data, char **env)  //there is still a seg fault here
+int	quotes_after_redireciton(char *line, int j, t_line_data **data)  //there is still a seg fault here
 {
 	t_line_data	*new_line_data;
-	int i;
 
-	if (line[0] == '$')
-	{
-		i = expander_fill(line, j, data, env);
-		return (i);
-	}
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
 	new_line_data->after_redirctor = (char *)ft_malloc(j + 1);
 	new_line_data->after_redirctor= ft_memcpy(new_line_data->after_redirctor, line, j); // it does put the whole string that
