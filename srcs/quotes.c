@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/08 15:51:52 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/08 17:32:21 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int quote_token(char *line, int i, t_line_data **line_data)
 	}									// if it's a filename, goes to this function
 	else if (flag == 0)									// else to the functions for the commands
 		quotes_command(tmp, i - j - 1, line_data);
-	printf("autos einai o arithmos exodou : %d\n", i + j + 1);
 	return (i + j + 1);									// returns the last position after the quotes and puts it in i
 }
 
