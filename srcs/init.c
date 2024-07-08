@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/08 15:00:41 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/08 17:33:08 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,16 +129,21 @@ if there is a pipe it will call the ft_split_pipe function .... etc
 void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 {
 	int i;
-	// t_env *mini_env;			// out first creation of the path linked list is here
-
-	// char *path = env[0];          // we will need to pass the env in the pipe, that's why I pulled it for the function
-	// printf("PATH : %s\n\n\n", path);  // this is just bullshit cause it was unused and for some reason with a (void)env, it wasn't satisfied :P
-
-	// create_path(env, &mini_env);
 
 	i = 0;
 	if(!input_line)
 		return ;
+	while (input_line[i] != '\0')
+	{
+		if (input_line[i] == '$')
+		{
+			input_line = expander_fill(input_line, &i, env);
+		}
+		i++;
+	}
+
+	i = 0;
+	printf("Final : %s\n", input_line);
 	while(input_line[i] != '\0')
 	{
 		while(input_line[i] == ' ')
@@ -149,15 +154,11 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 				|| (input_line[i] == '\'' && input_line[i + 1] == '\''))		// case there are, it does nothing like bash
 				i = i + 2;
 			else
-				i = quote_token(input_line, i, line_data, env);
-		}
-		else if (input_line[i] == '$')
-		{
-			i = expander_fill(input_line, i, line_data, env);
+				i = quote_token(input_line, i, line_data);
 		}
 		else if(input_line[i] == '<' || input_line[i] == '>')
 		{
-			i = redirection_fill(input_line, i, line_data, env);
+			i = redirection_fill(input_line, i, line_data);
 		}
 		else
 		{
