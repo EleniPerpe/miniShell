@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:51:11 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/08 17:42:08 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/08 18:08:26 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	after_redirection_decision(char *line, int i, t_line_data **data)
 	t_line_data	*tmp;
 
 	tmp = *data;
-	if (!ft_strcmp(tmp->redirctor, "<<"))
+	printf("redir is: %s\n", tmp->redirctor);
+	if (tmp->type == 2)
 	{
 		j = heredoc_init(line, i, data);
 	}
