@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/08 05:59:33 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/08 16:31:59 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ void	command_merage(t_line_data **data);
 void	merage_free_command(t_line_data **data, int len);
 int		expander_fill(char *line, int i, t_line_data **data, char **env);
 void	process_execution(t_line_data **data, char **env);
+int		heredoc_init(char *line, int i, t_line_data **data);
+int		after_redirection_decision(char *line, int i, t_line_data **data);
+int		after_redi_len(char *line, int i);
 
 #endif
 
