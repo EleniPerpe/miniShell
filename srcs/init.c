@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/04 14:37:04 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/04 21:56:09 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,25 @@ void add_node_to_list(t_line_data **data, t_line_data *new_line_data)
 		while (tmp->next != NULL)
 			tmp = tmp->next;
 		tmp->next = new_line_data;
+	}
+}
+
+void	add_node_to_commands_list(t_line_data **data, t_commands_list **commands_list)
+{
+	t_commands_list	*new_commands_list;
+	t_commands_list	*tmp;
+
+	new_commands_list = (t_commands_list *)ft_malloc(sizeof(t_commands_list));
+	new_commands_list->commands_node = *data;
+	new_commands_list->next = NULL;
+	if (*commands_list == NULL)
+		*commands_list = new_commands_list;
+	else
+	{
+		tmp = *commands_list;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = new_commands_list;
 	}
 }
 
@@ -112,8 +131,8 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 	int i;
 	// t_env *mini_env;			// out first creation of the path linked list is here
 
-	char *path = env[0];          // we will need to pass the env in the pipe, that's why I pulled it for the function
-	printf("PATH : %s\n\n\n", path);  // this is just bullshit cause it was unused and for some reason with a (void)env, it wasn't satisfied :P
+	// char *path = env[0];          // we will need to pass the env in the pipe, that's why I pulled it for the function
+	// printf("PATH : %s\n\n\n", path);  // this is just bullshit cause it was unused and for some reason with a (void)env, it wasn't satisfied :P
 
 	// create_path(env, &mini_env);
 
@@ -149,4 +168,9 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 		// 		i = ft_split_pipe(input_line, line_data, i, '|', env);
 	}
 	command_merage(line_data);
+	// in this step we already have the linked list of nodes
+	// now we must add it to the commands list
+	// to handle the pipes so each part will be in command node and will be executed in a different process
+	add_node_to_commands_list(line_data, &commands_list); // must know where to define the first commands_list .. here in this function or in start_prompt
+														// t_commands_list *commands_list; // definee the commands list
 }

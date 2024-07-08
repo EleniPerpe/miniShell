@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/04 18:28:12 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/04 21:44:23 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_commands_list
+{
+	t_line_data				*commands_node;
+	struct s_commands_list	*next;
+}	t_commands_list;
+
 void	start_prompt(char **env);
 void	ft_split_line(char *input_line, t_line_data **line_data, char **env);
 int		redirection_fill(char *line, int i, t_line_data **data);
@@ -66,8 +72,8 @@ void	exec_command(t_line_data *line_data, char **env);
 void	ft_free(char **paths_spleted, char *cmd, char *path);
 void	command_merage(t_line_data **data);
 void	merage_free_command(t_line_data **data, int len);
-int	expander_fill(char *line, int i, t_line_data **data, char **env);
-void	process_manager(t_line_data **data, char **env);
+int		expander_fill(char *line, int i, t_line_data **data, char **env);
+void	process_execution(t_line_data **data, char **env);
 
 #endif
 

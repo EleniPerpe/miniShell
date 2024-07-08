@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+         #
+#    By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/07/04 16:41:43 by eperperi         ###   ########.fr        #
+#    Updated: 2024/07/04 21:12:14 by rshatra          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME	=	minishell
 
-CC			=	gcc -g -fsanitize=address
+CC			=	gcc -g #-fsanitize=address
 # LEAKS = -L../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next -I ../LeakSanitize
 CFLAGS		=	-Wall -Wextra -Werror -I$(HOME)/local/include
 LDFLAGS = -L $(HOME)/local/lib -lreadline -lhistory
@@ -28,7 +28,7 @@ OBJ_DIR	=	./objs/
 GNL_DIR =	./Get_next_line/
 
 SRC		 =	$(SRC_DIR)main.c $(SRC_DIR)init.c $(SRC_DIR)pipe.c $(SRC_DIR)quotes.c $(SRC_DIR)init_redirector.c \
-			$(SRC_DIR)path.c $(SRC_DIR)standard_IO.c $(SRC_DIR)exec.c 
+			$(SRC_DIR)path.c $(SRC_DIR)standard_IO.c $(SRC_DIR)exec.c $(SRC_DIR)process_manager.c
 GNL_SRC  =	$(GNL_DIR)get_next_line.c $(GNL_DIR)get_next_line_utils.c
 
 OBJ		 =	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
