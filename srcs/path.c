@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:00:29 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/04 18:30:03 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/08 05:59:06 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ void create_path(char **env, t_env **mini_env)
 	// t_env *tmp;
 	int i;
 	int j;
-
-	i = 0;
-	while (env[i] != NULL)
-	{
-		printf("Env : %s\n", env[i]);
-		i++;
-	}
+//			PRINT THE ENV
+// ############################################################################
+	// i = 0;
+	// while (env[i] != NULL)
+	// {
+	// 	printf("Env : %s\n", env[i]);
+	// 	i++;
+	// }
+// ############################################################################
 	i = 0;
 	while (env[i] != NULL)
 	{
@@ -86,7 +88,9 @@ int	expander_fill(char *line, int i, t_line_data **data, char **env)
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
 	j = 0;
 	i++;
-	while (line[i + j] != ' ' && line[i + j] != '\0')
+	// I add some extra conditions in this while
+	while ((line[i + j] != ' ' && line[i + j] != '\0') &&
+		(line[i + j] != '<' && line[i + j] != '>') && (line[i + j] != '|'))
 		j++;
 	expander = (char *)ft_malloc(j + 1);
 	ft_strlcpy(expander, &line[i], j + 1);

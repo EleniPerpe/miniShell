@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/04 19:26:58 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/08 05:58:34 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	start_prompt(char **env)
 
 	// I create the path here for now and let's see later
 	create_path(env, &mini_env);
-	// printf("helloooo\n");
 	while (1)
 	{
 		input_line = readline("minishell >");
@@ -32,7 +31,7 @@ void	start_prompt(char **env)
 			add_history(input_line);
 			printf("You entered : %s\n", input_line);
 			ft_split_line(input_line, &line_data, env);
-			process_manager(&line_data, env);
+			process_execution(&line_data, env);
 //			PRINT THE LINKED LIST
 // ############################################################################
 		// tmp = line_data; // Use a temporary pointer for iteration
@@ -60,13 +59,13 @@ void	start_prompt(char **env)
 		// }
 // ############################################################################
 		// Free the linked list
-		while (line_data != NULL)
-		{
-			tmp = line_data;
-			line_data = line_data->next;
-			free(tmp);
-		}
-		free(input_line);
+			while (line_data != NULL)
+			{
+				tmp = line_data;
+				line_data = line_data->next;
+				free(tmp);
+			}
+			free(input_line);
 		}
 	}
 }
