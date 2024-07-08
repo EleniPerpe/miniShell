@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:51:11 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/04 17:16:08 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/08 15:52:44 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int check_redirection_cases(char *line, int i, t_line_data *new_line_data);
 
-int redirection_fill(char *line, int i, t_line_data **data, char **env)
+int redirection_fill(char *line, int i, t_line_data **data)
 {
 	t_line_data	*new_line_data;
 	// int j;
@@ -27,7 +27,7 @@ int redirection_fill(char *line, int i, t_line_data **data, char **env)
 	while (line[i] == ' ')
 		i++;
 	if (line[i] == '\'' || line[i] == '"')
-			i = quote_token(line, i, &new_line_data, env);
+			i = quote_token(line, i, &new_line_data);
 	else
 		i = after_redirection_fill(line, i, &new_line_data);  // I don't know why the address
 	return (i );
