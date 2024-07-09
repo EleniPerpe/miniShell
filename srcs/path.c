@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:00:29 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/08 17:23:25 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/09 14:29:47 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,17 @@ char	*expander_fill(char *line, int *i, char **env)
 
 	j = 0;
 	(*i)++;
-	while (line[*i + j] != ' ' && line[*i + j] != '\0')
+	while ((line[*i + j] != ' ' && line[*i + j] != '\'' && line[*i + j] != '"') && line[*i + j] != '\0')
 		j++;
 	expander = (char *)ft_malloc(j + 1);
 	ft_strlcpy(expander, &line[*i], j + 1);
 	expander[j] = '\0';
+	if (line[*i - 2] == '\'')
+	{
+		free(expander);
+		return (line);
+	}
+	// printf("This is the expander : %s\n", expander);
 	env_position = find_expander(expander, env);
 	env_value = create_final_env(env_position, env);
 	final = final_string(env_value, line, *i, j);

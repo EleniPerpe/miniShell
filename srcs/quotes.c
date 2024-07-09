@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/08 19:20:15 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/08 19:22:40 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,9 @@ int	quotes_after_redireciton(char *line, int j, t_line_data **data)  //there is 
 int quotes_command(char *line, int i, t_line_data **data)
 {
 	t_line_data	*new_line_data;
+	int j;
 
-	// j = ft_strlen(line);
+	j = ft_strlen(line);
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data)); // allocate memory for the new node
 	new_line_data->type = 0; // set the type of the node to command
 	new_line_data->command = (char **)ft_malloc(sizeof(char *) + 1);

@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/08 19:20:11 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/09 14:29:42 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,15 +148,15 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 	{
 		while(input_line[i] == ' ')
 			i++;
-		if (input_line[i] == '"' || input_line[i] == '\'')
-		{
-			if ((input_line[i] == '"' && input_line[i + 1] == '"')				// checks the possibility of 2 continuous quotes and in
-				|| (input_line[i] == '\'' && input_line[i + 1] == '\''))		// case there are, it does nothing like bash
-				i = i + 2;
-			else
-				i = quote_token(input_line, i, line_data);
-		}
-		else if(input_line[i] == '<' || input_line[i] == '>')
+		// if (input_line[i] == '"' || input_line[i] == '\'')
+		// {
+		// 	if ((input_line[i] == '"' && input_line[i + 1] == '"')				// checks the possibility of 2 continuous quotes and in
+		// 		|| (input_line[i] == '\'' && input_line[i + 1] == '\''))		// case there are, it does nothing like bash
+		// 		i = i + 2;
+		// 	else
+		// 		i = quote_token(input_line, i, line_data);
+		// }
+		if(input_line[i] == '<' || input_line[i] == '>')
 		{
 			i = redirection_fill(input_line, i, line_data);
 		}
