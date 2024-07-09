@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/08 19:22:40 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:41:56 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ int quote_token(char *line, int i, t_line_data **line_data)
 	flag = -1;
 	j = 0;
 
+	// printf("Hello from quotes function :)\n");
 	while (line[i] == ' '|| line[i] == '"' || line[i] == '\'') // go back to check the previous token
 		i--;
 	if (line[i] == '<' || line[i] == '>')  // if it's after_redirector, sets the flag to 7
-		flag = 7;
+		flag = 7;	
 	else								   // else it's a command, so sets it to 0
 		flag = 0;
 	i++;
@@ -108,7 +109,7 @@ int quotes_command(char *line, int i, t_line_data **data)
 	new_line_data->command = (char **)ft_malloc(sizeof(char *) + 1);
 	new_line_data->command[0] = (char *)ft_malloc((sizeof(char)*j) + 1); // split the command and the flags and save it in the node
 	new_line_data->command[0] = line;
-	printf(":::: %s\n",new_line_data->command[0]);
+	// printf(":::: %s\n",new_line_data->command[0]);
 	new_line_data->command[1] = NULL;
 
 	new_line_data->next = NULL;
@@ -118,3 +119,19 @@ int quotes_command(char *line, int i, t_line_data **data)
 	return (i + j);
 }
 
+void quotes_arguments(char *line, int i, t_line_data **data)
+{
+	int j;
+	char *tmp;
+	t_line_data	*new_line_data;
+	
+	// printf("Hello from quotes arguments :) \n");
+	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data)); // allocate memory for the new node
+	j = check_quotes_cases(line, &i);
+	tmp = (char *)ft_malloc(j + 1);			// create the new string in the quotes
+	ft_memcpy(tmp, &line[i], j);
+	tmp[j] = '\0';
+	quotes_command(tmp, j, data);
+	
+	
+}

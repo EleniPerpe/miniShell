@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/09 14:29:42 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:48:02 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,22 +100,33 @@ int command_fill(char *line, int i, t_line_data **data)  //very very nice :)
 	t_line_data	*new_line_data;
 	char *tmp_commands; // to save the command and the flags in one string tp split it later
 	int j;
-
+	
 	j = 0;
+		// printf("Hello from commands :)\n");
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data)); // allocate memory for the new node
 	new_line_data->type = 0; // set the type of the node to command
-	// to get the length of the command and the flags to allocate memory for it
-	// in the while I removed != ' '  because there might be a space between the command and the flags
 	while ((line[i + j] != '\0') && (line[i + j] != '<' && line[i + j] != '>') && (line[i + j] != '|'))
 		j++;
 	tmp_commands = (char *)ft_malloc(j + 1);
 	tmp_commands = ft_memcpy(tmp_commands, &line[i], j);
 	tmp_commands[j] = '\0';
-	new_line_data->command = ft_split((char const *)tmp_commands, ' '); // split the command and the flags and save it in the node
-	new_line_data->next = NULL;
-	new_line_data->redirctor = NULL;
-	new_line_data->after_redirctor = NULL;
-	add_node_to_list(data, new_line_data); // add the node to the linked list
+	// printf("This is the command :%s and this is position 1 :%c.\n", tmp_commands, tmp_commands[0]);
+	if (tmp_commands[0] == '\''|| tmp_commands[0] == '"'
+		|| tmp_commands[1] == '\''|| tmp_commands[1] == '"')
+	{
+		// printf("I'm in and that's what I 'll give to quotes :%s\n", &line[i + 1]);
+		free(tmp_commands);
+		quotes_arguments(line, i + 1, data);
+	}
+	else
+	{	
+		new_line_data->command = ft_split((char const *)tmp_commands, ' '); // split the command and the flags and save it in the node
+		free(tmp_commands);
+		new_line_data->next = NULL;
+		new_line_data->redirctor = NULL;
+		new_line_data->after_redirctor = NULL;
+		add_node_to_list(data, new_line_data); // add the node to the linked list
+	}
 	return (i + j);
 }
 /*
@@ -148,14 +159,14 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 	{
 		while(input_line[i] == ' ')
 			i++;
-		// if (input_line[i] == '"' || input_line[i] == '\'')
-		// {
-		// 	if ((input_line[i] == '"' && input_line[i + 1] == '"')				// checks the possibility of 2 continuous quotes and in
-		// 		|| (input_line[i] == '\'' && input_line[i + 1] == '\''))		// case there are, it does nothing like bash
-		// 		i = i + 2;
-		// 	else
-		// 		i = quote_token(input_line, i, line_data);
-		// }
+		if (input_line[i] == '"' || input_line[i] == '\'')
+		{
+			if ((input_line[i] == '"' && input_line[i + 1] == '"')				// checks the possibility of 2 continuous quotes and in
+				|| (input_line[i] == '\'' && input_line[i + 1] == '\''))		// case there are, it does nothing like bash
+				i = i + 2;
+			else
+				i = quote_token(input_line, i, line_data);
+		}
 		if(input_line[i] == '<' || input_line[i] == '>')
 		{
 			i = redirection_fill(input_line, i, line_data);
