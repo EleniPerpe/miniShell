@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/08 17:43:28 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/09 16:30:50 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	process_execution(t_line_data **data, char **env);
 int		heredoc_init(char *line, int i, t_line_data **data);
 int		after_redirection_decision(char *line, int i, t_line_data **data);
 int		after_redi_len(char *line, int i);
+void quotes_arguments(char *line, int i, t_line_data **data);
 
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:51:11 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/08 19:20:05 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:34:21 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	after_redirection_decision(char *line, int i, t_line_data **data)
 
 	tmp = *data;
 
-	printf("redir is: %s\n", tmp->redirctor);
+	// printf("redir is: %s\n", tmp->redirctor);
 	if (tmp->type == 2)
 
 	{
