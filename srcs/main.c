@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/10 14:14:27 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:15:20 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	start_prompt(char **env)
 	t_env *mini_env;	// our first list for the env (for now if it stays here)
 
 	line_data = NULL;
-
+	mini_env = NULL;
 	// I create the path here for now and let's see later
 	create_path(env, &mini_env);
 	while (1)
@@ -29,7 +29,7 @@ void	start_prompt(char **env)
 		if (input_line && (ft_strcmp(input_line, "") != 0))
 		{
 			add_history(input_line);
-			printf("You entered : %s\n", input_line);
+			// printf("You entered : %s\n", input_line);
 			ft_split_line(input_line, &line_data, env);
 			// process_execution(&line_data, env);
 //			PRINT THE LINKED LIST
@@ -41,8 +41,8 @@ void	start_prompt(char **env)
 				printf("redirector is: %s\n", tmp->redirctor);
 			if (tmp->after_redirctor != NULL)
 				printf("File name is: %s\n", tmp->after_redirctor);
-			if (tmp->expander != NULL)
-				printf("expander is: %s\n", tmp->expander);
+			// if (tmp->expander != NULL)
+			// 	printf("expander is: %s\n", tmp->expander);
 			if (tmp->command != NULL)
 				printf("Command is: %s\n", tmp->command);
 			tmp = tmp->next;
@@ -57,6 +57,16 @@ void	start_prompt(char **env)
 			}
 			free(input_line);
 		}
+// #############################################################################
+		// free the env linked list
+		// t_env *tmp_free;
+    	// while (mini_env != NULL)
+		// {
+		// 	tmp_free = mini_env;
+		// 	mini_env = mini_env->next;
+		// 	free(tmp_free->line);
+		// 	free(tmp_free);
+    	// }
 	}
 }
 

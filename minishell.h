@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/10 13:56:37 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:03:13 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_line_data
 	char				*redirctor; // ">>" , "<<" , "<" , ">" , "|";
 	char				*after_redirctor; // "file";
 	char				*command; // "LS" , "-l";
-	char				*expander; // "$PATH";
+	// char				*expander; // "$PATH";
 	int					type; //redir:  2 3 4 .... command = 1 expander =
 	struct s_line_data	*next;
 }	t_line_data;

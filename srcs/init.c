@@ -6,19 +6,18 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/10 16:50:38 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:40:17 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../minishell.h"
 
 // save some lines by using this function
 // it will return a void pointer to the allocated memory
 // that's why we need to cast it to the type we need each time we use it
-void *ft_malloc(size_t size)
+void	*ft_malloc(size_t size)
 {
-	void *ptr;
+	void	*ptr;
 
 	ptr = malloc(size);
 	if (ptr == NULL)
@@ -112,7 +111,7 @@ int command_fill(char *line, int i, t_line_data **data)  //very very nice :)
 		tmp_command = ft_memcpy(tmp_command, &line[i], j);
 		tmp_command[j] = '\0';
 		new_line_data->command = ft_strdup(tmp_command);
-		printf("to upoloipo string einai : %s\n", new_line_data->command);
+		// printf("to upoloipo string einai : %s\n", new_line_data->command);
 		free(tmp_command);
 		new_line_data->next = NULL;
 		new_line_data->redirctor = NULL;
