@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   standard_IO.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 07:00:37 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/08 17:42:42 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/10 18:05:50 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-
-void	standard_IO(t_line_data *line_data)
+void	standard_io(t_line_data *line_data)
 {
 	int	fd;
-	t_line_data *new_line_data;
+	t_line_data	*new_line_data;
 
 	new_line_data = line_data;
 	while (new_line_data != NULL)
@@ -57,7 +55,8 @@ void	standard_IO(t_line_data *line_data)
 			new_line_data = new_line_data->next;
 	}
 }
-void	reset_IO(void)
+
+void	reset_io(void)
 {
 	dup2(0, STDIN_FILENO);
 	dup2(1, STDOUT_FILENO);

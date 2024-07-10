@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/10 17:03:13 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:11:54 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,16 @@
 
 typedef struct s_line_data
 {
-	char				*redirctor; // ">>" , "<<" , "<" , ">" , "|";
-	char				*after_redirctor; // "file";
-	char				*command; // "LS" , "-l";
-	// char				*expander; // "$PATH";
-	int					type; //redir:  2 3 4 .... command = 1 expander =
+	char				*redirctor;
+	char				*after_redirctor;
+	char				*command;
+	int					type;
 	struct s_line_data	*next;
 }	t_line_data;
 
 typedef struct s_env
 {
-	char 			*line;
+	char			*line;
 	struct s_env	*next;
 }	t_env;
 
@@ -62,7 +61,7 @@ void	init_nodes_redirctor(t_line_data **data, int type);
 void	*ft_malloc(size_t size);
 int		command_fill(char *line, int i, t_line_data **data);
 void	add_node_to_list(t_line_data **data, t_line_data *new_line_data);
-int		ft_split_pipe(char *line, t_line_data **line_data, char p, int i, char **env);
+// int		ft_split_pipe(char *line, t_line_data **line_data, char p, int i, char **env);
 int		quote_token(char *line, int i, t_line_data **line_data);
 void	create_path(char **env, t_env **mini_env);
 void	standard_IO(t_line_data *line_data);
@@ -77,7 +76,7 @@ void	process_execution(t_line_data **data, char **env);
 int		heredoc_init(char *line, int i, t_line_data **data);
 int		after_redirection_decision(char *line, int i, t_line_data **data);
 int		after_redi_len(char *line, int i);
-void quotes_arguments(char *line, int i, t_line_data **data);
+void	quotes_arguments(char *line, int i, t_line_data **data);
+char	*expander_fill(char *line, int *i, char **env);
 
 #endif
-
