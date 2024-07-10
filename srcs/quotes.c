@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/10 14:27:10 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:36:26 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,19 @@ int quote_token(char *line, int i, t_line_data **line_data)
 	// printf("Hello from quotes function :)\n");
 	while (i > 0 && (line[i] == ' '|| line[i] == '"' || line[i] == '\'')) // go back to check the previous token
 		i--;
-	if (line[i] == '<' || line[i] == '>')  // if it's after_redirector, sets the flag to 7
-		flag = 7;	
-	else								   // else it's a command, so sets it to 0
-		flag = 0;
-	i++;
-
-	while (line[i] == ' ')  				// go again to skip the spaces
+	if (i > 0)
+	{	
+		if (line[i] == '<' || line[i] == '>')  // if it's after_redirector, sets the flag to 7
+			flag = 7;	
+		else								   // else it's a command, so sets it to 0
+			flag = 0;
 		i++;
+	}
+	else
+		flag = 0;
+	while (line[i] == ' ' || line[i] == '"' || line[i] == '\'')  				// go again to skip the spaces
+		i++;
+	printf("This is the line before the quotes : %s\n", &line[i - 1]);
 	j = check_quotes_cases(line, &i);
 	if (j != 2)
 	{	
@@ -48,7 +53,7 @@ int quote_token(char *line, int i, t_line_data **line_data)
 		else if (flag == 0)									// else to the functions for the commands
 			quotes_command(tmp, j, line_data);
 	}
-	// printf("to upoloipo string einai : %s\n", &line[i + j + 1]);
+	printf("to upoloipo string einai : %s\n", &line[i + j + 1]);
 	return (i + j + 1);					// returns the last position after the quotes and puts it in i
 }
 
@@ -57,11 +62,14 @@ int check_quotes_cases(char *line, int *i)
 	int j;
 
 	j = 0;
+	// printf("This is what the check quotes get : %s\n", &line[*i]);
+	(*i)--;
 	if (line[*i] == '\'')					// if it's single, counts till the next single
 	{
 		if (line[*i] == '\'' && line[*i + 1] == '\'')
 			return (2);
 		(*i)++;
+		// printf("This is what the check quotes get : %s\n", &line[*i]);
 		while (line[*i + j] != '\'' && line[*i + j] != '\0')
 			j++;
 	}
@@ -73,7 +81,7 @@ int check_quotes_cases(char *line, int *i)
 		while (line[*i + j] != '"' && line[*i + j] != '\0')
 			j++;
 	}
-	printf("This is the size of the string : %d\n", j);
+	// printf("This is the size of the string : %d and this is the position of i : %d\n", j, *i);
 	return (j);
 }
 
