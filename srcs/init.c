@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/10 17:40:17 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:43:55 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ void	*ft_malloc(size_t size)
 }
 // this function will add a new node to the linked list
 // also to save some lines
-void add_node_to_list(t_line_data **data, t_line_data *new_line_data)
+
+void	add_node_to_list(t_line_data **data, t_line_data *new_line_data)
 {
-	t_line_data *tmp;
+	t_line_data	*tmp;
 
 	tmp = *data;
 	if (*data == NULL)
@@ -42,7 +43,8 @@ void add_node_to_list(t_line_data **data, t_line_data *new_line_data)
 	}
 }
 
-void	add_node_to_commands_list(t_line_data **data, t_commands_list **commands_list)
+void	add_node_to_commands_list(t_line_data **data,
+	t_commands_list **commands_list)
 {
 	t_commands_list	*new_commands_list;
 	t_commands_list	*tmp;
@@ -64,8 +66,9 @@ void	add_node_to_commands_list(t_line_data **data, t_commands_list **commands_li
 // I made this function to save some lines from redirection_fii()
 // it will initialize the redirctor node
 // it will take the type of the redirctor and initialize the redirctor node
-// we can make ft_strcpy() which will allocate memory and copy the string to it to save more lines
-void init_nodes_redirctor(t_line_data **data, int type)
+// we can make ft_strcpy() which will allocate memory
+// and copy the string to it to save more lines
+void	init_nodes_redirctor(t_line_data **data, int type)
 {
 	t_line_data	*new_line_data;
 
@@ -94,24 +97,24 @@ void init_nodes_redirctor(t_line_data **data, int type)
 	new_line_data->command = NULL;
 }
 
-int command_fill(char *line, int i, t_line_data **data)  //very very nice :)
+int	command_fill(char *line, int i, t_line_data **data)
 {
 	t_line_data	*new_line_data;
-	char *tmp_command; // to save the command and the flags in one string tp split it later
-	int j;
-	
+	char		*tmp_command;
+	int			j;
+
 	j = 0;
-	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data)); // allocate memory for the new node
-	new_line_data->type = 0; // set the type of the node to command
-	while ((line[i + j] != '\0') && (line[i + j] != '<' && line[i + j] != '>') && (line[i + j] != '|') && (line[i + j] != ' '))
+	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
+	new_line_data->type = 0;
+	while ((line[i + j] != '\0') && (line[i + j] != '<' && line[i + j] != '>')
+		&& (line[i + j] != '|') && (line[i + j] != ' '))
 		j++;
 	if (j != 0)
-	{	
+	{
 		tmp_command = (char *)ft_malloc(j + 1);
 		tmp_command = ft_memcpy(tmp_command, &line[i], j);
 		tmp_command[j] = '\0';
 		new_line_data->command = ft_strdup(tmp_command);
-		// printf("to upoloipo string einai : %s\n", new_line_data->command);
 		free(tmp_command);
 		new_line_data->next = NULL;
 		new_line_data->redirctor = NULL;
@@ -128,12 +131,12 @@ if there is a redirctor it will call the ft_split_redirctor function
 if there is a pipe it will call the ft_split_pipe function .... etc
 */
 
-void ft_split_line(char *input_line, t_line_data **line_data, char **env)
+void	ft_split_line(char *input_line, t_line_data **line_data, char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if(!input_line)
+	if (!input_line)
 		return ;
 	while (input_line[i] != '\0')
 	{
@@ -143,22 +146,20 @@ void ft_split_line(char *input_line, t_line_data **line_data, char **env)
 		}
 		i++;
 	}
-
 	i = 0;
-	// printf("Final : %s\n", input_line);
-	while(input_line[i] != '\0')
+	while (input_line[i] != '\0')
 	{
-		while(input_line[i] == ' ')
+		while (input_line[i] == ' ')
 			i++;
 		if (input_line[i] == '"' || input_line[i] == '\'')
 		{
-			if ((input_line[i] == '"' && input_line[i + 1] == '"')				// checks the possibility of 2 continuous quotes and in
-				|| (input_line[i] == '\'' && input_line[i + 1] == '\''))		// case there are, it does nothing like bash
+			if ((input_line[i] == '"' && input_line[i + 1] == '"')
+				|| (input_line[i] == '\'' && input_line[i + 1] == '\''))
 				i = i + 2;
 			else
 				i = quote_token(input_line, i, line_data);
 		}
-		else if(input_line[i] == '<' || input_line[i] == '>')
+		else if (input_line[i] == '<' || input_line[i] == '>')
 		{
 			i = redirection_fill(input_line, i, line_data);
 		}
