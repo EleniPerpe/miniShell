@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/08 18:15:58 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:14:27 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	start_prompt(char **env)
 	char		*input_line;
 	t_line_data	*line_data; // a pointer to the first element of the linked list of nodes
 	t_line_data	*tmp; // a temporary pointer to iterate through the linked list
-	// t_env *mini_env;	// our first list for the env (for now if it stays here)
+	t_env *mini_env;	// our first list for the env (for now if it stays here)
 
 	line_data = NULL;
 
 	// I create the path here for now and let's see later
-	// create_path(env, &mini_env);
+	create_path(env, &mini_env);
 	while (1)
 	{
 		input_line = readline("minishell >");
@@ -44,17 +44,7 @@ void	start_prompt(char **env)
 			if (tmp->expander != NULL)
 				printf("expander is: %s\n", tmp->expander);
 			if (tmp->command != NULL)
-			{
-				int i = 0;
-				while (tmp->command[i] != NULL)
-				{
-					if (i == 0)
-						printf("Command is: %s\n", tmp->command[i]);
-					else
-						printf("argument number %d is: %s\n", i, tmp->command[i]);
-					i++;
-				}
-			}
+				printf("Command is: %s\n", tmp->command);
 			tmp = tmp->next;
 		}
 // ############################################################################

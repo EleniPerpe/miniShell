@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:41:50 by eperperi          #+#    #+#             */
-/*   Updated: 2024/03/08 20:53:34 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:59:41 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	{
 		dst[j] = '\0';
 	}
+	dst[j] = '\0';
 	return (i);
 }
