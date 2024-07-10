@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/10 14:27:11 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:50:38 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,19 @@ int command_fill(char *line, int i, t_line_data **data)  //very very nice :)
 	new_line_data->type = 0; // set the type of the node to command
 	while ((line[i + j] != '\0') && (line[i + j] != '<' && line[i + j] != '>') && (line[i + j] != '|') && (line[i + j] != ' '))
 		j++;
-	tmp_command = (char *)ft_malloc(j + 1);
-	tmp_command = ft_memcpy(tmp_command, &line[i], j);
-	tmp_command[j] = '\0';
-	new_line_data->command = ft_strdup(tmp_command);
-	free(tmp_command);
-	new_line_data->next = NULL;
-	new_line_data->redirctor = NULL;
-	new_line_data->after_redirctor = NULL;
-	add_node_to_list(data, new_line_data);
+	if (j != 0)
+	{	
+		tmp_command = (char *)ft_malloc(j + 1);
+		tmp_command = ft_memcpy(tmp_command, &line[i], j);
+		tmp_command[j] = '\0';
+		new_line_data->command = ft_strdup(tmp_command);
+		printf("to upoloipo string einai : %s\n", new_line_data->command);
+		free(tmp_command);
+		new_line_data->next = NULL;
+		new_line_data->redirctor = NULL;
+		new_line_data->after_redirctor = NULL;
+		add_node_to_list(data, new_line_data);
+	}
 	return (i + j);
 }
 /*

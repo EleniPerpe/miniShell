@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/10 15:36:26 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:46:29 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int quote_token(char *line, int i, t_line_data **line_data)
 		flag = 0;
 	while (line[i] == ' ' || line[i] == '"' || line[i] == '\'')  				// go again to skip the spaces
 		i++;
-	printf("This is the line before the quotes : %s\n", &line[i - 1]);
+	// printf("This is the line before the quotes : %s\n", &line[i - 1]);
 	j = check_quotes_cases(line, &i);
 	if (j != 2)
 	{	
@@ -50,10 +50,13 @@ int quote_token(char *line, int i, t_line_data **line_data)
 		// printf("Line is :%s\n\n", tmp);
 		if (flag == 7)
 			quotes_after_redireciton(tmp, j, line_data);								// if it's a filename, goes to this function
-		else if (flag == 0)									// else to the functions for the commands
+		else if (flag == 0)			
+		{
+			// printf("Just counting times \n\n");
 			quotes_command(tmp, j, line_data);
+		}						// else to the functions for the commands
 	}
-	printf("to upoloipo string einai : %s\n", &line[i + j + 1]);
+	// printf("to upoloipo string einai : %s\n", &line[i + j + 1]);
 	return (i + j + 1);					// returns the last position after the quotes and puts it in i
 }
 
