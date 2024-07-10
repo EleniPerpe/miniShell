@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:00:29 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/09 14:29:47 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:03:49 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void create_path(char **env, t_env **mini_env)
 	t_env *new_env;
 	// t_env *tmp;
 	int i;
-	int j;
+	// int j;
 //			PRINT THE ENV
 // ############################################################################
 	// i = 0;
@@ -36,10 +36,16 @@ void create_path(char **env, t_env **mini_env)
 	while (env[i] != NULL)
 	{
 		new_env = (t_env *)ft_malloc(sizeof(t_env));
-		j = ft_strlen(env[i]);
-		new_env->line = (char *)ft_malloc(j + 1);
-		ft_strlcpy(new_env->line, env[i], j);
-		new_env->line[j] = '\0';
+		// j = ft_strlen(env[i]);
+		// new_env->line = (char *)ft_malloc(j + 1);
+		// ft_strlcpy(new_env->line, env[i], j);
+		// new_env->line[j] = '\0';
+		new_env->line = ft_strdup(env[i]);
+		if (!new_env->line)
+		{
+			free(new_env);
+			exit(EXIT_FAILURE);
+		}
 		new_env->next = NULL;
 		add_path_to_list(mini_env, new_env);
 		i++;
