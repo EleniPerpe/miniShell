@@ -1,17 +1,16 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   exec.c                                             :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2024/07/03 08:46:05 by rshatra           #+#    #+#             */
-// /*   Updated: 2024/07/10 14:11:59 by eperperi         ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/03 08:46:05 by rshatra           #+#    #+#             */
+/*   Updated: 2024/07/10 18:08:18 by eperperi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 // #	include "../minishell.h"
-
 
 // // we will use this function to free the allocated memory
 // // after execute the command
@@ -45,7 +44,7 @@
 // 	}
 // 	else
 // 	{
-// 		while (tmp2->next != tmp) //as long as we don't reach the node we want to delete
+// 		while (tmp2->next != tmp) //as long as we don't reach the node to delete
 // 			tmp2 = tmp2->next; // move to the next node
 // 		tmp2->next = tmp->next;
 // 		free(tmp);
@@ -132,7 +131,7 @@
 // 		if (tmp->type == 0)
 // 		{
 // 			if (str != NULL) // if the string is not empty that means we
-// 						// have data from the previous node so we need to add space
+// 			// have data from the previous node so we need to add space
 // 				ft_strlcat(str, " ", ft_strlen(str) + 2);
 // 			i = 0;
 // 			while (tmp->command[i] != NULL)
