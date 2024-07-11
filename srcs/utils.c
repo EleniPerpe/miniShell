@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/11 13:38:33 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/11 15:06:44 by eperperi         ###   ########.fr       */
+/*   Created: 2024/07/11 15:31:40 by eperperi          #+#    #+#             */
+/*   Updated: 2024/07/11 15:38:05 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void free_path(t_env *mini_env)
 {
-	char	s;
+	t_env *tmp;
 
-	if (n == -2147483648)
+	while (mini_env != NULL)
 	{
-		write(fd, "-2147483648", 11);
-		return ;
+		tmp = mini_env;
+		mini_env = mini_env->next;
+		free(tmp->line);
+		free(tmp);
 	}
-	if (n < 0)
-	{
-		n *= -1;
-		write(fd, "-", 1);
-	}
-	if (n == 0)
-	{
-		write(fd, "0", 1);
-		return ;
-	}
-	if (n > 9)
-		ft_putnbr_fd (n / 10, fd);
-	s = n % 10 + 48;
-	write(fd, &s, 1);
 }

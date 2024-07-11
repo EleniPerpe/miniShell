@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 13:22:59 by eperperi          #+#    #+#             */
-/*   Updated: 2024/03/10 14:43:55 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:07:03 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	size_t		i;
 	int			j;
 
-	if (len < 0 || (!*haystack && *needle))
+	if (!*haystack && *needle)
 		return (0);
 	i = 0;
 	if (*needle == '\0' || needle == haystack)

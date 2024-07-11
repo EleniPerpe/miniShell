@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 15:34:32 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/10 17:45:33 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:06:25 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int	after_redi_len(char *line, int i)
 int	heredoc_init(char *line, int i, t_line_data **data)
 {
 	int			fd;
-	t_line_data	*new_line_data;
+	// t_line_data	*new_line_data;
 	char		*file;
 	char		*in_put;
 
 	file = "Libft/tmp_file";
-	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
+	// new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fd == -1)
 	{

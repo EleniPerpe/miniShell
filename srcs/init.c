@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/10 17:43:55 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:24:26 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	*ft_malloc(size_t size)
 	void	*ptr;
 
 	ptr = malloc(size);
+	if (ptr)
+		ft_bzero(ptr, size);
 	if (ptr == NULL)
 		exit (EXIT_FAILURE);
 	return (ptr);

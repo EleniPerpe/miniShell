@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/10 18:11:54 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:36:47 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	add_node_to_list(t_line_data **data, t_line_data *new_line_data);
 // int		ft_split_pipe(char *line, t_line_data **line_data, char p, int i, char **env);
 int		quote_token(char *line, int i, t_line_data **line_data);
 void	create_path(char **env, t_env **mini_env);
-void	standard_IO(t_line_data *line_data);
+void	standard_io(t_line_data *line_data);
 void	reset_IO(void);
 char	*find_path(char *cmd, char **env);
 void	exec_command(t_line_data *line_data, char **env);
@@ -78,5 +78,7 @@ int		after_redirection_decision(char *line, int i, t_line_data **data);
 int		after_redi_len(char *line, int i);
 void	quotes_arguments(char *line, int i, t_line_data **data);
 char	*expander_fill(char *line, int *i, char **env);
+void	process_execution(t_line_data **data, char **env);
+void	free_path(t_env *mini_env);
 
 #endif
