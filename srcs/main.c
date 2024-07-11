@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/10 17:15:20 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:51:10 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,9 @@ void	start_prompt(char **env)
 			}
 			free(input_line);
 		}
-// #############################################################################
-		// free the env linked list
-		// t_env *tmp_free;
-    	// while (mini_env != NULL)
-		// {
-		// 	tmp_free = mini_env;
-		// 	mini_env = mini_env->next;
-		// 	free(tmp_free->line);
-		// 	free(tmp_free);
-    	// }
+		// Free the path
+		// free_path(mini_env);
+
 	}
 }
 

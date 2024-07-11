@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 07:00:37 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/10 18:05:50 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:21:03 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	standard_io(t_line_data *line_data)
 {
-	int	fd;
+	int			fd;
 	t_line_data	*new_line_data;
 
 	new_line_data = line_data;

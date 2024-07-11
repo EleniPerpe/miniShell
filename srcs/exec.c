@@ -6,11 +6,11 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:46:05 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/10 18:08:18 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:03:21 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #	include "../minishell.h"
+#	include "../minishell.h"
 
 // // we will use this function to free the allocated memory
 // // after execute the command
@@ -51,8 +51,8 @@
 // 	}
 // }
 
-// // this function will find the path of the command
-// // it is just from pipe_x project
+// this function will find the path of the command
+// it is just from pipe_x project
 // char	*find_path(char *cmd, char **env)
 // {
 // 	char	*paths;
@@ -82,15 +82,15 @@
 
 // void	exec_command(t_line_data *line_data, char **env)
 // {
-// 	char *path;
+// 	char	*path;
 
 // 	while (line_data)
 // 	{
 // 		if (line_data->type == 0)
 // 		{
-// 			path = find_path(line_data->command[0], env);
+// 			path = find_path(line_data->command, env);
 // 			if (execve(path, line_data->command, env) == -1)
-// 			exit(EXIT_FAILURE);
+// 				exit(EXIT_FAILURE);
 // 		}
 // 		line_data = line_data->next;
 // 	}
