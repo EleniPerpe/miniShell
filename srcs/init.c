@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/11 15:24:26 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:22:51 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,6 @@
 // save some lines by using this function
 // it will return a void pointer to the allocated memory
 // that's why we need to cast it to the type we need each time we use it
-void	*ft_malloc(size_t size)
-{
-	void	*ptr;
-
-	ptr = malloc(size);
-	if (ptr)
-		ft_bzero(ptr, size);
-	if (ptr == NULL)
-		exit (EXIT_FAILURE);
-	return (ptr);
-}
-// this function will add a new node to the linked list
-// also to save some lines
-
-void	add_node_to_list(t_line_data **data, t_line_data *new_line_data)
-{
-	t_line_data	*tmp;
-
-	tmp = *data;
-	if (*data == NULL)
-		*data = new_line_data;
-	else
-	{
-		tmp = *data;
-		while (tmp->next != NULL)
-			tmp = tmp->next;
-		tmp->next = new_line_data;
-	}
-}
 
 void	add_node_to_commands_list(t_line_data **data,
 	t_commands_list **commands_list)
@@ -109,7 +80,8 @@ int	command_fill(char *line, int i, t_line_data **data)
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
 	new_line_data->type = 0;
 	while ((line[i + j] != '\0') && (line[i + j] != '<' && line[i + j] != '>')
-		&& (line[i + j] != '|') && (line[i + j] != ' '))
+		&& (line[i + j] != '|') && (line[i + j] != ' ') && (line[i + j] != '"')
+		&& (line[i + j] != '\''))
 		j++;
 	if (j != 0)
 	{
@@ -128,8 +100,8 @@ int	command_fill(char *line, int i, t_line_data **data)
 /*
 this function will split the input line into a linked list of nodes
 each node will contain a command or an expander or a redirctor and a file name
-it will scan the input line and check if there is a redirctor or a pipe or a command
-if there is a redirctor it will call the ft_split_redirctor function
+it will scan the input line and check if there is a redirctor or a pipe or a 
+command if there is a redirctor it will call the ft_split_redirctor function
 if there is a pipe it will call the ft_split_pipe function .... etc
 */
 

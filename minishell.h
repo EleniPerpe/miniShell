@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/11 15:36:47 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:16:51 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ void	quotes_arguments(char *line, int i, t_line_data **data);
 char	*expander_fill(char *line, int *i, char **env);
 void	process_execution(t_line_data **data, char **env);
 void	free_path(t_env *mini_env);
+void	free_list(t_line_data *line_data);
 
 #endif

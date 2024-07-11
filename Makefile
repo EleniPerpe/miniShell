@@ -6,7 +6,7 @@
 #    By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/07/11 15:56:16 by eperperi         ###   ########.fr        #
+#    Updated: 2024/07/11 18:22:37 by eperperi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ OBJ_DIR	=	./objs/
 
 SRC		 =	$(SRC_DIR)main.c $(SRC_DIR)init.c $(SRC_DIR)pipe.c $(SRC_DIR)quotes.c $(SRC_DIR)init_redirector.c \
 			$(SRC_DIR)path.c $(SRC_DIR)standard_IO.c $(SRC_DIR)exec.c $(SRC_DIR)process_manager.c \
-			$(SRC_DIR)heredoc_handle.c $(SRC_DIR)expander.c $(SRC_DIR)utils.c
+			$(SRC_DIR)heredoc_handle.c $(SRC_DIR)expander.c $(SRC_DIR)utils_parsing.c
 OBJ		 =	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 LIB		 =	Libft/libft.a
 

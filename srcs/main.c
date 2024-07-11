@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/11 15:51:10 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:21:07 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 void	start_prompt(char **env)
 {
 	char		*input_line;
-	t_line_data	*line_data; // a pointer to the first element of the linked list of nodes
-	t_line_data	*tmp; // a temporary pointer to iterate through the linked list
-	t_env *mini_env;	// our first list for the env (for now if it stays here)
+	t_line_data	*line_data;
+	t_line_data	*tmp;
+	t_env		*mini_env;
 
 	line_data = NULL;
 	mini_env = NULL;
-	// I create the path here for now and let's see later
 	create_path(env, &mini_env);
 	while (1)
 	{
@@ -29,26 +28,20 @@ void	start_prompt(char **env)
 		if (input_line && (ft_strcmp(input_line, "") != 0))
 		{
 			add_history(input_line);
-			// printf("You entered : %s\n", input_line);
 			ft_split_line(input_line, &line_data, env);
 			// process_execution(&line_data, env);
-//			PRINT THE LINKED LIST
-// ############################################################################
-		tmp = line_data; // Use a temporary pointer for iteration
-		while (tmp != NULL) // print the linked list to check if it's working
-		{
-			if (tmp->redirctor != NULL)
-				printf("redirector is: %s\n", tmp->redirctor);
-			if (tmp->after_redirctor != NULL)
-				printf("File name is: %s\n", tmp->after_redirctor);
-			// if (tmp->expander != NULL)
-			// 	printf("expander is: %s\n", tmp->expander);
-			if (tmp->command != NULL)
-				printf("Command is: %s\n", tmp->command);
-			tmp = tmp->next;
-		}
-// ############################################################################
-		// Free the linked list
+			tmp = line_data;
+			while (tmp != NULL)
+			{
+				if (tmp->redirctor != NULL)
+					printf("redirector is: %s\n", tmp->redirctor);
+				if (tmp->after_redirctor != NULL)
+					printf("File name is: %s\n", tmp->after_redirctor);
+				if (tmp->command != NULL)
+					printf("Command is: %s\n", tmp->command);
+				tmp = tmp->next;
+			}
+			// free_list(line_data);
 			while (line_data != NULL)
 			{
 				tmp = line_data;
@@ -57,24 +50,20 @@ void	start_prompt(char **env)
 			}
 			free(input_line);
 		}
+	}
 		// Free the path
 		// free_path(mini_env);
-
-	}
 }
 
 int	main(int argc, char **argv, char **env)
 {
-
 	(void)argv;
 	(void)argc;
-	// (void)env;
 	if (argc != 1)
 	{
 		printf("This program doesn't take any arguments!\n");
 		return (1);
 	}
 	start_prompt(env);
-
 	return (0);
 }
