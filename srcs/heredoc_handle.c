@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_handle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 15:34:32 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/11 17:48:45 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/12 00:46:42 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ int	heredoc_init(char *line, int i, t_line_data **data)
 		// error_handle function
 	}
 	fd = after_redirection_fill(line, i, data);
-	return (fd);
+	return (5);
 }

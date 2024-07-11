@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/11 15:03:44 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/11 22:54:02 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 	// after changing the IO to write and read from the pipe we will change them again inside each node depending on the redirectors in it
 	// because redirectors have higher priority than pipes
 	// so we must know how many pipes we have
-// void	process_execution(t_line_data **data, char **env)
-// {
-// 	t_line_data	*line_data;
+void	process_execution(t_line_data **data, char **cmd_args, char **env)
+{
+	t_line_data	*line_data;
 
-// 	line_data = *data;
-// 	standard_io(line_data);
-// 	exec_command(line_data, env);
-// }
+	line_data = *data;
+	standard_io(line_data);
+	exec_command(cmd_args, env);
+}

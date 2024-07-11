@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_redirector.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:51:11 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/11 18:25:30 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/12 00:48:04 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	after_redirection_decision(char *line, int i, t_line_data **data)
 	if (tmp->type == 2)
 		j = heredoc_init(line, i, data);
 	else
-		j = after_redirection_fill(line, i, data);
+		j =	after_redirection_fill(line, i, data);
 	return (j);
 }
 
