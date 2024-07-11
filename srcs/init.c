@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/11 15:24:26 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/11 23:35:09 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,13 +133,14 @@ if there is a redirctor it will call the ft_split_redirctor function
 if there is a pipe it will call the ft_split_pipe function .... etc
 */
 
-void	ft_split_line(char *input_line, t_line_data **line_data, char **env)
+char	**ft_split_line(char *input_line, t_line_data **line_data, char **env)
 {
 	int	i;
+	char **cmd_args;
 
 	i = 0;
 	if (!input_line)
-		return ;
+		return NULL;
 	while (input_line[i] != '\0')
 	{
 		if (input_line[i] == '$')
@@ -173,8 +174,8 @@ void	ft_split_line(char *input_line, t_line_data **line_data, char **env)
 		// else if (input_line[i] == '|')
 		// 		i = ft_split_pipe(input_line, line_data, i, '|', env);
 	}
-	// command_merage(line_data);
-
+	cmd_args = command_merge(line_data);
+	return (cmd_args);
 	// in this step we already have the linked list of nodes
 	// now we must add it to the commands list
 	// to handle the pipes so each part will be in command node and will be executed in a different process
