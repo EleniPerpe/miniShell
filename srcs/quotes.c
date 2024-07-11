@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/11 15:53:38 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:42:54 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	quotes_after_redireciton(char *line, int j, t_line_data **data);
 void quotes_command(char *line, int j, t_line_data **data);
-int check_quotes_cases(char *line, int *i);
+int check_quotes_cases(char *line, int *i, t_line_data **data);
 
 int quote_token(char *line, int i, t_line_data **line_data)
 {
@@ -28,7 +28,7 @@ int quote_token(char *line, int i, t_line_data **line_data)
 	// printf("Hello from quotes function :)\n");
 	while (i > 0 && (line[i] == ' '|| line[i] == '"' || line[i] == '\'')) // go back to check the previous token
 		i--;
-	if (i > 0)
+	if (i >= 0)
 	{	
 		if (line[i] == '<' || line[i] == '>')  // if it's after_redirector, sets the flag to 7
 			flag = 7;	
@@ -41,9 +41,9 @@ int quote_token(char *line, int i, t_line_data **line_data)
 	while (line[i] == ' ' || line[i] == '"' || line[i] == '\'')  				// go again to skip the spaces
 		i++;
 	// printf("This is the line before the quotes : %s\n", &line[i - 1]);
-	j = check_quotes_cases(line, &i);
-	// if (j != 1)
-	// {	
+	j = check_quotes_cases(line, &i, line_data);
+	if (j > 0)
+	{	
 		tmp = (char *)ft_malloc(j + 1);			// create the new string in the quotes
 		ft_memcpy(tmp, &line[i], j);
 		tmp[j] = '\0';
@@ -55,34 +55,52 @@ int quote_token(char *line, int i, t_line_data **line_data)
 			// printf("Just counting times \n\n");
 			quotes_command(tmp, j, line_data);
 		}						// else to the functions for the commands
-	// }
+		free(tmp);
+	}
 	// printf("to upoloipo string einai : %s\n", &line[i + j + 1]);
-	free(tmp);
 	return (i + j + 1);					// returns the last position after the quotes and puts it in i
 }
 
-int check_quotes_cases(char *line, int *i)
+int check_quotes_cases(char *line, int *i, t_line_data **data)
 {
 	int j;
 
 	j = 0;
+	if (*i <= 0)
+        return 0;
 	(*i)--;
 	if (line[*i] == '\'')
 	{
 		if (line[*i] == '\'' && line[*i + 1] == '\'')
 			return (2);
 		(*i)++;
+		
 
-		while (line[*i + j] != '\'' && line[*i + j] != '\0')
+		while (line[*i + j] != '\'' || (line[*i + j] == '\0')) 
+		{
 			j++;
+			if (line[*i + j] == '\0')
+			{
+				heredoc_init(line, *i, data);
+				break ;	
+			}
+		}
 	}
 	else if (line[*i] == '"')
 	{
 		if (line[*i] == '"' && line[*i + 1] == '"')
 			return (2);
 		(*i)++;
-		while (line[*i + j] != '"' && line[*i + j] != '\0')
+		while (line[*i + j] != '"' || line[*i + j] == '\0')
+		{
 			j++;
+			if (line[*i + j] == '\0')
+			{
+				heredoc_init(line, *i, data);
+				break ;
+			}
+
+		}
 	}
 	return (j);
 }

@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 18:09:57 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/11 15:39:50 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:49:28 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,19 @@ char	*expander_fill(char *line, int *i, char **env)
 	expander = (char *)ft_malloc(j + 1);
 	ft_strlcpy(expander, &line[*i], j + 1);
 	expander[j] = '\0';
-	if (line[*i - 2] == '\'')
+	if (*i > 1)
 	{
-		free(expander);
-		return (line);
+		if (line[*i - 2] == '\'')
+		{
+			free(expander);
+			return (line);
+		}
 	}
 	env_position = find_expander(expander, env);
 	env_value = create_final_env(env_position, env);
 	final = final_string(env_value, line, *i, j);
 	*i = *i + j;
 	free(expander);
-	free(env_value);
 	return (final);
 }
 
