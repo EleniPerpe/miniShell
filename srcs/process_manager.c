@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/11 22:54:02 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/12 03:18:33 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,20 @@
 	// so we must know how many pipes we have
 void	process_execution(t_line_data **data, char **cmd_args, char **env)
 {
+	int	pid;
 	t_line_data	*line_data;
 
-	line_data = *data;
-	standard_io(line_data);
-	exec_command(cmd_args, env);
+	pid = fork();
+	if (pid < 0)
+	{
+		// eroor_handle
+		exit(EXIT_FAILURE);
+	}
+	if (pid == 0)
+	{
+		line_data = *data;
+		standard_io(line_data);
+		exec_command(cmd_args, env);
+	}
+	waitpid(pid, 0 ,0);
 }
