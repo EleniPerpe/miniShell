@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/12 02:27:04 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/12 16:37:34 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	quotes_after_redireciton(char *line, int j, t_line_data **data);
 void	quotes_command(char *line, int j, t_line_data **data);
-int		check_quotes_cases(char *line, int *i, t_line_data **data);
+int		check_quotes_cases(char *line, int *i);
+int		check_for_flag(char *line, int i);
 
 int	quote_token(char *line, int i, t_line_data **line_data)
 {
@@ -24,75 +25,94 @@ int	quote_token(char *line, int i, t_line_data **line_data)
 
 	flag = -1;
 	j = 0;
-	while (i > 0 && (line[i] == ' ' || line[i] == '"' || line[i] == '\''))
-		i--;
-// in case <<"bla" it was not open heredoc because in this function we had two flags only 7 and 0
-// now i add new flag 2 and more if cases to handle <<
-	if (i >= 0)
-	{
-		if (line[i] == '<' && line[i - 1] == '<')
-			flag = 2;
-		else if ((line[i] == '<' || line[i] == '>') && (line[i - 1] != '<'))
-			flag = 7;
-		else
-			flag = 0;
+	flag = check_for_flag(line, i);
+	// printf("This is the start point :%s", &line[i]);
+	while (line[i] == '"' || line[i] == '\'')
 		i++;
-	}
-	// else
-	// 	flag = 0; // I Don't think we need it after we modify the if above to include the 0
-	while (line[i] == ' ' || line[i] == '"' || line[i] == '\'')
-		i++;
-	j = check_quotes_cases(line, &i, line_data);
+	j = check_quotes_cases(line, &i);
+	// printf("Here is where the j starts from :%s\n", &line[i]);
 	if (j > 0)
 	{
 		tmp = (char *)ft_malloc(j + 1);
 		ft_memcpy(tmp, &line[i], j);
 		tmp[j] = '\0';
+		// printf("That's the file to go to the node :%s\n", tmp);
 		if (flag == 7)
 			quotes_after_redireciton(tmp, j, line_data);
 		else if (flag == 2)
+		{	
 			heredoc_init(line, i, line_data);
+		}
 		else if (flag == 0)
+		{
+			
+			// printf("I'm here :) \n");
 			quotes_command(tmp, j, line_data);
+		}
 		free(tmp);
 	}
 	return (i + j + 1);
 }
 
-int	check_quotes_cases(char *line, int *i, t_line_data **data)
+int check_for_flag(char *line, int i)
+{
+	int flag;
+	
+	flag = 0;
+	while (i > 0 && (line[i] == ' ' || line[i] == '"' || line[i] == '\''))
+		i--;
+	if (line[i] == '<' && line[i - 1] == '<')
+		flag = 2;
+	else if ((line[i] == '<' || line[i] == '>') && (line[i - 1] != '<'))
+	{
+		// printf("Flag is 7 :) \n");
+		flag = 7;
+	}
+	else
+		flag = 0;
+	i++;
+	return (flag);
+}
+
+int	check_quotes_cases(char *line, int *i)
 {
 	int	j;
 
 	j = 0;
 	if (*i <= 0)
 		return (0);
+
 	(*i)--;
 	if (line[*i] == '\'')
 	{
-		if (line[*i] == '\'' && line[*i + 1] == '\'')
-			return (2); // We already checked for this case in the ft_splite_line in init.c line 131
 		(*i)++;
+		while (line[*i] == ' ')
+			(*i)++;
 		while (line[*i + j] != '\'' || (line[*i + j] == '\0'))
 		{
 			j++;
+		}
 			if (line[*i + j] == '\0')
 			{
-				heredoc_init(line, *i, data);
-				break ;
+				printf("The program does not interpret unclosed quotes\n");
+				// exit(EXIT_FAILURE);
 			}
-		}
 	}
 	else if (line[*i] == '"')
 	{
-		if (line[*i] == '"' && line[*i + 1] == '"')
-			return (2);
 		(*i)++;
+		while (line[*i] == ' ')
+			(*i)++;
+		// printf("Final position of the node :%s", &line[*i]);
 		while (line[*i + j] != '"' && line[*i + j] != '\0')
 			j++;
 		if (line[*i + j] == '\0')
-			heredoc_init(line, *i, data);
-
+		{
+			printf("The program does not interpret unclosed quotes\n");
+			// exit(EXIT_FAILURE);
+		}
 	}
+	// printf("J size is : %d\n", j);
 	return (j);
 }
 
