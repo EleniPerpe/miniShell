@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/12 17:17:57 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/12 17:37:34 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	quotes_after_redireciton(char *line, int j, t_line_data **data);
 void	quotes_command(char *line, int j, t_line_data **data);
 int		check_quotes_cases(char *line, int *i);
 int		check_for_flag(char *line, int i);
-int node_size(char *line, int *i, char c);
 
 int	quote_token(char *line, int i, t_line_data **line_data)
 {
@@ -73,29 +72,35 @@ int	check_quotes_cases(char *line, int *i)
 
 	(*i)--;
 	if (line[*i] == '\'')
-		j = node_size(line, i, '\'');
-	else if (line[*i] == '"')
-		j = node_size(line, i, '"');
-	return (j);
-}
-
-int node_size(char *line, int *i, char c)
-{
-	int j;
-
-	j = 0;
-	(*i)++;
-	while (line[*i] == ' ')
-		(*i)++;
-	while (line[*i + j] != c || (line[*i + j] == '\0'))
 	{
-		j++;
+		(*i)++;
+		while (line[*i] == ' ')
+			(*i)++;
+		while (line[*i + j] != '\'' || (line[*i + j] == '\0'))
+		{
+			j++;
+		}
+			if (line[*i + j] == '\0')
+			{
+				printf("The program does not interpret unclosed quotes\n");
+				exit(EXIT_FAILURE);
+				// send a signal to kill the child process
+			}
 	}
+	else if (line[*i] == '"')
+	{
+		(*i)++;
+		while (line[*i] == ' ')
+			(*i)++;
+		while (line[*i + j] != '"' && line[*i + j] != '\0')
+			j++;
 		if (line[*i + j] == '\0')
 		{
 			printf("The program does not interpret unclosed quotes\n");
 			exit(EXIT_FAILURE);
+			// send a signal to kill the child process
 		}
+	}
 	return (j);
 }
 
