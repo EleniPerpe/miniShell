@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/12 00:51:42 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/13 07:00:28 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <unistd.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <signal.h>
+
+extern pid_t child_pid;
 
 // type:
 // command = 0;
@@ -53,8 +56,19 @@ typedef struct s_commands_list
 	struct s_commands_list	*next;
 }	t_commands_list;
 
+typedef struct s_input
+{
+	char			*part_line; // string of characters between two pipes or the end of the line
+	int				write_to_pipe; // if there is a pipe set it as STDOUT to this node
+	int				read_from_pipe;//if there is a pipe set it as STDIN to the next node
+	int				pipe_in; // to get pip_fd[1] which allow us to write data into the pipe
+	int				pipe_out;//  to get pip_fd[0] which allow us to read data from the pipe
+	t_line_data		*data_node;	// first node of our old linked list
+	struct s_input	*next;
+}	t_input;
+
 void	start_prompt(char **env);
-char	**ft_split_line(char *input_line, t_line_data **line_data, char **env);
+char	**ft_split_line(char *input_line, t_line_data **line_data, char **env, t_input **input_node);
 int		redirection_fill(char *line, int i, t_line_data **data);
 int		after_redirection_fill(char *line, int i, t_line_data **data);
 void	init_nodes_redirctor(t_line_data **data, int type);
@@ -64,7 +78,7 @@ void	add_node_to_list(t_line_data **data, t_line_data *new_line_data);
 // int		ft_split_pipe(char *line, t_line_data **line_data, char p, int i, char **env);
 int		quote_token(char *line, int i, t_line_data **line_data);
 void	create_path(char **env, t_env **mini_env);
-void	standard_io(t_line_data *line_data);
+void	standard_io(t_input **data);
 void	reset_io(void);
 char	*find_path(char *cmd, char **env);
 void	exec_command(char **cmd_args, char **env);
@@ -72,12 +86,17 @@ void	ft_free(char **paths_spleted, char *cmd, char *path);
 char	**command_merge(t_line_data **data);
 char	**merge_free_command(t_line_data **data, int len);
 char	*expander_fill(char *line, int *i, char **env);
-void	process_execution(t_line_data **data, char **cmd_args, char **env);
+void	process_execution(t_input **data, char **cmd_args, char **env);
 int		heredoc_init(char *line, int i, t_line_data **data);
 int		after_redirection_decision(char *line, int i, t_line_data **data);
 int		after_redi_len(char *line, int i);
 char	*expander_fill(char *line, int *i, char **env);
 void	free_path(t_env *mini_env);
+void	start_real_work(t_input **new_input_node ,char **mini_env);
+void	split_pipes(char *whole_line, t_input **new_input_node);
+int		create_input_node(char *whole_line, int i,t_input **new_input_node);
+t_input	*get_last_node(t_input **node);
+void	add_inputnode_tolist(t_input **data, t_input *new_line_data);
 //void	free_list(t_line_data *line_data);
 
 #endif

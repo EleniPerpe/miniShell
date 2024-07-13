@@ -3,21 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   standard_IO.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 07:00:37 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/12 18:32:02 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/13 07:12:38 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	standard_io(t_line_data *line_data)
+void	standard_io(t_input **data)
 {
 	int			fd;
 	t_line_data	*new_line_data;
 
-	new_line_data = line_data;
+	new_line_data = (*data)->data_node;
+	if ((*data)->write_to_pipe > 0)
+	{
+		close((*data)->read_from_pipe);
+		printf("yes fd1 is positive look: fd=+%d\n", (*data)->write_to_pipe);
+		dup2((*data)->write_to_pipe, STDOUT_FILENO);
+		close((*data)->write_to_pipe);
+	}
+	if ((*data)->read_from_pipe > 0)
+	{
+		close((*data)->write_to_pipe);
+		printf("yes fd0 is positive look: fd=+%d\n", (*data)->read_from_pipe);
+		dup2((*data)->read_from_pipe, STDIN_FILENO);
+		close((*data)->read_from_pipe);
+	}
 	while (new_line_data != NULL)
 	{
 		if (new_line_data->redirctor != NULL)

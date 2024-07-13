@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/12 00:48:13 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/13 05:09:15 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	command_fill(char *line, int i, t_line_data **data)
 	}
 	return (i + j);
 }
+
 /*
 this function will split the input line into a linked list of nodes
 each node will contain a command or an expander or a redirctor and a file name
@@ -105,7 +106,7 @@ command if there is a redirctor it will call the ft_split_redirctor function
 if there is a pipe it will call the ft_split_pipe function .... etc
 */
 
-char	**ft_split_line(char *input_line, t_line_data **line_data, char **env)
+char	**ft_split_line(char *input_line, t_line_data **line_data, char **env, t_input **input_node)
 {
 	int	i;
 	char **cmd_args;
@@ -147,6 +148,7 @@ char	**ft_split_line(char *input_line, t_line_data **line_data, char **env)
 		// 		i = ft_split_pipe(input_line, line_data, i, '|', env);
 	}
 	cmd_args = command_merge(line_data);
+	(*input_node)->data_node = *line_data;
 	return (cmd_args);
 	// in this step we already have the linked list of nodes
 	// now we must add it to the commands list

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/12 17:37:34 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/13 01:20:10 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	quote_token(char *line, int i, t_line_data **line_data)
 int check_for_flag(char *line, int i)
 {
 	int flag;
-	
+
 	flag = 0;
 	while (i > 0 && (line[i] == ' ' || line[i] == '"' || line[i] == '\''))
 		i--;
@@ -83,7 +83,8 @@ int	check_quotes_cases(char *line, int *i)
 			if (line[*i + j] == '\0')
 			{
 				printf("The program does not interpret unclosed quotes\n");
-				exit(EXIT_FAILURE);
+				// kill(child_pid, SIGKILL);
+				// exit(EXIT_FAILURE);
 				// send a signal to kill the child process
 			}
 	}
@@ -97,7 +98,8 @@ int	check_quotes_cases(char *line, int *i)
 		if (line[*i + j] == '\0')
 		{
 			printf("The program does not interpret unclosed quotes\n");
-			exit(EXIT_FAILURE);
+			// kill(child_pid, SIGKILL);
+			// exit(EXIT_FAILURE);
 			// send a signal to kill the child process
 		}
 	}

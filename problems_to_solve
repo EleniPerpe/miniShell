@@ -35,3 +35,5 @@ print command not found in the terminal
 WE SHOULD NOOOOOOT change the STD_OUT to the file out
 
 -------------------------------------------------------------------------------------
+in bash we can have an empty file name like this > " "
+it contains only one space in this example
