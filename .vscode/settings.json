@@ -9,6 +9,12 @@
 		"algorithm": "c",
 		"complex": "c",
 		"new": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"array": "c",
+		"iterator": "c",
+		"string": "c",
+		"string_view": "c",
+		"vector": "c",
+		"minishell.h": "c"
 	}
 }
