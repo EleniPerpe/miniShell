@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/15 18:18:22 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/15 20:12:10 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ t_input	*get_last_node(t_input **node)
 	tmp = *node;
 	while (tmp->data_node != NULL)
 		tmp = tmp->next;
-//	printf("last node: %s\n",tmp->part_line);
 	return (tmp);
 }
 
