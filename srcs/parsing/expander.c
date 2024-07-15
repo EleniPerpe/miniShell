@@ -6,17 +6,17 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 18:09:57 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/12 17:31:41 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:44:14 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 char	*create_final_env(int i, char **env);
 int		find_expander(char *expander, char **env);
 char	*final_string(char *expander, char *line, int i, int j);
 
-char	*expander_fill(char *line, int *i, char **env)
+char	*expander_fill(char *line, int i, char **env)
 {
 	char	*expander;
 	int		j;
@@ -25,16 +25,16 @@ char	*expander_fill(char *line, int *i, char **env)
 	char	*env_value;
 
 	j = 0;
-	(*i)++;
-	while ((line[*i + j] != ' ' && line[*i + j] != '\'' && line[*i + j] != '"')
-		&& line[*i + j] != '\0')
+	i++;
+	while ((line[i + j] != ' ' && line[i + j] != '\'' && line[i + j] != '"')
+		&& line[i + j] != '\0')
 		j++;
 	expander = (char *)ft_malloc(j + 1);
-	ft_strlcpy(expander, &line[*i], j + 1);
+	ft_strlcpy(expander, &line[i], j + 1);
 	expander[j] = '\0';
-	if (*i > 1)
+	if (i > 1)
 	{
-		if (line[*i - 2] == '\'')
+		if (line[i - 2] == '\'')
 		{
 			free(expander);
 			return (line);
@@ -42,8 +42,8 @@ char	*expander_fill(char *line, int *i, char **env)
 	}
 	env_position = find_expander(expander, env);
 	env_value = create_final_env(env_position, env);
-	final = final_string(env_value, line, *i, j);
-	*i = *i + j;
+	final = final_string(env_value, line, i, j);
+	i = i + j;
 	free(expander);
 	return (final);
 }
