@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/13 07:08:19 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/15 16:45:13 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 pid_t	child_pid = -1;
 
-void	start_real_work(t_input **new_input_node ,char **mini_env);
+void	start_real_work(t_input **new_input_node ,t_env **mini_env, char **env);
 void	split_pipes(char *whole_line, t_input **new_input_node);
 int	create_input_node(char *whole_line, int i,t_input **new_input_node);
 t_input *get_last_node(t_input **node);
@@ -44,16 +44,16 @@ void	start_prompt(char **env)
 //																				pipe1			   /
 //			printout the linked list
 // ##############################################################
-	t_input *tmp = new_input_node;
-	while (tmp != NULL)
-	{
-		printf("part of whole line is: %s\n", tmp->part_line);
-		tmp = tmp->next;
-	}
+	// t_input *tmp = new_input_node;
+	// while (tmp != NULL)
+	// {
+	// 	printf("part of whole line is: %s\n", tmp->part_line);
+	// 	tmp = tmp->next;
+	// }
 // ###############################################################
 		while (new_input_node != NULL)
 		{
-			start_real_work(&new_input_node, env); // it was start_prompt() now it is start_real_work()
+			start_real_work(&new_input_node, &mini_env, env); // it was start_prompt() now it is start_real_work()
 			new_input_node = new_input_node->next;
 		}
 	}
@@ -142,7 +142,7 @@ t_input	*get_last_node(t_input **node)
 }
 
 
-void	start_real_work(t_input **new_input_node, char **mini_env)
+void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env)
 {
 	t_line_data	*line_data; // a pointer to the first element of the linked list of nodes
 	t_line_data	*tmp; // a temporary pointer to iterate through the linked list
@@ -158,8 +158,21 @@ void	start_real_work(t_input **new_input_node, char **mini_env)
 		if (input_line && (ft_strcmp(input_line, "") != 0))
 			{
 				// printf("You entered : %s\n", input_line);
-				cmd_args = ft_split_line(input_line, &line_data, mini_env, new_input_node);
-				process_execution(&input_node, cmd_args, mini_env);
+				cmd_args = ft_split_line(input_line, &line_data, env, new_input_node);
+				// int i = 0;
+				// while (cmd_args[i] != NULL)
+				// {
+				// 	printf("%s ,", cmd_args[i]);
+				// 	i++;
+				// }
+				// printf("\n");
+				// printf("this is the cmd args :%s\n", cmd_args[0]);
+				check_for_builtins(cmd_args, mini_env);
+				if ((ft_strcmp(cmd_args[0], "echo") == 0))
+				{
+					ft_echo(cmd_args);
+				}
+				process_execution(&input_node, cmd_args, env);
 
 	//			PRINT THE LINKED LIST
 	// ############################################################################

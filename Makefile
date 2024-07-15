@@ -6,7 +6,7 @@
 #    By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/07/15 14:22:26 by eperperi         ###   ########.fr        #
+#    Updated: 2024/07/15 17:01:01 by eperperi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ WHITE = \033[0m
 SRC_DIR = ./srcs/
 OBJ_DIR = ./objs/
 PARSING_DIR = ./srcs/parsing/
+BUILTINS_DIR = ./srcs/builtins/
 
 SRC = $(SRC_DIR)main.c \
       $(SRC_DIR)standard_IO.c \
@@ -37,7 +38,10 @@ SRC = $(SRC_DIR)main.c \
       $(PARSING_DIR)init_redirector.c \
       $(PARSING_DIR)path.c \
       $(PARSING_DIR)expander.c \
-      $(PARSING_DIR)utils_parsing.c
+      $(PARSING_DIR)utils_parsing.c \
+	  $(BUILTINS_DIR)echo.c \
+	  $(BUILTINS_DIR)builtins.c \
+	  $(BUILTINS_DIR)pwd.c \
 
 OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
 LIB = Libft/libft.a
@@ -54,6 +58,10 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR)%.o: $(PARSING_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(BUILTINS_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
