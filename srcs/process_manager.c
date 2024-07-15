@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/15 16:45:13 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:18:22 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,12 +167,12 @@ void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env)
 				// }
 				// printf("\n");
 				// printf("this is the cmd args :%s\n", cmd_args[0]);
-				check_for_builtins(cmd_args, mini_env);
-				if ((ft_strcmp(cmd_args[0], "echo") == 0))
+				if (check_for_builtins(cmd_args, mini_env) == 0)
 				{
-					ft_echo(cmd_args);
+					;
 				}
-				process_execution(&input_node, cmd_args, env);
+				else
+					process_execution(&input_node, cmd_args, env);
 
 	//			PRINT THE LINKED LIST
 	// ############################################################################

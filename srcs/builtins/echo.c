@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:56:41 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/15 16:15:03 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:15:39 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void ft_echo(char **args)
 		}
 		printf("\n");
 	}
-	exit(EXIT_FAILURE);
+	// exit(EXIT_FAILURE);
 }

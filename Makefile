@@ -6,7 +6,7 @@
 #    By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/07/15 17:01:01 by eperperi         ###   ########.fr        #
+#    Updated: 2024/07/15 18:35:18 by eperperi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRC = $(SRC_DIR)main.c \
 	  $(BUILTINS_DIR)echo.c \
 	  $(BUILTINS_DIR)builtins.c \
 	  $(BUILTINS_DIR)pwd.c \
+	  $(BUILTINS_DIR)env.c \
 
 OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
 LIB = Libft/libft.a
