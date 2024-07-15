@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/15 16:58:26 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/15 18:48:04 by eperperi         ###   ########.fr       */
+/*   Created: 2024/07/15 18:28:35 by eperperi          #+#    #+#             */
+/*   Updated: 2024/07/15 18:47:36 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void ft_pwd(t_env **mini_env, char **args)
+void ft_env(t_env **mini_env, char **args)
 {
 	t_env *tmp;
 	int i;
@@ -28,15 +28,20 @@ void ft_pwd(t_env **mini_env, char **args)
 	}
 	else
 	{		
-		while (tmp != NULL)
-		{
-			if (ft_strncmp(tmp->line, "PWD=", 4) == 0)
-			{
-				printf("%s\n", tmp->line + 4);
-				// return ;
+	while (tmp != NULL)
+	{
+		printf("%s\n", tmp->line);
+		tmp = tmp->next;
+	}
+		// while (tmp != NULL)
+		// {
+		// 	if (ft_strncmp(tmp->line, "PWD=", 4) == 0)
+		// 	{
+		// 		printf("%s\n", tmp->line + 4);
+		// 		// return ;
 
-			}
-			tmp = tmp->next;
-		}
+		// 	}
+		// 	tmp = tmp->next;
+		// }
 	}
 }
