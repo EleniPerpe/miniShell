@@ -6,17 +6,13 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/15 14:53:25 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:45:37 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 char *check_expander_and_rest(char *input_line, char **env);
-
-// save some lines by using this function
-// it will return a void pointer to the allocated memory
-// that's why we need to cast it to the type we need each time we use it
 
 void	add_node_to_commands_list(t_line_data **data,
 	t_commands_list **commands_list)
@@ -38,11 +34,6 @@ void	add_node_to_commands_list(t_line_data **data,
 	}
 }
 
-// I made this function to save some lines from redirection_fii()
-// it will initialize the redirctor node
-// it will take the type of the redirctor and initialize the redirctor node
-// we can make ft_strcpy() which will allocate memory
-// and copy the string to it to save more lines
 void	init_nodes_redirctor(t_line_data **data, int type)
 {
 	t_line_data	*new_line_data;
@@ -99,14 +90,6 @@ int	command_fill(char *line, int i, t_line_data **data)
 	}
 	return (i + j);
 }
-
-/*
-this function will split the input line into a linked list of nodes
-each node will contain a command or an expander or a redirctor and a file name
-it will scan the input line and check if there is a redirctor or a pipe or a
-command if there is a redirctor it will call the ft_split_redirctor function
-if there is a pipe it will call the ft_split_pipe function .... etc
-*/
 
 char	**ft_split_line(char *input_line, t_line_data **line_data, char **env, t_input **input_node)
 {
