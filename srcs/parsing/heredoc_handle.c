@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_handle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 15:34:32 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/12 02:31:27 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/15 14:21:40 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 int	after_redi_len(char *line, int i)
 {

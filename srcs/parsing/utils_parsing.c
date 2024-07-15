@@ -6,11 +6,11 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:31:40 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/12 17:40:21 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:20:05 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	free_path(t_env *mini_env)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/13 07:00:28 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/15 14:42:43 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,11 @@ void	exec_command(char **cmd_args, char **env);
 void	ft_free(char **paths_spleted, char *cmd, char *path);
 char	**command_merge(t_line_data **data);
 char	**merge_free_command(t_line_data **data, int len);
-char	*expander_fill(char *line, int *i, char **env);
 void	process_execution(t_input **data, char **cmd_args, char **env);
 int		heredoc_init(char *line, int i, t_line_data **data);
 int		after_redirection_decision(char *line, int i, t_line_data **data);
 int		after_redi_len(char *line, int i);
-char	*expander_fill(char *line, int *i, char **env);
+char	*expander_fill(char *line, int i, char **env);
 void	free_path(t_env *mini_env);
 void	start_real_work(t_input **new_input_node ,char **mini_env);
 void	split_pipes(char *whole_line, t_input **new_input_node);

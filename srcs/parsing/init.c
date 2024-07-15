@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/13 05:09:15 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/15 14:53:25 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
+
+char *check_expander_and_rest(char *input_line, char **env);
 
 // save some lines by using this function
 // it will return a void pointer to the allocated memory
@@ -111,17 +113,7 @@ char	**ft_split_line(char *input_line, t_line_data **line_data, char **env, t_in
 	int	i;
 	char **cmd_args;
 
-	i = 0;
-	if (!input_line)
-		return NULL;
-	while (input_line[i] != '\0')
-	{
-		if (input_line[i] == '$')
-		{
-			input_line = expander_fill(input_line, &i, env);
-		}
-		i++;
-	}
+	input_line = check_expander_and_rest(input_line, env);
 	i = 0;
 	while (input_line[i] != '\0')
 	{
@@ -155,4 +147,28 @@ char	**ft_split_line(char *input_line, t_line_data **line_data, char **env, t_in
 	// to handle the pipes so each part will be in command node and will be executed in a different process
 	// add_node_to_commands_list(line_data, &commands_list); // must know where to define the first commands_list .. here in this function or in start_prompt
 														// t_commands_list *commands_list; // definee the commands list
+}
+char *check_expander_and_rest(char *input_line, char **env)
+{
+	int i;
+	
+	i = 0;
+	if (!input_line)
+		return NULL;
+	while (input_line[i] != '\0')
+	{
+		if (input_line[i] == ';' || input_line[i] == '\\')
+		{
+			printf("The program can not interpret '\\' or ';'\n");
+				// kill(child_pid, SIGKILL);
+				// exit(EXIT_FAILURE);
+				// send a signal to kill the child process
+		}
+		if (input_line[i] == '$')
+		{
+			input_line = expander_fill(input_line, i, env);
+		}
+		i++;
+	}
+	return (input_line);
 }

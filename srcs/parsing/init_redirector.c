@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_redirector.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:51:11 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/12 00:48:04 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/15 14:19:54 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 int	check_redirection_cases(char *line, int i, t_line_data *new_line_data);
 
