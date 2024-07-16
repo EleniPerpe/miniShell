@@ -6,11 +6,15 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:57:54 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/16 18:46:15 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/16 19:44:17 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+// I have to add only in export even if it's empty variable
+// I have to check if the variable exists already so to modify it 
+// instead of adding a new one
 
 void create_export_path(char **env, t_env **new_export);
 char *create_export_line(char *env);
@@ -22,6 +26,7 @@ void ft_export(t_env **mini_env, char **args, char **env)
 	int i;
 	t_env *new_env;
 	t_env *new_export;
+	t_env *new_export_line;
 
 	new_export = NULL;
 	create_export_path(env, &new_export);
@@ -30,10 +35,11 @@ void ft_export(t_env **mini_env, char **args, char **env)
 		i++;
 	if (i == 1)
 		print_export(&new_export);
+	i = 0;
 	while (args[i] != NULL)
 	{
 		if (ft_strchr(args[i], '=') != NULL && (ft_isalpha(args[i][0]) || args[i][0] == '_'))
-		{	
+		{
 			new_env = (t_env *)ft_malloc(sizeof(t_env));
 			new_env->line = ft_strdup(args[i]);
 			if (!new_env->line)
@@ -43,7 +49,32 @@ void ft_export(t_env **mini_env, char **args, char **env)
 			}
 			new_env->next = NULL;
 			add_path_to_list(mini_env, new_env);
-		}	
+			new_export_line = (t_env *)ft_malloc(sizeof(t_env));
+			new_export_line->line = create_export_line(args[i]);
+			if (!new_export_line->line)
+			{
+				free(new_export_line);
+				exit(EXIT_FAILURE);
+			}
+			new_export_line->next= NULL;
+			add_path_to_list(&new_export, new_export_line);
+			printf("Line for export : %s\n", new_export_line->line);
+		}
+		// else if (ft_isalpha(args[i][0]) || args[i][0] == '_')
+		// {
+		// 	new_export_line = (t_env *)ft_malloc(sizeof(t_env));
+		// 	new_export_line->line = (char *)ft_malloc(ft_strlen(args[i]) + 1);
+		// 	new_export_line->line[ft_strlen(args[i]) + 1] = '\0';
+		// 	new_export_line->line = create_export_line(args[i]);
+		// 	// printf("That's the line : %s\n", new_export_line->line);
+		// 	if (!new_export_line->line)
+		// 	{
+		// 		free(new_export_line);
+		// 		exit(EXIT_FAILURE);
+		// 	}
+		// 	new_export_line->next = NULL;
+		// 	add_path_to_list(&new_export, new_export_line);
+		// }
 		else
 		{
 			
@@ -91,6 +122,8 @@ char *create_export_line(char *env)
 	char *second_part;
 
 	i = 0;
+	if (ft_strchr(env, '=') == NULL)
+		return (env);
 	while (env[i] != '=')
 		i++;
 	first_sub_env = ft_substr(env, 0, i + 1);
