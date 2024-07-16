@@ -6,13 +6,11 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:00:29 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/15 16:56:46 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:22:32 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-void	add_path_to_list(t_env **mini_env, t_env *new_env);
 
 void	create_path(char **env, t_env **mini_env)
 {
