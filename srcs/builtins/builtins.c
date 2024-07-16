@@ -6,13 +6,13 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:08:51 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/16 15:30:34 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:05:18 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int check_for_builtins(char **args, t_env **mini_env)
+int check_for_builtins(char **args, t_env **mini_env, char **env)
 {
 	//need to fix the command not found if it is echos for example instead of doing nothing
 	if ((ft_strcmp(args[0], "echo") == 0) || (ft_strcmp(args[0], "ECHO") == 0))
@@ -52,7 +52,7 @@ int check_for_builtins(char **args, t_env **mini_env)
             printf("Command not found: %s\n", args[0]);
             return 1;
         }
-        ft_export(mini_env, args);
+        ft_export(mini_env, args, env);
         return 0;
 	}
 	// if ((ft_strcmp(args[0], "unset") == 0) || (ft_strcmp(args[0], "UNSET") == 0))
