@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:23:27 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/17 16:58:25 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:15:58 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void export_remove(t_env **node_remove, char *line, int i)
 		return ;
 	}
 	curr = *node_remove;
-	printf("Line is: %s and in node is: %s\n", line, curr->next->line);
 	while (curr->next != NULL)
 	{
 		if (ft_strncmp(line, curr->next->line, i) == 0)
