@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:57:54 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/17 14:42:01 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:46:47 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ char	*ft_strjoin_export(char const *s1, char const *s2, char c);
 void	print_export(t_env **new_export);
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char **args, int i);
 void	fill_only_exp(t_env **new_export, char **args, int i, t_env **mini_env);
-void	find_if_exists(t_env **new_export, char *line, t_env **mini_env);
-void	export_remove(t_env **new_export, char *line, int i);
-void	env_remove(t_env **new_export, char *line, int i);
 
 void ft_export(t_env **mini_env, char **args, t_env **new_export)
 {
@@ -39,7 +36,7 @@ void ft_export(t_env **mini_env, char **args, t_env **new_export)
 	{
 		if (ft_strchr(args[i], '=') != NULL && (ft_isalpha(args[i][0])
 			|| args[i][0] == '_'))
-			fill_env_and_export(new_export, mini_env, args, i);
+				fill_env_and_export(new_export, mini_env, args, i);
 		else if (ft_isalpha(args[i][0]) || args[i][0] == '_')
 			fill_only_exp(new_export, args, i, mini_env);
 		else
@@ -59,8 +56,9 @@ void	fill_env_and_export(t_env **new_export, t_env **mini_env, char **args, int 
 	t_env *new_export_line;
 	
 	new_env = (t_env *)ft_malloc(sizeof(t_env));
-	find_if_exists(new_export, args[i], mini_env);
+	// printf("This is the arg from fill function : %s\n", args[i]);
 	new_env->line = ft_strdup(args[i]);
+	find_if_exists(new_export, args[i], mini_env);
 	if (!new_env->line)
 	{
 		free(new_env);
@@ -70,6 +68,7 @@ void	fill_env_and_export(t_env **new_export, t_env **mini_env, char **args, int 
 	add_path_to_list(mini_env, new_env);
 	new_export_line = (t_env *)ft_malloc(sizeof(t_env));
 	new_export_line->line = create_export_line(args[i]);
+	find_if_exists(new_export, new_export_line->line, mini_env);
 	if (!new_export_line->line)
 	{
 		free(new_export_line);
@@ -86,7 +85,7 @@ void	fill_only_exp(t_env **new_export, char **args, int i, t_env **mini_env)
 
 	new_export_line = (t_env *)ft_malloc(sizeof(t_env));
 	new_export_line->line = create_export_line(args[i]);
-	find_if_exists(new_export, args[i], mini_env);
+	find_if_exists(new_export, new_export_line->line, mini_env);
 	if (!new_export_line->line)
 	{
 		free(new_export_line);
@@ -150,81 +149,6 @@ char	*create_export_line(char *line)
 	free(second_sub_env);
 	free(first_part);
 	return (second_part);
-}
-
-void	find_if_exists(t_env **new_export, char *line, t_env **mini_env)
-{
-	int i;
-	
-	i = 0;
-	while (line[i] != '=' && line[i] != '\0')
-		i++;
-	if (*new_export == NULL)
-		return ;
-	if (ft_strncmp("declare -x ", ((*new_export)->line), 11) == 0)
-	{
-		export_remove(new_export, line, i);
-	}
-	else
-		env_remove(mini_env, line, i);
-}
-
-void export_remove(t_env **new_export, char *line, int i)
-{
-	t_env *curr;
-	t_env *remove;
-	
-	if (ft_strncmp(line, (*new_export)->line + 11, i) == 0)
-	{
-		remove = *new_export;
-		*new_export = (*new_export)->next;
-		free(remove->line);
-		free(remove);
-		return ;
-	}
-	curr = *new_export;
-	while (curr->next != NULL)
-	{
-		if (ft_strncmp(line, curr->next->line + 11, i) == 0)
-		{
-			remove = curr->next;
-			curr->next = curr->next->next;
-			free(remove->line);
-			free(remove);
-			return ;
-		}
-		// printf("That's the next->line : %s\n", curr->next->line + 11);
-		curr = curr->next;	
-	}
-}
-
-void env_remove(t_env **new_export, char *line, int i)
-{
-	t_env *curr;
-	t_env *remove;
-	
-	if (ft_strncmp(line, (*new_export)->line, i) == 0)
-	{
-		remove = *new_export;
-		*new_export = (*new_export)->next;
-		free(remove->line);
-		free(remove);
-		return ;
-	}
-	curr = *new_export;
-	while (curr->next != NULL)
-	{
-		if (ft_strncmp(line, curr->next->line, i) == 0)
-		{
-			remove = curr->next;
-			curr->next = curr->next->next;
-			free(remove->line);
-			free(remove);
-			return ;
-		}
-		// printf("That's the next->line : %s\n", curr->next->line + 11);
-		curr = curr->next;	
-	}
 }
 
 char	*ft_strjoin_export(char const *s1, char const *s2, char c)
