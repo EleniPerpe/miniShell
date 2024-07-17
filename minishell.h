@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/17 10:07:08 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:25:20 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	ft_env(t_env **mini_env, char **args);
 void	ft_pwd(t_env **mini_env, char **args);
 void	ft_export(t_env **mini_env, char **args, t_env **new_export);
 void	create_export_path(t_env **mini_env, t_env **new_export);
+void	find_if_exists(t_env **new_export, char *line, t_env **mini_env);
 //void	free_list(t_line_data *line_data);
 
 #endif
