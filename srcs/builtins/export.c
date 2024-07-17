@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:57:54 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/16 19:44:17 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:56:41 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,92 +16,101 @@
 // I have to check if the variable exists already so to modify it 
 // instead of adding a new one
 
-void create_export_path(char **env, t_env **new_export);
-char *create_export_line(char *env);
+char	*create_export_line(char *env, t_env **new_export);
 char	*ft_strjoin_export(char const *s1, char const *s2, char c);
-void print_export(t_env **new_export);
+void	print_export(t_env **new_export);
+void	fill_env_and_export(t_env **new_export, t_env **mini_env, char **args, int i);
+void	fill_only_export(t_env **new_export, char **args, int i);
+void	find_if_exists(t_env **new_export, char *line);
 
-void ft_export(t_env **mini_env, char **args, char **env)
+
+void ft_export(t_env **mini_env, char **args, t_env **new_export)
 {
 	int i;
-	t_env *new_env;
-	t_env *new_export;
-	t_env *new_export_line;
 
-	new_export = NULL;
-	create_export_path(env, &new_export);
 	i = 0;
 	while (args[i] != NULL)
 		i++;
 	if (i == 1)
-		print_export(&new_export);
-	i = 0;
+		print_export(new_export);
+	i = 1;
 	while (args[i] != NULL)
 	{
-		if (ft_strchr(args[i], '=') != NULL && (ft_isalpha(args[i][0]) || args[i][0] == '_'))
-		{
-			new_env = (t_env *)ft_malloc(sizeof(t_env));
-			new_env->line = ft_strdup(args[i]);
-			if (!new_env->line)
-			{
-				free(new_env);
-				exit(EXIT_FAILURE);
-			}
-			new_env->next = NULL;
-			add_path_to_list(mini_env, new_env);
-			new_export_line = (t_env *)ft_malloc(sizeof(t_env));
-			new_export_line->line = create_export_line(args[i]);
-			if (!new_export_line->line)
-			{
-				free(new_export_line);
-				exit(EXIT_FAILURE);
-			}
-			new_export_line->next= NULL;
-			add_path_to_list(&new_export, new_export_line);
-			printf("Line for export : %s\n", new_export_line->line);
-		}
-		// else if (ft_isalpha(args[i][0]) || args[i][0] == '_')
-		// {
-		// 	new_export_line = (t_env *)ft_malloc(sizeof(t_env));
-		// 	new_export_line->line = (char *)ft_malloc(ft_strlen(args[i]) + 1);
-		// 	new_export_line->line[ft_strlen(args[i]) + 1] = '\0';
-		// 	new_export_line->line = create_export_line(args[i]);
-		// 	// printf("That's the line : %s\n", new_export_line->line);
-		// 	if (!new_export_line->line)
-		// 	{
-		// 		free(new_export_line);
-		// 		exit(EXIT_FAILURE);
-		// 	}
-		// 	new_export_line->next = NULL;
-		// 	add_path_to_list(&new_export, new_export_line);
-		// }
+		if (ft_strchr(args[i], '=') != NULL && (ft_isalpha(args[i][0])
+			|| args[i][0] == '_'))
+			fill_env_and_export(new_export, mini_env, args, i);
+		else if (ft_isalpha(args[i][0]) || args[i][0] == '_')
+			fill_only_export(new_export, args, i);
 		else
 		{
 			
 			if (ft_isprint(args[i][0]) && !ft_isalpha(args[i][0]))
-				printf("minishell: %s: '%s': not a valid identifier\n", args[0], args[i]);
+				printf("minishell: %s: '%s': not a valid identifier\n",
+					args[0], args[i]);
 		}
 		i++;
 	}
 }
 
-void create_export_path(char **env, t_env **new_export)
+void	fill_env_and_export(t_env **new_export, t_env **mini_env, char **args, int i)
+{
+	t_env *new_env;
+	t_env *new_export_line;
+	
+	new_env = (t_env *)ft_malloc(sizeof(t_env));
+	new_env->line = ft_strdup(args[i]);
+	if (!new_env->line)
+	{
+		free(new_env);
+		exit(EXIT_FAILURE);
+	}
+	new_env->next = NULL;
+	add_path_to_list(mini_env, new_env);
+	new_export_line = (t_env *)ft_malloc(sizeof(t_env));
+	new_export_line->line = create_export_line(args[i], new_export);
+	if (!new_export_line->line)
+	{
+		free(new_export_line);
+		exit(EXIT_FAILURE);
+	}
+	new_export_line->next= NULL;
+	add_path_to_list(new_export, new_export_line);
+	
+}
+
+void	fill_only_export(t_env **new_export, char **args, int i)
+{
+	t_env *new_export_line;
+
+	new_export_line = (t_env *)ft_malloc(sizeof(t_env));
+	new_export_line->line = create_export_line(args[i], new_export);
+	if (!new_export_line->line)
+	{
+		free(new_export_line);
+		exit(EXIT_FAILURE);
+	}
+	new_export_line->next = NULL;
+	add_path_to_list(new_export, new_export_line);
+}
+
+
+void create_export_path(t_env **mini_env, t_env **new_export)
 {
 	t_env	*new_env;
-	int		i;
 	int		len;
 	char	*export_line;
+	t_env *tmp;
 
 	len = 0;
-	i = 0;
-	while (env[i] != NULL)
+	tmp = *mini_env;
+	while (tmp != NULL)
 	{
-		len = ft_strlen(env[i]) + 13;
-		export_line = create_export_line(env[i]);
+		len = ft_strlen(tmp->line) + 13;
+		export_line = create_export_line(tmp->line, new_export);
 		new_env = (t_env *)ft_malloc(sizeof(t_env));
 		new_env->line = (char *)ft_malloc(len + 1);
 		new_env->line = export_line;
-		new_env->line[len + 1] = '\0';
+		new_env->line[len] = '\0';
 		if (!new_env->line)
 		{
 			free(new_env);
@@ -109,11 +118,11 @@ void create_export_path(char **env, t_env **new_export)
 		}
 		new_env->next = NULL;
 		add_path_to_list(new_export, new_env);
-		i++;
+		tmp = tmp->next;
 	}
 }
 
-char *create_export_line(char *env)
+char	*create_export_line(char *line, t_env **new_export)
 {
 	int i;
 	char *first_sub_env;
@@ -122,12 +131,17 @@ char *create_export_line(char *env)
 	char *second_part;
 
 	i = 0;
-	if (ft_strchr(env, '=') == NULL)
-		return (env);
-	while (env[i] != '=')
+	(void)new_export;
+	// find_if_exists(new_export, line);
+	if (ft_strchr(line, '=') == NULL)
+	{
+		second_part = ft_strjoin("declare -x ", line);
+		return (second_part);
+	}
+	while (line[i] != '=')
 		i++;
-	first_sub_env = ft_substr(env, 0, i + 1);
-	second_sub_env = ft_substr(env, i + 1, ft_strlen(env) - i);
+	first_sub_env = ft_substr(line, 0, i + 1);
+	second_sub_env = ft_substr(line, i + 1, ft_strlen(line) - i);
 	first_part = ft_strjoin("declare -x ", first_sub_env);
 	second_part = ft_strjoin_export(first_part, second_sub_env, '"');
 	free(first_sub_env);
@@ -135,6 +149,42 @@ char *create_export_line(char *env)
 	free(first_part);
 	return (second_part);
 }
+
+// void	find_if_exists(t_env **new_export, char *line)
+// {
+// 	t_env *tmp;
+// 	t_env *prev;
+// 	int i;
+	
+// 	i = 0;
+// 	while (line[i] != '=')
+// 		i++;
+	
+// 	tmp = *new_export;
+// 	prev = NULL;
+// 	while (tmp != NULL)
+// 	{
+// 		if (ft_strncmp(line, tmp->line, i) == 0)
+// 		{
+// 			if (prev == NULL)
+// 				*new_export = tmp->next;
+// 			else
+// 				prev->next = tmp->next;
+// 		free(tmp->line);
+// 		free(tmp);
+// 		if (prev == NULL)
+//                 tmp = *new_export;
+//             else
+//                 tmp = prev->next;
+// 		}
+// 		else
+// 		{
+// 			prev = tmp;
+// 			tmp = tmp->next;
+// 		}
+// 	}
+// }
+
 
 char	*ft_strjoin_export(char const *s1, char const *s2, char c)
 {
@@ -162,8 +212,7 @@ char	*ft_strjoin_export(char const *s1, char const *s2, char c)
 		i++; 
 	}
 	ptr[s1len + i + 1] = c;
-	ptr[s1len + s2len + 2] = '\0';
-	return (ptr);
+	return (ptr[s1len + s2len + 2] = '\0', ptr);
 }
 
 void print_export(t_env **new_export)

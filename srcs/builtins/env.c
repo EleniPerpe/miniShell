@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:28:35 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/16 15:25:51 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:13:12 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,9 @@ void ft_env(t_env **mini_env, char **args)
         printf("env: environment list is empty or uninitialized\n");
         return;
     }
-		while (tmp != NULL)
-		{
-			printf("%s\n", tmp->line);
-			tmp = tmp->next;
-		}
-
+	while (tmp != NULL)
+	{
+		printf("%s\n", tmp->line);
+		tmp = tmp->next;
+	}
 }
