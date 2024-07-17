@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:08:51 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/17 10:58:21 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:23:08 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,19 @@ int check_for_builtins(char **args, t_env **mini_env, t_env **new_export)
             printf("Command not found: %s\n", args[0]);
             return 1;
         }
-		// new_export = NULL;
-		// create_export_path(mini_env, &new_export);
-		// printf("Hi\n");
-		// tmp = new_export;
-		// while (tmp != NULL)
-		// {
-		// 	printf("%s\n", tmp->line);
-		// 	tmp = tmp->next;
-		// }
-
         ft_export(mini_env, args, new_export);
         return 0;
 	}
-	// if ((ft_strcmp(args[0], "unset") == 0) || (ft_strcmp(args[0], "UNSET") == 0))
-	// {
-	// 	if (args[0][5] != '\0')
-    //     {
-    //         printf("Command not found: %s\n", args[0]);
-    //         return 1;
-    //     }
-    //     ft_unset(mini_env, args);
-    //     return 0;
-	// }
+	if ((ft_strcmp(args[0], "unset") == 0) || (ft_strcmp(args[0], "UNSET") == 0))
+	{
+		if (args[0][5] != '\0')
+        {
+            printf("Command not found: %s\n", args[0]);
+            return 1;
+        }
+        ft_unset(args, mini_env, new_export);
+        return 0;
+	}
 	// if ((ft_strcmp(args[0], "exit") == 0) || (ft_strcmp(args[0], "EXIT") == 0))
 	// {
 	// 	if (args[0][4] != '\0')

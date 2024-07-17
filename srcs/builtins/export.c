@@ -6,15 +6,11 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:57:54 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/17 15:46:47 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:56:28 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-// I have to add only in export even if it's empty variable
-// I have to check if the variable exists already so to modify it 
-// instead of adding a new one
 
 char	*create_export_line(char *env);
 char	*ft_strjoin_export(char const *s1, char const *s2, char c);
@@ -56,7 +52,6 @@ void	fill_env_and_export(t_env **new_export, t_env **mini_env, char **args, int 
 	t_env *new_export_line;
 	
 	new_env = (t_env *)ft_malloc(sizeof(t_env));
-	// printf("This is the arg from fill function : %s\n", args[i]);
 	new_env->line = ft_strdup(args[i]);
 	find_if_exists(new_export, args[i], mini_env);
 	if (!new_env->line)
@@ -133,7 +128,6 @@ char	*create_export_line(char *line)
 	char *second_part;
 
 	i = 0;
-	// find_if_exists(new_export, line);
 	if (ft_strchr(line, '=') == NULL)
 	{
 		second_part = ft_strjoin("declare -x ", line);
@@ -151,43 +145,5 @@ char	*create_export_line(char *line)
 	return (second_part);
 }
 
-char	*ft_strjoin_export(char const *s1, char const *s2, char c)
-{
-	size_t	s1len;
-	size_t	s2len;
-	char	*ptr;
-	size_t	i;
 
-	i = 0;
-	s1len = ft_strlen(s1);
-	s2len = ft_strlen(s2);
-	ptr = (char *)malloc((s1len + s2len + 3) * sizeof(char));
-	if (ptr == NULL)
-		return (NULL);
-	while (i < s1len)
-	{
-		ptr[i] = s1[i];
-		i++;
-	}
-	ptr[i] = c;
-	i = 0;
-	while (i < s2len)
-	{
-		ptr[s1len + 1 + i] = s2[i];
-		i++; 
-	}
-	ptr[s1len + i + 1] = c;
-	return (ptr[s1len + s2len + 2] = '\0', ptr);
-}
 
-void print_export(t_env **new_export)
-{
-	t_env *tmp;
-
-	tmp = *new_export;
-	while (tmp != NULL)
-	{
-		printf("%s\n", tmp->line);
-		tmp = tmp->next;
-	}
-}
