@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/16 16:31:42 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:08:44 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 pid_t	child_pid = -1;
 
-void	start_real_work(t_input **new_input_node ,t_env **mini_env, char **env);
 void	split_pipes(char *whole_line, t_input **new_input_node);
 int	create_input_node(char *whole_line, int i,t_input **new_input_node);
 t_input *get_last_node(t_input **node);
@@ -25,10 +24,13 @@ void	start_prompt(char **env)
 	char 		*whole_line;
 	t_input		*new_input_node;
 	t_env		*mini_env;
+	t_env		*new_export;
 
 	mini_env = NULL;
 	new_input_node = NULL;
 	create_path(env, &mini_env);
+	new_export = NULL;
+	create_export_path(&mini_env, &new_export);
 	while (1)
 	{
 		whole_line = readline("minishell >");
@@ -53,7 +55,7 @@ void	start_prompt(char **env)
 // ###############################################################
 		while (new_input_node != NULL)
 		{
-			start_real_work(&new_input_node, &mini_env, env); // it was start_prompt() now it is start_real_work()
+			start_real_work(&new_input_node, &mini_env, env, &new_export); // it was start_prompt() now it is start_real_work()
 			new_input_node = new_input_node->next;
 		}
 	}
@@ -141,7 +143,7 @@ t_input	*get_last_node(t_input **node)
 }
 
 
-void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env)
+void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env, t_env **new_export)
 {
 	t_line_data	*line_data; // a pointer to the first element of the linked list of nodes
 	t_line_data	*tmp; // a temporary pointer to iterate through the linked list
@@ -166,7 +168,7 @@ void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env)
 				// }
 				// printf("\n");
 				// printf("this is the cmd args :%s\n", cmd_args[0]);
-				if (check_for_builtins(cmd_args, mini_env, env) == 0)
+				if (check_for_builtins(cmd_args, mini_env, new_export) == 0)
 				{
 					;
 				}

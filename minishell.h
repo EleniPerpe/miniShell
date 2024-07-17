@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/16 16:32:12 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:07:08 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,17 +91,18 @@ int		after_redirection_decision(char *line, int i, t_line_data **data);
 int		after_redi_len(char *line, int i);
 char	*expander_fill(char *line, int i, char **env);
 void	free_path(t_env *mini_env);
-void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env);
+void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env, t_env **new_export);
 void	split_pipes(char *whole_line, t_input **new_input_node);
 int		create_input_node(char *whole_line, int i,t_input **new_input_node);
 t_input	*get_last_node(t_input **node);
 void	add_inputnode_tolist(t_input **data, t_input *new_line_data);
 void	add_path_to_list(t_env **mini_env, t_env *new_env);
-int		check_for_builtins(char **args, t_env **mini_env, char **env);
+int		check_for_builtins(char **args, t_env **mini_env, t_env **new_export);
 void	ft_echo(char **args);
 void	ft_env(t_env **mini_env, char **args);
 void	ft_pwd(t_env **mini_env, char **args);
-void	ft_export(t_env **mini_env, char **args, char **env);
+void	ft_export(t_env **mini_env, char **args, t_env **new_export);
+void	create_export_path(t_env **mini_env, t_env **new_export);
 //void	free_list(t_line_data *line_data);
 
 #endif

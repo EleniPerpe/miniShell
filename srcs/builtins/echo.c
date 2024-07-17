@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:56:41 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/15 20:08:17 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:01:39 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void ft_echo(char **args)
 	int i;
 	
 	i = 1;
-	if (ft_strcmp(args[i], "-n") == 0)
+	if (args[i] != NULL && ft_strcmp(args[i], "-n") == 0)
 	{
 		i++;
 		while (args[i] != NULL)
@@ -37,7 +37,7 @@ void ft_echo(char **args)
 				printf(" ");
 			i++;
 		}
-		printf("\n");
+		if (args[1] != NULL)
+			printf("\n");
 	}
-	// exit(EXIT_FAILURE);
 }
