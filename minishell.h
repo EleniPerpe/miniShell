@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/17 17:13:21 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/18 08:04:32 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_input
 	int				pipe_in; // to get pip_fd[1] which allow us to write data into the pipe
 	int				pipe_out;//  to get pip_fd[0] which allow us to read data from the pipe
 	t_line_data		*data_node;	// first node of our old linked list
+	pid_t			pro_pid;
 	struct s_input	*next;
 }	t_input;
 
@@ -109,6 +110,7 @@ char	*ft_strjoin_export(char const *s1, char const *s2, char c);
 void	ft_unset(char **args, t_env **mini_env, t_env **new_export);
 void	export_remove(t_env **node_remove, char *line, int i);
 char *check_expander_and_rest(char *input_line, char **env);
+t_input	*get_last_node(t_input **node);
 //void	free_list(t_line_data *line_data);
 
 #endif

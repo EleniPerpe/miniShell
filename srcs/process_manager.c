@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   process_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/17 17:17:09 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/18 08:08:30 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-pid_t	child_pid = -1;
+// pid_t	child_pid = -1;
 
 void	split_pipes(char *whole_line, t_input **new_input_node);
 int	create_input_node(char *whole_line, int i,t_input **new_input_node);
@@ -102,16 +102,12 @@ int	create_input_node(char *whole_line, int i,t_input **new_input_node)
 		tmp->pipe_in = pipe_fd[1];
 		tmp->pipe_out = pipe_fd[0];
 		tmp->write_to_pipe = pipe_fd[1];
-		printf("fd1 from pipe is: %d\n", tmp->pipe_in);
 	}
-	if (whole_line[i - 1] == '|')
+	if (i > 0 && whole_line[i - 1] == '|')
 	{
 		tmp2 = get_last_node(new_input_node);
 		if (tmp2 != NULL)
-		{
-			printf("fd0 from pipe is: %d\n", tmp2->pipe_out);
 			tmp->read_from_pipe = tmp2->pipe_out;
-		}
 	}
 	add_inputnode_tolist(new_input_node, tmp);
 	return (i + j);
@@ -146,11 +142,17 @@ t_input	*get_last_node(t_input **node)
 void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env, t_env **new_export)
 {
 	t_line_data	*line_data; // a pointer to the first element of the linked list of nodes
-	t_line_data	*tmp; // a temporary pointer to iterate through the linked list
+	// t_line_data	*tmp; // a temporary pointer to iterate through the linked list
 	t_input		*input_node;
 	char **cmd_args;
 	char *input_line;
+	t_input *t;
+	t_input *t2;
 
+	(void)new_export;
+	(void)mini_env;
+	t = *new_input_node;
+	t2 = *new_input_node;
 	input_node = *new_input_node;
 	while (input_node != NULL)
 	{
@@ -158,23 +160,14 @@ void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env, t_e
 		line_data = NULL;
 		if (input_line && (ft_strcmp(input_line, "") != 0))
 			{
-				// printf("You entered : %s\n", input_line);
 				cmd_args = ft_split_line(input_line, &line_data, env, new_input_node);
-				// int i = 0;
-				// while (cmd_args[i] != NULL)
-				// {
-				// 	printf("%s ,", cmd_args[i]);
-				// 	i++;
-				// }
-				// printf("\n");
-				// printf("this is the cmd args :%s\n", cmd_args[0]);
-				if (check_for_builtins(cmd_args, mini_env, new_export) == 0)
-				{
-					;
-				}
-				else
-					process_execution(&input_node, cmd_args, env);
 
+				// if (check_for_builtins(cmd_args, mini_env, new_export) == 0)
+				// {
+				// 	;
+				// }
+				// else
+				process_execution(&input_node, cmd_args, env);
 	//			PRINT THE LINKED LIST
 	// ############################################################################
 	// 		tmp = line_data;
@@ -199,38 +192,64 @@ void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env, t_e
 	// 		}
 	// // ############################################################################
 			// Free the linked list
-				while (line_data != NULL)
-				{
-					tmp = line_data;
-					line_data = line_data->next;
-					free(tmp);
-				}
-				free(input_line);
+			// 	while (line_data != NULL)
+			// 	{
+			// 		tmp = line_data;
+			// 		line_data = line_data->next;
+			// 		free(tmp);
+			// 	}
+			// 	free(input_line);
 			}
 			// Free the path
 			// free_path(mini_env);
 		input_node = input_node->next;
 	}
+	while (t != NULL)
+	{
+		if (t->pipe_in > 0)
+		{
+			close(t->pipe_in);
+			close(t->pipe_out);
+		}
+		t = t->next;
+	}
+	while (t2 != NULL)
+	{
+		waitpid(t2->pro_pid, NULL ,0);
+		t2 = t2->next;
+	}
 }
 
 void	process_execution(t_input **data, char **cmd_args, char **env)
 {
-	child_pid = fork();
-	if (child_pid < 0)
+	// pid_t	child_pid;
+	t_input *t;
+
+	t= *data;
+	printf("pid in: %d\n", (*data)->write_to_pipe);
+	printf("pid out: %d\n", (*data)->read_from_pipe);
+	(*data)->pro_pid = fork();
+	if ((*data)->pro_pid < 0)
 	{
 		// eroor_handle
 		exit(EXIT_FAILURE);
 	}
-	if (child_pid == 0)
+	if ((*data)->pro_pid== 0)
 	{
-		reset_io();
+		// reset_io();
 		standard_io(data);
+		while (t != NULL)
+		{
+			if (t->pipe_in > 0)
+			{
+				close(t->pipe_in);
+				close(t->pipe_out);
+			}
+			t = t->next;
+		}
 		exec_command(cmd_args, env);
 		exit(EXIT_SUCCESS);
 	}
-	waitpid(child_pid, 0 ,0);
-		if((*data)->read_from_pipe)
-			close((*data)->read_from_pipe);
-		if ((*data)->write_to_pipe)
-			close((*data)->write_to_pipe);
+	else
+		exit(2);
 }
