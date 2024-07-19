@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/18 08:04:32 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/19 05:14:21 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_input
 	int				pipe_in; // to get pip_fd[1] which allow us to write data into the pipe
 	int				pipe_out;//  to get pip_fd[0] which allow us to read data from the pipe
 	t_line_data		*data_node;	// first node of our old linked list
+	char			**cmd_args;
 	pid_t			pro_pid;
 	struct s_input	*next;
 }	t_input;

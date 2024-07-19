@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:46:05 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/15 16:43:18 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/19 03:23:41 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,12 @@ char	**merge_free_command(t_line_data **data, int len)
 			cmd_args[i] = ft_strdup(tmp->command);
 			i++;
 			tmp_delete = tmp;
-			free(tmp->command);
+			tmp = tmp->next;
+			free(tmp_delete->command);
 			delete_node(data, tmp_delete);
 		}
-		tmp = tmp->next;
+		else
+			tmp = tmp->next;
 	}
 	cmd_args[i] = NULL;
 	return (cmd_args);

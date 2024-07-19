@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 07:00:37 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/18 07:28:39 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/19 06:00:27 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ void	standard_io(t_input **data)
 	new_line_data = (*data)->data_node;
 	if ((*data)->write_to_pipe > 0)
 	{
-		printf("yes we change the out\n");
 		close((*data)->read_from_pipe);
 		dup2((*data)->write_to_pipe, STDOUT_FILENO);
 		close((*data)->write_to_pipe);
 	}
 	if ((*data)->read_from_pipe > 0)
 	{
-		printf("yes we change the in\n");
 		close((*data)->write_to_pipe);
 		dup2((*data)->read_from_pipe, STDIN_FILENO);
 		close((*data)->read_from_pipe);
