@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/19 05:57:15 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/19 08:04:03 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ void	split_pipes(char *whole_line, t_input **new_input_node);
 int	create_input_node(char *whole_line, int i,t_input **new_input_node);
 t_input *get_last_node(t_input **node);
 void	add_inputnode_tolist(t_input **data, t_input *new_line_data);
+void	close_fds(t_input **data);
+void	wait_for_children(t_input **data);
+void	fork_and_exec(t_input **data, char **env);
 
 void	start_prompt(char **env)
 {
 	char 		*whole_line;
 	t_input		*new_input_node;
-	t_input		*new_input_node2;
 	t_env		*mini_env;
 	t_env		*new_export;
-	t_input		*t;
-	t_input		*t2;
 
 	mini_env = NULL;
 	new_input_node = NULL;
@@ -46,31 +46,11 @@ void	start_prompt(char **env)
 //																	pipe1		pipe1		pipe2    ` linked list of t_input struct
 //																				  +					/
 //																				pipe1			   /
-	new_input_node2 = new_input_node;
-	t = new_input_node;
-	t2 = new_input_node;
-		start_real_work(&new_input_node, &mini_env, env, &new_export);
-		while (new_input_node2 != NULL)
-		{
-			process_execution(&new_input_node2, new_input_node2->cmd_args, env);
-			new_input_node2 = new_input_node2->next;
-		}
 
-		while (t2 != NULL)	// wait for the child process to finish
-		{
-			printf("waiting for pid: %d\n", t2->pro_pid);
-			waitpid(t2->pro_pid, NULL ,0);
-			t2 = t2->next;
-		}
-		while (t != NULL)  // close the pipes
-		{
-			if (t->pipe_in > 0)
-			{
-				close(t->pipe_in);
-				close(t->pipe_out);
-			}
-			t = t->next;
-		}
+		init_linked_list(&new_input_node, &mini_env, env, &new_export);
+		fork_and_exec(&new_input_node, env);
+		wait_for_children(&new_input_node);
+		close_fds(&new_input_node);
 
 	}
 }
@@ -153,7 +133,7 @@ t_input	*get_last_node(t_input **node)
 }
 
 
-void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env, t_env **new_export)
+void	init_linked_list(t_input **new_input_node, t_env **mini_env, char **env, t_env **new_export)
 {
 	t_line_data	*line_data; // a pointer to the first element of the linked list of nodes
 	// t_line_data	*tmp; // a temporary pointer to iterate through the linked list
@@ -201,26 +181,64 @@ void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env, t_e
 	}
 }
 
-void	process_execution(t_input **data, char **cmd_args, char **env)
+void close_fds(t_input **data)
 {
 	t_input *t;
-	t_input *t2;
 
-	t= (*data);
-	t2= (*data);
-	// printf("pid in: %d\n", (*data)->write_to_pipe);
-	// printf("pid out: %d\n", (*data)->read_from_pipe);
-	(*data)->pro_pid = fork();
-	if ((*data)->pro_pid < 0)
+	t = (*data);
+	while (t != NULL)
 	{
-		// eroor_handle
-		exit(EXIT_FAILURE);
+		if (t->pipe_in > 0)
+		{
+			close(t->pipe_out);
+			close(t->pipe_in);
+		}
+		t = t->next;
 	}
-	if ((*data)->pro_pid== 0)
+}
+
+void	wait_for_children(t_input **data)
+{
+	t_input *t;
+
+	t = (*data);
+	while (t != NULL)
 	{
-		// printf("process pid is: %d\n", getpid());
-		standard_io(data);
-		exec_command(cmd_args, env);
-		exit(EXIT_SUCCESS);
+		waitpid(t->pro_pid, NULL, 0);
+		t = t->next;
 	}
+}
+
+void	process_execution(t_input **data, char **cmd_args, char **env)
+{
+	printf("pid in: %d\n", (*data)->write_to_pipe);
+	printf("pid out: %d\n", (*data)->read_from_pipe);
+	printf("command is: %s\n", (*data)->cmd_args[0]);
+	standard_io(data);
+	close_fds(data);
+	exec_command(cmd_args, env);
+	exit(EXIT_SUCCESS);
+}
+
+void	fork_and_exec(t_input **data, char **env)
+{
+	t_input *new_input_node;
+
+	new_input_node = *data;
+
+		while (new_input_node != NULL)
+		{
+			new_input_node->pro_pid = fork();
+			if (new_input_node->pro_pid < 0)
+			{
+				// eroor_handle
+				exit(EXIT_FAILURE);
+			}
+			if (new_input_node->pro_pid == 0)
+			{
+				process_execution(&new_input_node, new_input_node->cmd_args, env);
+				exit(EXIT_SUCCESS);
+			}
+			new_input_node = new_input_node->next;
+		}
 }

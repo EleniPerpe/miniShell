@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 07:00:37 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/19 06:00:27 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/19 07:12:44 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void	standard_io(t_input **data)
 		dup2((*data)->read_from_pipe, STDIN_FILENO);
 		close((*data)->read_from_pipe);
 	}
+	printf("pid in: %d\n", (*data)->write_to_pipe);
+	printf("pid out: %d\n", (*data)->read_from_pipe);
+	printf("command is: %s\n", (*data)->cmd_args[0]);
 	while (new_line_data != NULL)
 	{
 		if (new_line_data->redirctor != NULL)

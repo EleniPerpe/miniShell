@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/19 05:14:21 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/19 08:04:25 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int		after_redirection_decision(char *line, int i, t_line_data **data);
 int		after_redi_len(char *line, int i);
 char	*expander_fill(char *line, int i, char **env);
 void	free_path(t_env *mini_env);
-void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env, t_env **new_export);
+void	init_linked_list(t_input **new_input_node, t_env **mini_env, char **env, t_env **new_export);
 void	split_pipes(char *whole_line, t_input **new_input_node);
 int		create_input_node(char *whole_line, int i,t_input **new_input_node);
 t_input	*get_last_node(t_input **node);
@@ -110,8 +110,12 @@ void	print_export(t_env **new_export);
 char	*ft_strjoin_export(char const *s1, char const *s2, char c);
 void	ft_unset(char **args, t_env **mini_env, t_env **new_export);
 void	export_remove(t_env **node_remove, char *line, int i);
-char *check_expander_and_rest(char *input_line, char **env);
+char	*check_expander_and_rest(char *input_line, char **env);
 t_input	*get_last_node(t_input **node);
+void	close_fds(t_input **data);
+void	wait_for_children(t_input **data);
+void	fork_and_exec(t_input **data, char **env);
+
 //void	free_list(t_line_data *line_data);
 
 #endif
