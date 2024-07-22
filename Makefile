@@ -6,7 +6,7 @@
 #    By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/07/17 17:31:02 by eperperi         ###   ########.fr        #
+#    Updated: 2024/07/22 17:41:42 by eperperi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME = minishell
 
-CC = gcc -g #-fsanitize=address
+CC = gcc -g -fsanitize=address
 # LEAKS = -L../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next -I ../LeakSanitize
 CFLAGS = -Wall -Wextra -Werror -I$(HOME)/local/include
 LDFLAGS = -L $(HOME)/local/lib -lreadline -lhistory
@@ -47,6 +47,7 @@ SRC = $(SRC_DIR)main.c \
 	  $(BUILTINS_DIR)export_remove.c \
 	  $(BUILTINS_DIR)unset.c \
 	  $(BUILTINS_DIR)exit.c \
+	  $(BUILTINS_DIR)cd.c \
 
 OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
 LIB = Libft/libft.a

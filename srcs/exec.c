@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:46:05 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/15 16:43:18 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:38:44 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,17 @@ char	**merge_free_command(t_line_data **data, int len)
 			cmd_args[i] = ft_strdup(tmp->command);
 			i++;
 			tmp_delete = tmp;
-			free(tmp->command);
+			tmp = tmp->next;
+			free(tmp_delete->command);
 			delete_node(data, tmp_delete);
 		}
-		tmp = tmp->next;
+		else
+		{
+			tmp = tmp->next;
+		}
 	}
 	cmd_args[i] = NULL;
+	i = 0;
 	return (cmd_args);
 }
 
@@ -135,6 +140,9 @@ int	cmd_args_counter(t_line_data **data)
 char	**command_merge(t_line_data **data)
 {
 	char **cmd_args;
+	t_line_data	*tmp;
+	
+	tmp = *data;
 	cmd_args = merge_free_command(data, cmd_args_counter(data));
 	return (cmd_args);
 }

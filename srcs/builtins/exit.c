@@ -6,11 +6,11 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:30:26 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/17 17:32:25 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/22 12:53:18 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "../../minishell"
+ #include "../../minishell.h"
 
 //  void ft_exit(t_env **mini_env, t_env **new_export)
 //  {
