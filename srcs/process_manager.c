@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/17 17:17:09 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:35:20 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	create_input_node(char *whole_line, int i,t_input **new_input_node)
 		tmp->write_to_pipe = pipe_fd[1];
 		printf("fd1 from pipe is: %d\n", tmp->pipe_in);
 	}
-	if (whole_line[i - 1] == '|')
+	if (whole_line[i - 1 && i > 0] == '|')
 	{
 		tmp2 = get_last_node(new_input_node);
 		if (tmp2 != NULL)

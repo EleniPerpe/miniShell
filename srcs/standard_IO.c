@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   standard_IO.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 07:00:37 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/13 07:12:38 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/22 14:29:10 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	standard_io(t_input **data)
 			// {
 			// }
 		}
-		else
+		// else
 			new_line_data = new_line_data->next;
 	}
 }

@@ -1,39 +1,13 @@
-"-------------------------------------------------------------------------------------
-# case:
-< "  file"
-(if there is space in the quote it doesnot work correctly in file name)
-
--------------------------------------------------------------------------------------
-case missing the second ":
 
 # case 1:
-"ls
-we must open heredoc, keep read lines until find the second "
-then error message: command  not found,  which will come from execve
-but to make things easy we can printout this error directly
-
-# case 2:
-< "file
-we must open heredoc, read lines until we find the second "
-print error message: No such file or directory
-
-
-# case 3:
-> "file111
-we must open heredoc, read again until second "
-and create a file named file111 and redirect the command to it and ignor everything in heredoc
-
-
-# case 4:
-<< "mark
-open heredoc and read lines forever
-
-# case 5:
 > out "ls
-open heredoc, read lines until second "
-print command not found in the terminal
-WE SHOULD NOOOOOOT change the STD_OUT to the file out
+check for seg fault".
 
--------------------------------------------------------------------------------------
-in bash we can have an empty file name like this > " "
-it contains only one space in this example
+
+cd, and function for execution.
+
+cd, cd .. cd /Users/eperperi/etc cd ~.
+
+$? (I need the status).
+
+I can clean and I can check for exit codes.
