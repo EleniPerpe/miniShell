@@ -6,33 +6,68 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 07:00:37 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/19 07:12:44 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/22 22:15:54 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	standard_io(t_input **data)
+// void	standard_io(t_input *data)
+void	standard_io(t_input *data, int **pipe_fd, int i, int processes_num)
 {
-	int			fd;
 	t_line_data	*new_line_data;
+	int			fd;
+	// printf("-------------------standard_io--------------------------\n");
+	new_line_data = data->data_node;
+	// printf("from standard_io() the command is %s\n", data->cmd_args[0]);
+	// printf("processes_num is: %d\n", processes_num);
+	// printf("i is: %d\n", i);
+	// // printf("redirector is: %s\n", data->data_node->redirctor);
+	// printf("-------------------end--------------------------\n");
 
-	new_line_data = (*data)->data_node;
-	if ((*data)->write_to_pipe > 0)
+if (i == 0 && pipe_fd[i] != NULL)
+{
+	close(pipe_fd[i][0]);
+	dup2(pipe_fd[i][1], STDOUT_FILENO);
+	close(pipe_fd[i][1]);
+}
+else if (i != 0 && i == (processes_num - 1) && pipe_fd[i - 1] != NULL)
+{
+	close(pipe_fd[i - 1][1]);
+	dup2(pipe_fd[i - 1][0], STDIN_FILENO);
+	close(pipe_fd[i - 1][0]);
+}
+else if (i > 0 && i < (processes_num - 1))
+{
+	if (pipe_fd[i - 1] != NULL)
 	{
-		close((*data)->read_from_pipe);
-		dup2((*data)->write_to_pipe, STDOUT_FILENO);
-		close((*data)->write_to_pipe);
+		close(pipe_fd[i - 1][1]);
+		dup2(pipe_fd[i - 1][0], STDIN_FILENO);
+		close(pipe_fd[i - 1][0]);
 	}
-	if ((*data)->read_from_pipe > 0)
+	if (pipe_fd[i] != NULL)
 	{
-		close((*data)->write_to_pipe);
-		dup2((*data)->read_from_pipe, STDIN_FILENO);
-		close((*data)->read_from_pipe);
+		close(pipe_fd[i][0]);
+		dup2(pipe_fd[i][1], STDOUT_FILENO);
+		close(pipe_fd[i][1]);
 	}
-	printf("pid in: %d\n", (*data)->write_to_pipe);
-	printf("pid out: %d\n", (*data)->read_from_pipe);
-	printf("command is: %s\n", (*data)->cmd_args[0]);
+}
+
+	// t_line_data *pr;
+
+	// pr = data->data_node;
+	// while (pr != NULL)
+	// {
+	// 	if (pr->redirctor != NULL)
+	// 		printf("redirector is: %s\n", pr->redirctor);
+	// 	if (pr->after_redirctor != NULL)
+	// 		printf("File name is: %s\n", pr->after_redirctor);
+	// 	// if (tmp->expander != NULL)
+	// 	// 	printf("expander is: %s\n", tmp->expander);
+	// 	if (pr->command != NULL)
+	// 		printf("Command is: %s\n", pr->command);
+	// 	pr = pr->next;
+	// }
 	while (new_line_data != NULL)
 	{
 		if (new_line_data->redirctor != NULL)
@@ -41,13 +76,14 @@ void	standard_io(t_input **data)
 			{
 				new_line_data = new_line_data->next;
 				fd = open(new_line_data->after_redirctor, O_RDONLY);
+				printf("the fd is: %d\n", fd);
 				dup2(fd, STDIN_FILENO);
 				close(fd);
 			}
 			else if (!ft_strcmp(">", new_line_data->redirctor))
 			{
 				new_line_data = new_line_data->next;
-				fd = open(new_line_data->after_redirctor, O_WRONLY | O_CREAT | O_TRUNC, 0777);	//O_WRONLY: the file is opened for writing only.
+				fd = open(new_line_data->after_redirctor, O_WRONLY | O_CREAT | O_TRUNC, 0644);	//O_WRONLY: the file is opened for writing only.
 																						// O_CREAT: to create the file if it does not already exist.
 																						// O_TRUNC: clearing any existing content in the file.
 																						// 0644: the file permission.
@@ -57,7 +93,7 @@ void	standard_io(t_input **data)
 			else if (!ft_strcmp(">>", new_line_data->redirctor))
 			{
 				new_line_data = new_line_data->next;
-				fd = open(new_line_data->after_redirctor, O_WRONLY | O_CREAT | O_APPEND, 0777); // O_APPEND: the file is opened in append mode.
+				fd = open(new_line_data->after_redirctor, O_WRONLY | O_CREAT | O_APPEND, 0644); // O_APPEND: the file is opened in append mode.
 				dup2(fd, STDOUT_FILENO);
 				close(fd);
 			}
@@ -73,6 +109,13 @@ void	standard_io(t_input **data)
 
 void	reset_io(void)
 {
-	dup2(0, STDIN_FILENO);
-	dup2(1, STDOUT_FILENO);
+		int	stand_in;
+		int	stand_out;
+		stand_in = dup(STDIN_FILENO);
+		stand_out = dup(STDOUT_FILENO);
+
+		dup2(stand_in, STDIN_FILENO);
+		dup2(stand_out , STDOUT_FILENO);
+		close(stand_in);
+		close(stand_out);
 }
