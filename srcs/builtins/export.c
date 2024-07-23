@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:57:54 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/17 15:56:28 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:22:16 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,12 @@ void	fill_only_exp(t_env **new_export, char **args, int i, t_env **mini_env)
 
 	new_export_line = (t_env *)ft_malloc(sizeof(t_env));
 	new_export_line->line = create_export_line(args[i]);
-	find_if_exists(new_export, new_export_line->line, mini_env);
 	if (!new_export_line->line)
 	{
 		free(new_export_line);
 		exit(EXIT_FAILURE);
 	}
+	find_if_exists(new_export, new_export_line->line, mini_env);
 	new_export_line->next = NULL;
 	add_path_to_list(new_export, new_export_line);
 }

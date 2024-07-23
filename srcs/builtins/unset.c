@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:12:10 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/17 17:16:03 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:53:05 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void ft_unset(char **args, t_env **mini_env, t_env **new_export)
 		j = 0;
 		while (args[i][j] != '=' && args[i][j] != '\0')
 			j++;
-		export_remove(mini_env, args[i], j);
+		node_remove(mini_env, args[i], j);
 		string = ft_strjoin("declare -x ", args[i]);
-		export_remove(new_export, string, j + 11);
+		node_remove(new_export, string, j + 11);
 		free(string);	
 		i++;
 	}

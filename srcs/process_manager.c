@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/22 17:35:20 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:34:30 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env, t_e
 				// }
 				// printf("\n");
 				// printf("this is the cmd args :%s\n", cmd_args[0]);
-				if (check_for_builtins(cmd_args, mini_env, new_export) == 0)
+				if (check_for_builtins(cmd_args, mini_env, new_export, env) == 0)
 				{
 					;
 				}
