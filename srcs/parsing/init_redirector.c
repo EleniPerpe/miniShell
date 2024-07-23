@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_redirector.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 16:51:11 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/15 14:19:54 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/23 16:42:30 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int	redirection_fill(char *line, int i, t_line_data **data)
 
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
 	i = check_redirection_cases(line, i, new_line_data);
-	add_node_to_list(data, new_line_data);
 	while (line[i] == ' ')
 		i++;
 	if (line[i] == '\'' || line[i] == '"')
 		i = quote_token(line, i, &new_line_data);
 	else
 		i = after_redirection_decision(line, i, &new_line_data);
+	add_node_to_list(data, new_line_data);
 	return (i);
 }
 

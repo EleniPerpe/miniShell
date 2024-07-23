@@ -6,16 +6,24 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/13 04:56:24 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/22 01:25:31 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+// int	open_check()
+// {
+// 	// via the fd --> open and check wether fd == -1
+// 	write(2, "minishell: ", ft_strlen("minishell"));
+// 	write(2, 0);
+// 	ft_putstr_fd("", )
+// 	write (2 ,"minishell: No such file or directory", ft_strlen("minishell: No such file or directory"));
+// }
+
 int	main(int argc, char **argv, char **env)
 {
 	(void)argv;
-	(void)argc;
 	if (argc != 1)
 	{
 		printf("This program doesn't take any arguments!\n");
