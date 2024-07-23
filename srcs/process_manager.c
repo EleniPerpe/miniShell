@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/22 22:27:56 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/23 19:52:46 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,13 @@ void	start_prompt(char **env)
 		reset_io(); // need to modify it to take STD IN and OUT from before the while
 		whole_line = readline("minishell >");
 		add_history(whole_line);
-		processes_num =  split_pipes(whole_line, &new_input_node); // to have     --------- | --------- | ---------
-//																					 |			 |			 |
-//																					 |			 |			 |
-//																					 v			 v			 v
-//																					node1		node2		node3  `
-//																					 +			  +			 +      `
-//																					pipe1		pipe1		pipe2    ` linked list of t_input struct
-//																								  +					/
-//																								pipe1			   /
+		processes_num =  split_pipes(whole_line, &new_input_node);
 
 		init_linked_list(&new_input_node, &mini_env, env, &new_export);
 		pipe_fd =  pipes_init(processes_num);
-		// assign_pipe_to_nodes(&new_input_node, pipe_fd, processes_num);
 		pro_pid = (int **)ft_malloc(sizeof(int *) * (processes_num + 1));
 		pro_pid[processes_num] = NULL;
-		while (i < processes_num /*&& new_input_node != NULL*/)
+		while (i < processes_num)
 		{
 			pro_pid[i] = (int *)ft_malloc(sizeof(int) * 2);
 			pro_pid[i][1] = (int)NULL;
@@ -175,13 +166,16 @@ void	init_linked_list(t_input **new_input_node, t_env **mini_env, char **env, t_
 	input_node = *new_input_node;
 	while (input_node != NULL)
 	{
+			printf("check check\n");
 		input_line = input_node->part_line;
 		if (input_line && (ft_strcmp(input_line, "") != 0))
 			{
 				input_node->cmd_args = ft_split_line(input_line, /*&line_data,*/ env, input_node);
 	//			PRINT THE LINKED LIST
 	// ############################################################################
-			// tmp = line_data;
+			// t_line_data *tmp;
+
+			// tmp = input_node->data_node;
 			// printf("part of whooooooole line is: %s\n", input_node->part_line);
 			// printf("command is: %s\n", input_node->cmd_args[0]);
 			// while (tmp != NULL) // print the linked list to check if it's working
@@ -196,7 +190,7 @@ void	init_linked_list(t_input **new_input_node, t_env **mini_env, char **env, t_
 			// 		printf("Command is: %s\n", tmp->command);
 			// 	tmp = tmp->next;
 			// }
-	// // ############################################################################
+	// // // ############################################################################
 			}
 		input_node = input_node->next;
 	}
@@ -259,7 +253,7 @@ int **pipes_init(int processes_num)
 	int		i;
 
 	i = 0;
-	pipe_fd = (int **)ft_malloc(sizeof(int *) * (processes_num - 1 + 1)); // -1: if we have 1 prosess we don't need a pipe
+	pipe_fd = (int **)ft_malloc(sizeof(int *) * (processes_num - 1 + 1));
 	pipe_fd[processes_num - 1] =NULL;
 	while (i < (processes_num - 1))
 	{
@@ -269,41 +263,3 @@ int **pipes_init(int processes_num)
 	}
 	return (pipe_fd);
 }
-
-// void	assign_pipe_to_nodes(t_input **data, int **pipe_fd, int process_num)
-// {
-// 	t_input *current_node;
-// 	int		i;
-
-// 	current_node = *data;
-// 	i = 0;
-// 	while (i < process_num && current_node != NULL && process_num > 1)
-// 	{
-// 		if (i == 0)
-// 		{
-// 			printf("in assighn_pipe_to_nodes(), for command %s: ", current_node->cmd_args[0]);
-// 			printf("we change the output to %d\n", pipe_fd[i][1]);
-// 			current_node->write_to_pipe = pipe_fd[i][1];
-// 			current_node->pipe_out = pipe_fd[i][0];
-// 		}
-// 		else if (i == process_num - 1)
-// 		{
-// 			printf("in assighn_pipe_to_nodes(), for command %s: ", current_node->cmd_args[0]);
-// 			printf("we change the input to %d\n", pipe_fd[i - 1][0]);
-// 			current_node->read_from_pipe = pipe_fd[i - 1][0];
-// 			current_node->pipe_in = pipe_fd[i - 1][1];
-// 		}
-// 		else if (i > 0 && i < process_num - 1)
-// 		{
-// 			printf("in assighn_pipe_to_nodes(), for command %s: ", current_node->cmd_args[0]);
-// 			printf("in assign_pipe_to_nodes: we change the input to %d and the output to %d\n", pipe_fd[i - 1][0], pipe_fd[i][1]);
-// 			current_node->write_to_pipe = pipe_fd[i][1];
-// 			current_node->read_from_pipe = pipe_fd[i - 1][0];
-// 			current_node->pipe_out = pipe_fd[i][0];
-// 			current_node->pipe_in = pipe_fd[i - 1][1];
-// 		}
-// 		current_node = current_node->next;
-// 		i++;
-// 	}
-
-// }
