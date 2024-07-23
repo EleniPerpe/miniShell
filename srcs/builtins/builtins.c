@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:08:51 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/22 17:29:28 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:34:37 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int check_if_valid(char **args, int i);
 
-int check_for_builtins(char **args, t_env **mini_env, t_env **new_export)
+int check_for_builtins(char **args, t_env **mini_env, t_env **new_export, char **env)
 {
 	// t_env *new_export;
 	// t_env *tmp;
@@ -53,13 +53,13 @@ int check_for_builtins(char **args, t_env **mini_env, t_env **new_export)
         ft_unset(args, mini_env, new_export);
         return 0;
 	}
-	// if ((ft_strncmp(args[0], "cd", 2) == 0) || (ft_strncmp(args[0], "CD", 2) == 0))
-	// {
-	// 	if (check_if_valid(args, 2) == 1)
-	// 		return (1);
-    //     ft_cd(mini_env, args);
-    //     return 0;
-	// }
+	if ((ft_strncmp(args[0], "cd", 2) == 0) || (ft_strncmp(args[0], "CD", 2) == 0))
+	{
+		if (check_if_valid(args, 2) == 1)
+			return (1);
+        ft_cd(mini_env, args, env, new_export);
+        return 0;
+	}
 	// if ((ft_strncmp(args[0], "exit", 4) == 0) || (ft_strncmp(args[0], "EXIT", 4) == 0))
 	// {
 	// 	if (args[0][4] != '\0')

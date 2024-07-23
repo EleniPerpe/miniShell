@@ -6,13 +6,13 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:23:27 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/17 17:15:58 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:44:12 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	export_remove(t_env **new_export, char *line, int i);
+void	node_remove(t_env **new_export, char *line, int i);
 
 void	find_if_exists(t_env **new_export, char *line, t_env **mini_env)
 {
@@ -25,15 +25,15 @@ void	find_if_exists(t_env **new_export, char *line, t_env **mini_env)
 		return ;
 	if (ft_strncmp("declare -x ", line, 11) == 0)
 	{
-		export_remove(new_export, line, i);
+		node_remove(new_export, line, i);
 	}
 	else
 	{
-		export_remove(mini_env, line, i);
+		node_remove(mini_env, line, i);
 	}
 }
 
-void export_remove(t_env **node_remove, char *line, int i)
+void node_remove(t_env **node_remove, char *line, int i)
 {
 	t_env *curr;
 	t_env *remove;
