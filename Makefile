@@ -6,7 +6,7 @@
 #    By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/07/19 03:18:38 by rshatra          ###   ########.fr        #
+#    Updated: 2024/07/23 20:48:34 by rshatra          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,9 @@ SRC = $(SRC_DIR)main.c \
 	  $(BUILTINS_DIR)export_remove.c \
 	  $(BUILTINS_DIR)unset.c \
 	  $(BUILTINS_DIR)exit.c \
+	  $(BUILTINS_DIR)pipes_fork_utilities.c \
+	  $(BUILTINS_DIR)errors_free.c \
+	  $(BUILTINS_DIR)build_nodes.c \
 
 OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
 LIB = Libft/libft.a
