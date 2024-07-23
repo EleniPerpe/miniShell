@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:00:29 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/23 14:17:25 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:26:56 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,19 @@ void	create_path(char **env, t_env **mini_env)
 	i = 0;
 	while (env[i] != NULL)
 	{
-		new_env = (t_env *)ft_malloc(sizeof(t_env));
-		new_env->line = ft_strdup(env[i]);
-		if (!new_env->line)
+		if (ft_strncmp("OLDPWD", env[i], 6) != 0)
 		{
-			free(new_env);
-			exit(EXIT_FAILURE);
+			new_env = (t_env *)ft_malloc(sizeof(t_env));
+			new_env->line = ft_strdup(env[i]);
+			if (!new_env->line)
+			{
+				free(new_env);
+				exit(EXIT_FAILURE);
+			}
+			new_env->next = NULL;
+			add_path_to_list(mini_env, new_env);
 		}
-		new_env->next = NULL;
-		add_path_to_list(mini_env, new_env);
-		i++;
+		i++;	
 	}
 }
 
