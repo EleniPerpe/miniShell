@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:30:26 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/22 12:53:18 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/23 23:25:56 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 //  void ft_exit(t_env **mini_env, t_env **new_export)
 //  {
-	
+
 //  }
