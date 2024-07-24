@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:23:28 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/24 13:11:26 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:45:28 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_cd(t_env **mini_env, char **args, char **env, t_env **new_export)
 	char *temp_pwd;
 
 	(void)env;
-	// create_old_pwd(mini_env, new_export);
+	create_old_pwd(mini_env, new_export);
 	if (args[1] == NULL || (args[1][0] == '~' && args[1][1] == '\0'))
 	{
 		temp_pwd = getenv("HOME");
@@ -40,11 +40,21 @@ void	ft_cd(t_env **mini_env, char **args, char **env, t_env **new_export)
 			exit (EXIT_FAILURE);
 		}
 	}
-	// else if (args[1] != NULL && (ft_strncmp("--", args[1], 2)))
-	// {
-	// 	//give the oldpwd instead
-	// }
-	else if (args[1] != NULL || (ft_strncmp("..", args[1], 2)))
+	else if (args[1] != NULL && strcmp(args[1], "--") == 0)
+	{
+		temp_pwd = getenv("OLDPWD");
+		if (temp_pwd == NULL)
+		{
+			fprintf(stderr, "Cannot find OLDPWD environment variable\n");
+			exit(EXIT_FAILURE);
+		}
+		if (chdir(temp_pwd) != 0)
+		{
+			perror("chdir() error");
+			exit(EXIT_FAILURE);
+		}
+	}
+	else if (args[1] != NULL && (ft_strncmp("..", args[1], 2)) == 0)
 	{
 		temp_pwd = create_previous_directory(mini_env);
 		if (chdir(temp_pwd) != 0)
@@ -71,54 +81,53 @@ void	ft_cd(t_env **mini_env, char **args, char **env, t_env **new_export)
 }
 
 	
-// void	create_old_pwd(t_env **mini_env, t_env **new_export)
-// {
-// 	char *old_pwd;
-// 	size_t size = 1024;
-// 	t_env *pwd_export;
-// 	t_env *pwd_env;
+void	create_old_pwd(t_env **mini_env, t_env **new_export)
+{
+	char *old_pwd;
+	size_t size = 1024;
+	t_env *pwd_export;
+	t_env *pwd_env;
 	
-// 	(void)new_export;
-// 	check_if_exists(mini_env);
-// 	check_if_exists(new_export);
-// 	old_pwd = (char *)ft_malloc(size);
-// 	if (getcwd(old_pwd, size) != NULL)
-// 	{
-// 		pwd_export = (t_env *)ft_malloc(sizeof(t_env));
-// 		pwd_export->line = ft_strjoin("OLDPWD=", old_pwd);
-// 		pwd_export->next = NULL;
-// 		pwd_env = (t_env *)ft_malloc(sizeof(t_env));
-// 		pwd_env->line = ft_strjoin("OLDPWD=", old_pwd);
-// 		pwd_env->next = NULL;
-// 		add_path_to_list(mini_env, pwd_env);
+	(void)new_export;
+	check_if_exists(mini_env);
+	check_if_exists(new_export);
+	old_pwd = (char *)ft_malloc(size);
+	if (getcwd(old_pwd, size) != NULL)
+	{
+		pwd_export = (t_env *)ft_malloc(sizeof(t_env));
+		pwd_export->line = ft_strjoin_export("declare -x OLDPWD=", old_pwd, '"');
+		pwd_export->next = NULL;
+		add_path_to_list(new_export, pwd_export);
+		pwd_env = (t_env *)ft_malloc(sizeof(t_env));
+		pwd_env->line = ft_strjoin("OLDPWD=", old_pwd);
+		pwd_env->next = NULL;
+		add_path_to_list(mini_env, pwd_env);
 
-// 	}
-// 	else
-//         perror("getcwd() error");
-// }
+	}
+	else
+        perror("getcwd() error");
+}
 
-// void check_if_exists(t_env **envs)
-// {
-// 	t_env *temp_envs;
-// 	t_env *next_env;
-// 	char *temp_export;
+void check_if_exists(t_env **envs)
+{
+	t_env *temp_envs;
+	t_env *next_env;
+	char *temp_export;
 
-// 	temp_envs = *envs;
-// 	while (temp_envs != NULL)
-// 	{
-// 		next_env = temp_envs->next;
-// 		printf("Hi from line %s :)\n", temp_envs->line);
-// 		if (ft_strncmp("OLDPWD", temp_envs->line, 6) == 0)
-// 				node_remove(envs, temp_envs->line, 6);
-// 		else if (ft_strncmp("declare -x OLDPWD", temp_envs->line, 17) == 0)
-// 		{
-// 			printf("Hi :)\n");
-// 			temp_export = ft_strjoin("declare -x ", temp_envs->line);
-// 			node_remove(envs, temp_export, 6);
-// 		}
-// 		temp_envs = next_env;
-// 	}
-// }
+	temp_envs = *envs;
+	while (temp_envs != NULL)
+	{
+		next_env = temp_envs->next;
+		if (ft_strncmp("OLDPWD", temp_envs->line, 6) == 0)
+				node_remove(envs, temp_envs->line, 6);
+		else if (ft_strncmp("declare -x OLDPWD", temp_envs->line, 17) == 0)
+		{
+			temp_export = ft_strjoin("declare -x ", temp_envs->line);
+			node_remove(envs, temp_export, 6);
+		}
+		temp_envs = next_env;
+	}
+}
 
 
 char	*create_previous_directory(t_env **mini_env)
@@ -150,7 +159,6 @@ void	change_other_envs(t_env **mini_env,t_env **new_export, char *line)
 	
 	i = 0;
 	current_mini_env = *mini_env;
-	// printf("Line : %s\n", line);
 	while (line[i] != '=' && line[i] != '\0')
 		i++;
 	while (current_mini_env != NULL && ft_strncmp(current_mini_env->line, line, i) != 0)
@@ -162,7 +170,7 @@ void	change_other_envs(t_env **mini_env,t_env **new_export, char *line)
 		current_new_export = current_new_export->next;
 	if (current_new_export != NULL)
 	{
-		temp_export = ft_strjoin("declare -x ", line);
+		temp_export = ft_strjoin_export("declare -x PWD=", line + 4, '"');
 		replace_nodes(new_export, temp_export, i + 11, 2);
 	}
 }
@@ -171,7 +179,6 @@ void replace_nodes(t_env **mini_env, char *line, int i, int bool)
 {
 	t_env *temp_env;
 	
-	// printf("Line :: %s\n", line);
 	node_remove(mini_env, line, i);
 	temp_env = (t_env *)ft_malloc(sizeof(t_env));
 	if (bool == 1)
