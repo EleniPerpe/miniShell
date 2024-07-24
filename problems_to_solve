@@ -6,21 +6,9 @@ check for seg fault".
 
 cd, and function for execution.
 
-cd, cd .. cd /Users/eperperi/etc cd ~.
-
-$? (I need the status).
+$? (I need the status for the exit code).
 
 I can clean and I can check for exit codes.
 
-+ at export is to append
-
 export problems
 	- += is append
-
-unset problems
-	- same variable / grammar check as export, e.g cant start with a 1 
-
-
-echo problem
-	- multiple -n flags not removed before work
-	- multiple n's not creating -n effects
