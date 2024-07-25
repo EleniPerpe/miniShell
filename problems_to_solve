@@ -7,5 +7,5 @@ $? (I need the status for the exit code).
 
 I can clean and I can check for exit codes.
 
-export problems
-	- += is append
+I need to change the expander to take out env instead of the real one
+when I know how the execution works
