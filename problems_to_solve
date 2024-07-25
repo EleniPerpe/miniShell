@@ -3,9 +3,6 @@
 > out "ls
 check for seg fault".
 
-
-cd, and function for execution.
-
 $? (I need the status for the exit code).
 
 I can clean and I can check for exit codes.
