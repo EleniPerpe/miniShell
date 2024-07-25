@@ -6,11 +6,11 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:46:05 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/22 17:45:09 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:56:12 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#	include "../minishell.h"
+#include "../minishell.h"
 
 // we will use this function to free the allocated memory
 // after execute the command
@@ -83,10 +83,11 @@ char	*find_path(char *cmd, char **env)
 void	exec_command(char **cmd_args, char **env)
 {
 	char	*path;
-		if (cmd_args[0] != NULL)
-			path = find_path(cmd_args[0], env);
-		if (execve(path, cmd_args, env) == -1)
-			exit(EXIT_FAILURE);
+
+	if (cmd_args[0] != NULL)
+		path = find_path(cmd_args[0], env);
+	if (execve(path, cmd_args, env) == -1)
+		exit(EXIT_FAILURE);
 }
 
 char	**merge_free_command(t_line_data **data, int len)
@@ -122,8 +123,8 @@ char	**merge_free_command(t_line_data **data, int len)
 
 int	cmd_args_counter(t_line_data **data)
 {
-	int	counter;
-	t_line_data *tmp;
+	int			counter;
+	t_line_data	*tmp;
 
 	counter = 0;
 	tmp = *data;
@@ -134,14 +135,13 @@ int	cmd_args_counter(t_line_data **data)
 		tmp = tmp->next;
 	}
 	return (counter);
-
 }
 
 char	**command_merge(t_line_data **data)
 {
-	char **cmd_args;
+	char		**cmd_args;
 	t_line_data	*tmp;
-	
+
 	tmp = *data;
 	cmd_args = merge_free_command(data, cmd_args_counter(data));
 	return (cmd_args);

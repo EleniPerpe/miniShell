@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/15 14:19:44 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:55:09 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int	quote_token(char *line, int i, t_line_data **line_data)
 	return (i + j + 1);
 }
 
-int check_for_flag(char *line, int i)
+int	check_for_flag(char *line, int i)
 {
-	int flag;
+	int	flag;
 
 	flag = 0;
 	while (i > 0 && (line[i] == ' ' || line[i] == '"' || line[i] == '\''))
@@ -69,7 +69,6 @@ int	check_quotes_cases(char *line, int *i)
 	j = 0;
 	if (*i <= 0)
 		return (0);
-
 	(*i)--;
 	if (line[*i] == '\'')
 	{
@@ -80,13 +79,13 @@ int	check_quotes_cases(char *line, int *i)
 		{
 			j++;
 		}
-			if (line[*i + j] == '\0')
-			{
-				printf("The program does not interpret unclosed quotes\n");
-				// kill(child_pid, SIGKILL);
-				// exit(EXIT_FAILURE);
-				// send a signal to kill the child process
-			}
+		if (line[*i + j] == '\0')
+		{
+			printf("The program does not interpret unclosed quotes\n");
+			// kill(child_pid, SIGKILL);
+			// exit(EXIT_FAILURE);
+			// send a signal to kill the child process
+		}
 	}
 	else if (line[*i] == '"')
 	{

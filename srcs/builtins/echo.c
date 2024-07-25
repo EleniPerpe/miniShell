@@ -6,19 +6,19 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:56:41 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/24 18:54:27 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:45:13 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int check_for_ns(char **args, int count);
-void print_echo(char **args, int i);
+int		check_for_ns(char **args, int count);
+void	print_echo(char **args, int i);
 
-void ft_echo(char **args)
+void	ft_echo(char **args)
 {
-	int i;
-	
+	int	i;
+
 	i = 1;
 	if (args[i] != NULL && ft_strncmp(args[i], "-n", 2) == 0)
 	{
@@ -26,17 +26,17 @@ void ft_echo(char **args)
 			i++;
 		i = check_for_ns(args, i);
 		if (i > 1)
-			print_echo(args, i);		
+			print_echo(args, i);
 	}
 	else
 	{
-		print_echo(args, i);		
+		print_echo(args, i);
 		if (args[1] != NULL)
 			printf("\n");
 	}
 }
 
-void print_echo(char **args, int i)
+void	print_echo(char **args, int i)
 {
 	while (args[i] != NULL)
 	{
@@ -47,11 +47,10 @@ void print_echo(char **args, int i)
 	}
 }
 
-int check_for_ns(char **args, int count)
+int	check_for_ns(char **args, int count)
 {
-	int i;
-	int j;
-
+	int	i;
+	int	j;
 
 	i = 1;
 	while (i < count)

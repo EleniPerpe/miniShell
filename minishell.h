@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/25 18:21:39 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:53:36 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <fcntl.h>
 # include <signal.h>
 
-extern pid_t child_pid;
+extern pid_t	child_pid;
 
 // type:
 // command = 0;
@@ -68,14 +68,14 @@ typedef struct s_input
 }	t_input;
 
 void	start_prompt(char **env);
-char	**ft_split_line(char *input_line, t_line_data **line_data, char **env, t_input **input_node);
+char	**ft_split_line(char *input_line, t_line_data **line_data, char **env,
+			t_input **input_node);
 int		redirection_fill(char *line, int i, t_line_data **data);
 int		after_redirection_fill(char *line, int i, t_line_data **data);
 void	init_nodes_redirctor(t_line_data **data, int type);
 void	*ft_malloc(size_t size);
 int		command_fill(char *line, int i, t_line_data **data);
 void	add_node_to_list(t_line_data **data, t_line_data *new_line_data);
-// int		ft_split_pipe(char *line, t_line_data **line_data, char p, int i, char **env);
 int		quote_token(char *line, int i, t_line_data **line_data);
 void	create_path(char **env, t_env **mini_env);
 void	standard_io(t_input **data);
@@ -91,13 +91,15 @@ int		after_redirection_decision(char *line, int i, t_line_data **data);
 int		after_redi_len(char *line, int i);
 char	*expander_fill(char *line, int i, char **env);
 void	free_path(t_env *mini_env);
-void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env, t_env **new_export);
+void	start_real_work(t_input **new_input_node, t_env **mini_env, char **env,
+			t_env **new_export);
 void	split_pipes(char *whole_line, t_input **new_input_node);
-int		create_input_node(char *whole_line, int i,t_input **new_input_node);
+int		create_input_node(char *whole_line, int i, t_input **new_input_node);
 t_input	*get_last_node(t_input **node);
 void	add_inputnode_tolist(t_input **data, t_input *new_line_data);
 void	add_path_to_list(t_env **mini_env, t_env *new_env);
-int		check_for_builtins(char **args, t_env **mini_env, t_env **new_export, char **env);
+int		check_for_builtins(char **args, t_env **mini_env, t_env **new_export,
+			char **env);
 void	ft_echo(char **args);
 void	ft_env(t_env **mini_env, char **args);
 void	ft_pwd(t_env **mini_env, char **args);
@@ -110,8 +112,10 @@ void	ft_unset(char **args, t_env **mini_env, t_env **new_export);
 void	node_remove(t_env **node_remove, char *line, int i);
 char	*check_expander_and_rest(char *input_line, char **env);
 void	ft_cd(t_env **mini_env, char **args, t_env **new_export);
-int 	check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
+int		check_for_append(char **args, t_env **mini_env, t_env **new_export,
+			int i);
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args);
+void	create_old_pwd(t_env **mini_env, t_env **new_export);
 
 //void	free_list(t_line_data *line_data);
 

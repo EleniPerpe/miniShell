@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:57:54 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/25 18:21:36 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:52:09 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ char	*create_export_line(char *env);
 void	print_export(t_env **new_export);
 void	fill_only_exp(t_env **new_export, char **args, int i, t_env **mini_env);
 
-void ft_export(t_env **mini_env, char **args, t_env **new_export)
+void	ft_export(t_env **mini_env, char **args, t_env **new_export)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (args[i] != NULL)
@@ -32,7 +32,7 @@ void ft_export(t_env **mini_env, char **args, t_env **new_export)
 			break ;
 		if (ft_strchr(args[i], '=') != NULL && (ft_isalpha(args[i][0])
 			|| args[i][0] == '_'))
-				fill_env_and_export(new_export, mini_env, args[i]);
+			fill_env_and_export(new_export, mini_env, args[i]);
 		else if (ft_isalpha(args[i][0]) || args[i][0] == '_')
 			fill_only_exp(new_export, args, i, mini_env);
 		else
@@ -47,9 +47,9 @@ void ft_export(t_env **mini_env, char **args, t_env **new_export)
 
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args)
 {
-	t_env *new_env;
-	t_env *new_export_line;
-	
+	t_env	*new_env;
+	t_env	*new_export_line;
+
 	new_env = (t_env *)ft_malloc(sizeof(t_env));
 	new_env->line = ft_strdup(args);
 	find_if_exists(new_export, args, mini_env);
@@ -68,14 +68,13 @@ void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args)
 		free(new_export_line);
 		exit(EXIT_FAILURE);
 	}
-	new_export_line->next= NULL;
+	new_export_line->next = NULL;
 	add_path_to_list(new_export, new_export_line);
-	
 }
 
 void	fill_only_exp(t_env **new_export, char **args, int i, t_env **mini_env)
 {
-	t_env *new_export_line;
+	t_env	*new_export_line;
 
 	new_export_line = (t_env *)ft_malloc(sizeof(t_env));
 	new_export_line->line = create_export_line(args[i]);
@@ -89,13 +88,12 @@ void	fill_only_exp(t_env **new_export, char **args, int i, t_env **mini_env)
 	add_path_to_list(new_export, new_export_line);
 }
 
-
-void create_export_path(t_env **mini_env, t_env **new_export)
+void	create_export_path(t_env **mini_env, t_env **new_export)
 {
 	t_env	*new_env;
 	int		len;
 	char	*export_line;
-	t_env *tmp;
+	t_env	*tmp;
 
 	len = 0;
 	tmp = *mini_env;
@@ -120,11 +118,11 @@ void create_export_path(t_env **mini_env, t_env **new_export)
 
 char	*create_export_line(char *line)
 {
-	int i;
-	char *first_sub_env;
-	char *second_sub_env;
-	char *first_part;
-	char *second_part;
+	int		i;
+	char	*first_sub_env;
+	char	*second_sub_env;
+	char	*first_part;
+	char	*second_part;
 
 	i = 0;
 	if (ft_strchr(line, '=') == NULL)
@@ -143,6 +141,3 @@ char	*create_export_line(char *line)
 	free(first_part);
 	return (second_part);
 }
-
-
-
