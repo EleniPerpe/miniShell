@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:57:54 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/25 15:12:10 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:04:29 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 char	*create_export_line(char *env);
 void	print_export(t_env **new_export);
-void	fill_env_and_export(t_env **new_export, t_env **mini_env, char **args, int i);
+void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args);
 void	fill_only_exp(t_env **new_export, char **args, int i, t_env **mini_env);
 int 	check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
 void	append_export_and_env(t_env **mini_env, t_env **new_export, char *line, int j);
+void	new_append_addition(t_env **new_export, t_env **mini_env, char *line, int pos);
 
 void ft_export(t_env **mini_env, char **args, t_env **new_export)
 {
@@ -35,7 +36,7 @@ void ft_export(t_env **mini_env, char **args, t_env **new_export)
 			break ;
 		if (ft_strchr(args[i], '=') != NULL && (ft_isalpha(args[i][0])
 			|| args[i][0] == '_'))
-				fill_env_and_export(new_export, mini_env, args, i);
+				fill_env_and_export(new_export, mini_env, args[i]);
 		else if (ft_isalpha(args[i][0]) || args[i][0] == '_')
 			fill_only_exp(new_export, args, i, mini_env);
 		else
@@ -89,31 +90,54 @@ void append_export_and_env(t_env **mini_env, t_env **new_export, char *line, int
 		if (ft_strnstr(new_env->line, temp, ft_strlen(new_env->line)) != NULL)
 		{
 			new_env->line = ft_strjoin(new_env->line, line + j + 1);
-			printf("This is the new line : %s and this is the line : %s\n", new_env->line, line + j + 1);
 			break ;
 		}
 		new_env = new_env->next;
 	}
+	if (new_env == NULL)
+		new_append_addition(new_export, mini_env, line, j);
 	export = *new_export;
 	while (export != NULL)
 	{
 		if (ft_strnstr(export->line, temp, ft_strlen(export->line)) != NULL)
 		{
-			ft_strjoin(export->line, temp + j);
+			export->line = ft_substr(export->line, 0, ft_strlen(export->line) - 1);
+			export->line = ft_strjoin(export->line, line + j + 1);
+			export->line = ft_strjoin(export->line, "\"");
+			printf("This is the new line : %s and this is the line : %s\n", export->line, line + j + 1);
 			break ;
 		}
 		export = export->next;
 	}
 }
 
-void	fill_env_and_export(t_env **new_export, t_env **mini_env, char **args, int i)
+void new_append_addition(t_env **new_export, t_env **mini_env, char *line, int pos)
+{
+	char *final1;
+	char *final2;
+	char *final;
+
+
+	(void)mini_env;
+	(void)new_export;
+	final1 = ft_substr(line, 0, pos - 1);
+	final2 = ft_substr(line, pos, ft_strlen(line) - pos);
+	final = ft_strjoin(final1, final2);
+	fill_env_and_export(new_export, mini_env, final);
+	free(final1);
+	free(final2);
+	free(final);
+	
+}
+
+void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args)
 {
 	t_env *new_env;
 	t_env *new_export_line;
 	
 	new_env = (t_env *)ft_malloc(sizeof(t_env));
-	new_env->line = ft_strdup(args[i]);
-	find_if_exists(new_export, args[i], mini_env);
+	new_env->line = ft_strdup(args);
+	find_if_exists(new_export, args, mini_env);
 	if (!new_env->line)
 	{
 		free(new_env);
@@ -122,7 +146,7 @@ void	fill_env_and_export(t_env **new_export, t_env **mini_env, char **args, int 
 	new_env->next = NULL;
 	add_path_to_list(mini_env, new_env);
 	new_export_line = (t_env *)ft_malloc(sizeof(t_env));
-	new_export_line->line = create_export_line(args[i]);
+	new_export_line->line = create_export_line(args);
 	find_if_exists(new_export, new_export_line->line, mini_env);
 	if (!new_export_line->line)
 	{
