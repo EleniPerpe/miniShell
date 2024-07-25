@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:23:27 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/24 18:58:01 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:50:29 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ char	*ft_strjoin_export(char const *s1, char const *s2, char c);
 
 void	find_if_exists(t_env **new_export, char *line, t_env **mini_env)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (line[i] != '=' && line[i] != '\0')
 		i++;
@@ -34,11 +34,10 @@ void	find_if_exists(t_env **new_export, char *line, t_env **mini_env)
 	}
 }
 
-void node_remove(t_env **node_remove, char *line, int i)
+void	node_remove(t_env **node_remove, char *line, int i)
 {
-	t_env *curr;
-	t_env *remove;
-	
+	t_env	*curr;
+	t_env	*remove;
 
 	if (ft_strncmp(line, (*node_remove)->line, i) == 0)
 	{
@@ -86,15 +85,15 @@ char	*ft_strjoin_export(char const *s1, char const *s2, char c)
 	while (i < s2len)
 	{
 		ptr[s1len + 1 + i] = s2[i];
-		i++; 
+		i++;
 	}
 	ptr[s1len + i + 1] = c;
 	return (ptr[s1len + s2len + 2] = '\0', ptr);
 }
 
-void print_export(t_env **new_export)
+void	print_export(t_env **new_export)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = *new_export;
 	while (tmp != NULL)
