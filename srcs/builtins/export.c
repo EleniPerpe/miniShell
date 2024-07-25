@@ -6,17 +6,18 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:57:54 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/24 12:59:04 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:12:10 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 char	*create_export_line(char *env);
-char	*ft_strjoin_export(char const *s1, char const *s2, char c);
 void	print_export(t_env **new_export);
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char **args, int i);
 void	fill_only_exp(t_env **new_export, char **args, int i, t_env **mini_env);
+int 	check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
+void	append_export_and_env(t_env **mini_env, t_env **new_export, char *line, int j);
 
 void ft_export(t_env **mini_env, char **args, t_env **new_export)
 {
@@ -30,6 +31,8 @@ void ft_export(t_env **mini_env, char **args, t_env **new_export)
 	i = 1;
 	while (args[i] != NULL)
 	{
+		if (check_for_append(args, mini_env, new_export, i) == 0)
+			break ;
 		if (ft_strchr(args[i], '=') != NULL && (ft_isalpha(args[i][0])
 			|| args[i][0] == '_'))
 				fill_env_and_export(new_export, mini_env, args, i);
@@ -37,12 +40,69 @@ void ft_export(t_env **mini_env, char **args, t_env **new_export)
 			fill_only_exp(new_export, args, i, mini_env);
 		else
 		{
-			
 			if (ft_isprint(args[i][0]) && !ft_isalpha(args[i][0]))
 				printf("minishell: %s: '%s': not a valid identifier\n",
 					args[0], args[i]);
 		}
 		i++;
+	}
+}
+
+int 	check_for_append(char **args, t_env **mini_env, t_env **new_export, int i)
+{
+	int j;
+	char *line;
+	// int flag;
+	
+	j = 0;
+	if (ft_strnstr(args[i], "+=", ft_strlen(args[i])) != NULL && args[i][0] != '+')
+	{
+		if (ft_isalpha(args[i][0]) || args[i][0] == '_')
+		{
+			while (args[i][j] != '=')
+				j++;
+			line = ft_substr(args[i], 0, j - 1);
+			// printf("That's the line to compare : %s and that's the first : %s\n", line, args[i]);
+			append_export_and_env(mini_env, new_export, args[i], j);
+			printf("Hello\n");
+			free(line);
+		}
+	}
+	else
+	{
+		// free(line);
+		return (1);
+	}
+	return (0);
+}
+
+void append_export_and_env(t_env **mini_env, t_env **new_export, char *line, int j)
+{
+	t_env *new_env;
+	t_env *export;
+	char *temp;
+	
+	temp = ft_substr(line, 0, j - 1);
+	new_env = *mini_env;
+	while (new_env != NULL)
+	{
+		if (ft_strnstr(new_env->line, temp, ft_strlen(new_env->line)) != NULL)
+		{
+			new_env->line = ft_strjoin(new_env->line, line + j + 1);
+			printf("This is the new line : %s and this is the line : %s\n", new_env->line, line + j + 1);
+			break ;
+		}
+		new_env = new_env->next;
+	}
+	export = *new_export;
+	while (export != NULL)
+	{
+		if (ft_strnstr(export->line, temp, ft_strlen(export->line)) != NULL)
+		{
+			ft_strjoin(export->line, temp + j);
+			break ;
+		}
+		export = export->next;
 	}
 }
 

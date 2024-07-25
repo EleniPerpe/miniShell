@@ -6,13 +6,14 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:23:27 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/23 12:44:12 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:58:01 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 void	node_remove(t_env **new_export, char *line, int i);
+char	*ft_strjoin_export(char const *s1, char const *s2, char c);
 
 void	find_if_exists(t_env **new_export, char *line, t_env **mini_env)
 {
