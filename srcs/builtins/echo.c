@@ -6,38 +6,63 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:56:41 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/17 11:01:39 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:45:13 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void ft_echo(char **args)
+int		check_for_ns(char **args, int count);
+void	print_echo(char **args, int i);
+
+void	ft_echo(char **args)
 {
-	int i;
-	
+	int	i;
+
 	i = 1;
-	if (args[i] != NULL && ft_strcmp(args[i], "-n") == 0)
+	if (args[i] != NULL && ft_strncmp(args[i], "-n", 2) == 0)
 	{
-		i++;
-		while (args[i] != NULL)
-		{
-			printf("%s", args[i]);
-			if (args[i + 1])
-				printf(" ");
+		while (args[i] != NULL && ft_strncmp(args[i], "-n", 2) == 0)
 			i++;
-		}
+		i = check_for_ns(args, i);
+		if (i > 1)
+			print_echo(args, i);
 	}
 	else
 	{
-		while (args[i] != NULL)
-		{
-			printf("%s", args[i]);
-			if (args[i + 1])
-				printf(" ");
-			i++;
-		}
+		print_echo(args, i);
 		if (args[1] != NULL)
 			printf("\n");
 	}
+}
+
+void	print_echo(char **args, int i)
+{
+	while (args[i] != NULL)
+	{
+		printf("%s", args[i]);
+		if (args[i + 1])
+			printf(" ");
+		i++;
+	}
+}
+
+int	check_for_ns(char **args, int count)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (i < count)
+	{
+		j = 1;
+		while (args[i][j] != '\0')
+		{
+			if (args[i][j] != 'n')
+				return (i);
+			j++;
+		}
+		i++;
+	}
+	return (i);
 }
