@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:28:35 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/25 18:47:25 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/26 11:37:47 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@ void	ft_env(t_env **mini_env, char **args)
 
 	tmp = *mini_env;
 	i = 0;
-	if (args == NULL || args[0] == NULL)
-	{
-		printf("env: invalid arguments\n");
-		return ;
-	}
 	while (args[i] != NULL)
 		i++;
 	if (i > 1)
@@ -32,7 +27,10 @@ void	ft_env(t_env **mini_env, char **args)
 		return ;
 	}
 	if (mini_env == NULL || *mini_env == NULL)
-		return (printf("env: environment list is empty or uninitialized\n"));
+	{
+		printf("env: environment list is empty or uninitialized\n");
+		return ;
+	}
 	while (tmp != NULL)
 	{
 		printf("%s\n", tmp->line);

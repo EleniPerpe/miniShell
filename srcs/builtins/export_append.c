@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:19:36 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/25 18:49:57 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/26 11:33:53 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	check_for_append(char **args, t_env **mini_env, t_env **new_export, int i)
 				j++;
 			line = ft_substr(args[i], 0, j - 1);
 			append_export_and_env(mini_env, new_export, args[i], j);
-			printf("Hello\n");
 			free(line);
 		}
 	}
