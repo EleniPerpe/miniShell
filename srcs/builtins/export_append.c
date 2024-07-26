@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:19:36 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/26 11:33:53 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/26 12:00:20 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void	append_export(char *temp, char *line, t_env **new_export, int j)
 		}
 		export = export->next;
 	}
+	free(temp);
+	free(line);
 }
 
 void	new_append_addition(t_env **new_export, t_env **mini_env,
