@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:30:26 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/23 23:25:56 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/26 13:03:30 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "../../minishell.h"
+#include "../../minishell.h"
 
 //  void ft_exit(t_env **mini_env, t_env **new_export)
 //  {
 
 //  }
+

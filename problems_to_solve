@@ -3,28 +3,9 @@
 > out "ls
 check for seg fault".
 
-
-cd, and function for execution.
-
-cd, cd .. cd /Users/eperperi/etc cd ~.
-
-$? (I need the status).
+$? (I need the status for the exit code).
 
 I can clean and I can check for exit codes.
 
-+ at export is to append
-
-export problems
-	- += is append
-
-unset problems
-	- same variable / grammar check as export, e.g cant start with a 1
-
-
-echo problem
-	- multiple -n flags not removed before work
-	- multiple n's not creating -n effects
-
-
-init.c: line:113 qoutes doesn't return the correct i
-I did chnage it from return (i + j + 1) because I don't know if it will affect the others cases
+I need to change the expander to take out env instead of the real one
+when I know how the execution works
