@@ -18,9 +18,13 @@ export problems
 	- += is append
 
 unset problems
-	- same variable / grammar check as export, e.g cant start with a 1 
+	- same variable / grammar check as export, e.g cant start with a 1
 
 
 echo problem
 	- multiple -n flags not removed before work
 	- multiple n's not creating -n effects
+
+
+init.c: line:113 qoutes doesn't return the correct i
+I did chnage it from return (i + j + 1) because I don't know if it will affect the others cases
