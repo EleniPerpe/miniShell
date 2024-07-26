@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:46:05 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/22 17:45:09 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/23 23:28:22 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#	include "../minishell.h"
+#include "../../minishell.h"
 
 // we will use this function to free the allocated memory
 // after execute the command
@@ -111,9 +111,7 @@ char	**merge_free_command(t_line_data **data, int len)
 			delete_node(data, tmp_delete);
 		}
 		else
-		{
 			tmp = tmp->next;
-		}
 	}
 	cmd_args[i] = NULL;
 	i = 0;
@@ -141,7 +139,7 @@ char	**command_merge(t_line_data **data)
 {
 	char **cmd_args;
 	t_line_data	*tmp;
-	
+
 	tmp = *data;
 	cmd_args = merge_free_command(data, cmd_args_counter(data));
 	return (cmd_args);
