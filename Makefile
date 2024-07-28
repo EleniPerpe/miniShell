@@ -6,7 +6,7 @@
 #    By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/07/23 23:25:00 by rshatra          ###   ########.fr        #
+#    Updated: 2024/07/28 05:29:19 by rshatra          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ BUILTINS_DIR = ./srcs/builtins/
 EXECUTION_DIR = ./srcs/execution/
 
 SRC = $(SRC_DIR)main.c \
-      $(EXECUTION_DIR)standard_IO.c \
+      $(EXECUTION_DIR)standard_io.c \
       $(EXECUTION_DIR)exec.c \
       $(EXECUTION_DIR)process_manager.c \
       $(PARSING_DIR)heredoc_handle.c \

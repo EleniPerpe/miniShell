@@ -5,26 +5,70 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 07:00:37 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/23 23:28:41 by rshatra          ###   ########.fr       */
+/*   Created: 2024/07/28 05:28:36 by rshatra           #+#    #+#             */
+/*   Updated: 2024/07/28 05:28:39 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// void	standard_io(t_input *data)
+void	open_outfile(t_line_data *data, char c)
+{
+	int	fd;
+
+	if (c == 'T')
+	{
+		fd = open(data->after_redirctor, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+	else if (c == 'A')
+	{
+		fd = open(data->after_redirctor, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+}
+
+void	open_infile(t_line_data *data)
+{
+	int	fd;
+
+	fd = open(data->after_redirctor, O_RDONLY);
+	if (fd < 0)
+	{
+		write(2,"minishell: ", 11);
+		write(2,data->after_redirctor,ft_strlen(data->after_redirctor));
+		write (2 ,": No such file or directory", ft_strlen(": No such file or directory"));
+		// signal to kill the process must ne sent from here
+		return ;
+	}
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+}
+
+void	handle_redirectors(t_input *data)
+{
+	t_line_data	*current_data;
+	t_line_data	*next_data;
+
+	current_data = data->data_node;
+	while (current_data != NULL)
+	{
+
+		if (current_data->type == 5 || current_data->type == 4 || current_data->type == 3)
+			next_data = current_data->next;
+		if (current_data->type == 5)
+			open_infile(next_data);
+		else if (current_data->type == 4)
+			open_outfile(next_data, 'T');
+		else if (current_data->type == 3)
+			open_outfile(next_data, 'A');
+		current_data = current_data->next;
+	}
+}
 void	standard_io(t_input *data, int **pipe_fd, int i, int processes_num)
 {
-	t_line_data	*new_line_data;
-	int			fd;
-	// printf("-------------------standard_io--------------------------\n");
-	new_line_data = data->data_node;
-	// printf("from standard_io() the command is %s\n", data->cmd_args[0]);
-	// printf("processes_num is: %d\n", processes_num);
-	// printf("i is: %d\n", i);
-	// // printf("redirector is: %s\n", data->data_node->redirctor);
-	// printf("-------------------end--------------------------\n");
-
 	if (i == 0 && pipe_fd[i] != NULL)
 	{
 		close(pipe_fd[i][0]);
@@ -39,48 +83,14 @@ void	standard_io(t_input *data, int **pipe_fd, int i, int processes_num)
 	}
 	else if (i > 0 && i < (processes_num - 1))
 	{
-		if (pipe_fd[i - 1] != NULL)
-		{
 			close(pipe_fd[i - 1][1]);
 			dup2(pipe_fd[i - 1][0], STDIN_FILENO);
 			close(pipe_fd[i - 1][0]);
-		}
-		if (pipe_fd[i] != NULL)
-		{
 			close(pipe_fd[i][0]);
 			dup2(pipe_fd[i][1], STDOUT_FILENO);
 			close(pipe_fd[i][1]);
-		}
 	}
-	while (new_line_data != NULL)
-	{
-		if (new_line_data->type == 5)
-		{
-			new_line_data = new_line_data->next;
-			fd = open(new_line_data->after_redirctor, O_RDONLY);
-			dup2(fd, STDIN_FILENO);
-			close(fd);
-		}
-		else if (new_line_data->type == 4)
-		{
-			new_line_data = new_line_data->next;
-			fd = open(new_line_data->after_redirctor, O_WRONLY | O_CREAT | O_TRUNC, 0644);	//O_WRONLY: the file is opened for writing only.
-																					// O_CREAT: to create the file if it does not already exist.
-																					// O_TRUNC: clearing any existing content in the file.
-																					// 0644: the file permission.
-			dup2(fd, STDOUT_FILENO);
-			close(fd);
-		}
-		else if (new_line_data->type == 3)
-		{
-			new_line_data = new_line_data->next;
-			fd = open(new_line_data->after_redirctor, O_WRONLY | O_CREAT | O_APPEND, 0644); // O_APPEND: the file is opened in append mode.
-			dup2(fd, STDOUT_FILENO);
-			close(fd);
-		}
-		// else
-			new_line_data = new_line_data->next;
-	}
+	handle_redirectors(data);
 }
 
 void	reset_io(void)
