@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:45:17 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/23 23:27:48 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/28 07:01:20 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	add_inputnode_tolist(t_input **data, t_input *new_line_data)
 	}
 }
 
-int	create_input_node(char *whole_line, int i,t_input **new_input_node)
+int	create_input_node(char *whole_line, int i,t_input **new_input_node, int k)
 {
 	t_input	*tmp;
 	int		j;
@@ -42,10 +42,11 @@ int	create_input_node(char *whole_line, int i,t_input **new_input_node)
 	tmp->part_line[j] = '\0';
 	tmp->next = NULL;
 	tmp->data_node = NULL;
-	tmp->read_from_pipe = -99;
-	tmp->write_to_pipe = -99;
-	tmp->pipe_in = -99;
-	tmp->pipe_out = -99;
+	// tmp->read_from_pipe = -99;
+	// tmp->write_to_pipe = -99;
+	// tmp->pipe_in = -99;
+	// tmp->pipe_out = -99;
+	tmp->i = k;
 	add_inputnode_tolist(new_input_node, tmp);
 	return (i + j);
 }
@@ -53,9 +54,11 @@ int	create_input_node(char *whole_line, int i,t_input **new_input_node)
 int	split_pipes(char *whole_line, t_input **new_input_node)
 {
 	int		i;
+	int		j;
 	int		processes_num;
 
 	i = 0;
+	j = 0;
 	processes_num = 0;
 	while (whole_line[i] != '\0')
 	{
@@ -64,18 +67,17 @@ int	split_pipes(char *whole_line, t_input **new_input_node)
 		else
 		{
 			processes_num++;
-			i = create_input_node(whole_line, i, new_input_node);
+			i = create_input_node(whole_line, i, new_input_node, j);
+			j++;
 		}
 	}
 return (processes_num);
 }
-void	init_linked_list(t_input **new_input_node, t_env **mini_env, char **env, t_env **new_export)
+void	init_linked_list(t_input **new_input_node,char **env)
 {
 	t_input		*input_node;
 	char *input_line;
 
-	(void)new_export;
-	(void)mini_env;
 	input_node = *new_input_node;
 	while (input_node != NULL)
 	{
