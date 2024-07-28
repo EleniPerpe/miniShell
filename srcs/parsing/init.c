@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/28 07:15:36 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/28 07:34:32 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,51 @@ int	command_fill(char *line, int i, t_line_data **data)
 	return (i + j);
 }
 
-char	**ft_split_line(char *input_line, t_line_data **line_data,
-	t_env **mini_env, t_input **input_node)
-{
-	int		i;
-	char	**cmd_args;
+// char	**ft_split_line(char *input_line, t_line_data **line_data,
+// 	t_env **mini_env, t_input **input_node)
+// {
+// 	int		i;
+// 	char	**cmd_args;
 
+// 	input_line = check_expander_and_rest(input_line, mini_env);
+// 	i = 0;
+// 	while (input_line[i] != '\0')
+// 	{
+// 		while (input_line[i] == ' ')
+// 			i++;
+// 		if (input_line[i] == '"' || input_line[i] == '\'')
+// 		{
+// 			if ((input_line[i] == '"' && input_line[i + 1] == '"')
+// 				|| (input_line[i] == '\'' && input_line[i + 1] == '\''))
+// 				i = i + 2;
+// 			else
+// 			{
+// 				i = quote_token(input_line, i, &line_data);
+// 				i--;
+// 				printf("after quotes i is : %d\n",i);
+// 			}
+// 		}
+// 		else if (input_line[i] == '<' || input_line[i] == '>')
+// 		{
+// 			i = redirection_fill(input_line, i, &line_data);
+// 		}
+// 		else
+// 		{
+// 			i = command_fill(input_line, i, &line_data);
+// 		}
+// 	}
+// 	cmd_args = command_merge(&line_data);
+// 	(*input_node)->data_node = line_data;
+// 	return (cmd_args);
+// }
+
+char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini_env, t_input *input_node)
+{
+	int	i;
+	char **cmd_args;
+	t_line_data *line_data;
+
+	line_data = NULL;
 	input_line = check_expander_and_rest(input_line, mini_env);
 	i = 0;
 	while (input_line[i] != '\0')
@@ -107,11 +146,7 @@ char	**ft_split_line(char *input_line, t_line_data **line_data,
 				|| (input_line[i] == '\'' && input_line[i + 1] == '\''))
 				i = i + 2;
 			else
-			{
 				i = quote_token(input_line, i, &line_data);
-				i--;
-				printf("after quotes i is : %d\n",i);
-			}
 		}
 		else if (input_line[i] == '<' || input_line[i] == '>')
 		{
@@ -121,10 +156,18 @@ char	**ft_split_line(char *input_line, t_line_data **line_data,
 		{
 			i = command_fill(input_line, i, &line_data);
 		}
+		// to add later:
+		// else if (input_line[i] == '|')
+		// 		i = ft_split_pipe(input_line, line_data, i, '|', env);
 	}
 	cmd_args = command_merge(&line_data);
-	(*input_node)->data_node = line_data;
+	input_node->data_node = line_data;
 	return (cmd_args);
+	// in this step we already have the linked list of nodes
+	// now we must add it to the commands list
+	// to handle the pipes so each part will be in command node and will be executed in a different process
+	// add_node_to_commands_list(line_data, &commands_list); // must know where to define the first commands_list .. here in this function or in start_prompt
+														// t_commands_list *commands_list; // definee the commands list
 }
 
 char	*check_expander_and_rest(char *input_line, t_env **mini_env)
