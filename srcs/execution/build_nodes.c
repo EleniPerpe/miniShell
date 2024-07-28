@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:45:17 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/28 02:01:15 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/28 07:01:20 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ int	create_input_node(char *whole_line, int i,t_input **new_input_node, int k)
 	tmp->part_line[j] = '\0';
 	tmp->next = NULL;
 	tmp->data_node = NULL;
-	tmp->read_from_pipe = -99;
-	tmp->write_to_pipe = -99;
-	tmp->pipe_in = -99;
-	tmp->pipe_out = -99;
+	// tmp->read_from_pipe = -99;
+	// tmp->write_to_pipe = -99;
+	// tmp->pipe_in = -99;
+	// tmp->pipe_out = -99;
 	tmp->i = k;
 	add_inputnode_tolist(new_input_node, tmp);
 	return (i + j);

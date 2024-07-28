@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/28 03:28:36 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/28 06:24:47 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	start_prompt(char **env, t_env **mini_env, t_env **new_export)
 		pro_pid  = pid_init(processes_num);
 		while (i < processes_num)
 		{
-			fork_and_exec(new_input_node, env, pro_pid[i], pipe_fd);
+			fork_and_exec(new_input_node, env, pro_pid[i], pipe_fd, mini_env, new_export);
 			new_input_node = new_input_node->next;
 			i++;
 		}
@@ -47,7 +47,7 @@ void	start_prompt(char **env, t_env **mini_env, t_env **new_export)
 }
 
 
-void	process_execution(t_input *data, char **env, int **pipe_fd)
+void	process_execution(t_input *data, char **env, int **pipe_fd , t_env **mini_env, t_env **new_export)
 {
 	int processes_num;
 	t_input *tmp;
@@ -58,11 +58,14 @@ void	process_execution(t_input *data, char **env, int **pipe_fd)
 	processes_num = tmp->i + 1;
 	standard_io(data, pipe_fd, data->i, processes_num);
 	close_fds(pipe_fd);
-	exec_command(data->cmd_args, env);
+	if (check_for_builtins(data->cmd_args, mini_env, new_export, env) == 0)
+		;
+	else
+		exec_command(data->cmd_args, env);
 	exit(EXIT_SUCCESS);
 }
 
-void	fork_and_exec(t_input *data, char **env, int *process_pid, int **pipe_fd)
+void	fork_and_exec(t_input *data, char **env, int *process_pid, int **pipe_fd, t_env **mini_env, t_env **new_export)
 {
 
 	t_input *new_input_node;
@@ -78,7 +81,7 @@ void	fork_and_exec(t_input *data, char **env, int *process_pid, int **pipe_fd)
 	}
 	else if (cur_pro_pid[0]== 0)
 	{
-		process_execution(new_input_node, env, pipe_fd);
+		process_execution(new_input_node, env, pipe_fd, mini_env, new_export);
 		exit(EXIT_SUCCESS); // not necessary
 	}
 }
