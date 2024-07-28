@@ -6,20 +6,11 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/28 01:45:42 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/28 05:28:50 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// int	open_check()
-// {
-// 	// via the fd --> open and check wether fd == -1
-// 	write(2, "minishell: ", ft_strlen("minishell"));
-// 	write(2, 0);
-// 	ft_putstr_fd("", )
-// 	write (2 ,"minishell: No such file or directory", ft_strlen("minishell: No such file or directory"));
-// }
 
 int	main(int argc, char **argv, char **env)
 {

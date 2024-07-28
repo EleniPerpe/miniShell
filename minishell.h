@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/28 03:32:54 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/28 05:04:55 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,7 @@ void	fork_and_exec(t_input *data, char **env, int *process_pid, int **pipe_fd);
 void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd);
 int		**pipes_init(int processes_num);
 int		**pid_init(int processes_num);
+void	handle_redirectors(t_input *data);
+void	open_infile(t_line_data *data);
 
 #endif
