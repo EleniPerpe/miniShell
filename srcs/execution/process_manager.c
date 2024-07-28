@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/28 06:24:47 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/28 07:36:46 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	start_prompt(char **env, t_env **mini_env, t_env **new_export)
 		add_history(whole_line);
 		processes_num =  split_pipes(whole_line, &new_input_node);
 
-		init_linked_list(&new_input_node, env);
+		init_linked_list(&new_input_node, mini_env);
 		pipe_fd =  pipes_init(processes_num);
 		pro_pid  = pid_init(processes_num);
 		while (i < processes_num)
@@ -58,7 +58,7 @@ void	process_execution(t_input *data, char **env, int **pipe_fd , t_env **mini_e
 	processes_num = tmp->i + 1;
 	standard_io(data, pipe_fd, data->i, processes_num);
 	close_fds(pipe_fd);
-	if (check_for_builtins(data->cmd_args, mini_env, new_export, env) == 0)
+	if (check_for_builtins(data->cmd_args, mini_env, new_export) == 0)
 		;
 	else
 		exec_command(data->cmd_args, env);
