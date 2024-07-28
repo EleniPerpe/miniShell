@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/28 02:04:12 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/28 03:28:36 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,10 @@ void	start_prompt(char **env, t_env **mini_env, t_env **new_export)
 
 		init_linked_list(&new_input_node, env);
 		pipe_fd =  pipes_init(processes_num);
-		pro_pid = (int **)ft_malloc(sizeof(int *) * (processes_num + 1));
-		pro_pid[processes_num] = NULL;
+		pro_pid  = pid_init(processes_num);
 		while (i < processes_num)
 		{
-			pro_pid[i] = (int *)ft_malloc(sizeof(int) * 2);
-			pro_pid[i][1] = (int)NULL;
-			fork_and_exec(new_input_node, env, pro_pid[i], pipe_fd, processes_num);
+			fork_and_exec(new_input_node, env, pro_pid[i], pipe_fd);
 			new_input_node = new_input_node->next;
 			i++;
 		}
@@ -50,15 +47,22 @@ void	start_prompt(char **env, t_env **mini_env, t_env **new_export)
 }
 
 
-void	process_execution(t_input *data, char **env, int **pipe_fd, int processes_num)
+void	process_execution(t_input *data, char **env, int **pipe_fd)
 {
+	int processes_num;
+	t_input *tmp;
+
+	tmp = data;
+	while (tmp->next)
+		tmp = tmp->next;
+	processes_num = tmp->i + 1;
 	standard_io(data, pipe_fd, data->i, processes_num);
 	close_fds(pipe_fd);
 	exec_command(data->cmd_args, env);
 	exit(EXIT_SUCCESS);
 }
 
-void	fork_and_exec(t_input *data, char **env, int *process_pid, int **pipe_fd, int processes_num)
+void	fork_and_exec(t_input *data, char **env, int *process_pid, int **pipe_fd)
 {
 
 	t_input *new_input_node;
@@ -74,7 +78,7 @@ void	fork_and_exec(t_input *data, char **env, int *process_pid, int **pipe_fd, i
 	}
 	else if (cur_pro_pid[0]== 0)
 	{
-		process_execution(new_input_node, env, pipe_fd, processes_num);
+		process_execution(new_input_node, env, pipe_fd);
 		exit(EXIT_SUCCESS); // not necessary
 	}
 }

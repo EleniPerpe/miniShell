@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/28 02:03:48 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/28 03:32:54 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	exec_command(char **cmd_args, char **env);
 void	ft_free(char **paths_spleted, char *cmd, char *path);
 char	**command_merge(t_line_data **data);
 char	**merge_free_command(t_line_data **data, int len);
-void	process_execution(t_input *data, char **env, int **pipe_fd, int processes_num);
+void	process_execution(t_input *data, char **env, int **pipe_fd);
 int		heredoc_init(char *line, int i, t_line_data **data);
 int		after_redirection_decision(char *line, int i, t_line_data **data);
 int		after_redi_len(char *line, int i);
@@ -114,8 +114,9 @@ char	*check_expander_and_rest(char *input_line, char **env);
 void	ft_cd(t_env **mini_env, char **args, char **env, t_env **new_export);
 void	close_fds(int **pipe_fd);
 void	wait_for_children(int **pro_pid, int processes_num);
-void	fork_and_exec(t_input *data, char **env, int *process_pid, int **pipe_fd, int processes_num);
+void	fork_and_exec(t_input *data, char **env, int *process_pid, int **pipe_fd);
 void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd);
 int		**pipes_init(int processes_num);
+int		**pid_init(int processes_num);
 
 #endif
