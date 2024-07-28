@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:08:51 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/23 12:34:37 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/28 06:50:09 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int check_for_builtins(char **args, t_env **mini_env, t_env **new_export, char *
         return 0;
 	}
 	if ((ft_strncmp(args[0], "export", 6) == 0) || (ft_strncmp(args[0], "EXPORT", 6) == 0))
-	{	
+	{
 		if (check_if_valid(args, 6) == 1)
 			return (1);
         ft_export(mini_env, args, new_export);
