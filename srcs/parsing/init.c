@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/26 13:04:47 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/28 07:15:36 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,18 +121,10 @@ char	**ft_split_line(char *input_line, t_line_data **line_data,
 		{
 			i = command_fill(input_line, i, &line_data);
 		}
-		// to add later:
-		// else if (input_line[i] == '|')
-		// 		i = ft_split_pipe(input_line, line_data, i, '|', env);
 	}
 	cmd_args = command_merge(&line_data);
 	(*input_node)->data_node = line_data;
 	return (cmd_args);
-	// in this step we already have the linked list of nodes
-	// now we must add it to the commands list
-	// to handle the pipes so each part will be in command node and will be executed in a different process
-	// add_node_to_commands_list(line_data, &commands_list); // must know where to define the first commands_list .. here in this function or in start_prompt
-														// t_commands_list *commands_list; // definee the commands list
 }
 
 char	*check_expander_and_rest(char *input_line, t_env **mini_env)
