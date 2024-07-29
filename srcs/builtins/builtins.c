@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:08:51 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/28 07:16:51 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/29 20:05:19 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_if_valid(char **args, int i);
 
-int	check_for_builtins(char **args, t_env **mini_env, t_env **new_export)
+int check_for_builtins(char **args, t_env **mini_env, t_env **new_export)
 {
 	if ((ft_strncmp(args[0], "echo", 4) == 0))
 	{

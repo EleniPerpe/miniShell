@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/28 07:37:01 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/29 20:09:20 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ typedef struct s_input
 }	t_input;
 
 // parsing:
-char	**ft_split_line(char *input_line, /*t_line_data **line_data,*/
-			t_env **mini_env, t_input *input_node);
+char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini_env, t_input *input_node);
 int		redirection_fill(char *line, int i, t_line_data **data);
 int		after_redirection_fill(char *line, int i, t_line_data **data);
 void	init_nodes_redirctor(t_line_data **data, int type);
@@ -96,14 +95,14 @@ void	add_path_to_list(t_env **mini_env, t_env *new_env);
 void	add_inputnode_tolist(t_input **data, t_input *new_line_data);
 
 //execution:
-void	start_prompt(char **env, t_env **mini_env, t_env **new_export);
+void	start_prompt(t_env **mini_env, t_env **new_export);
 void	standard_io(t_input *data, int **pipe_fd, int i, int processes_num);
 void	reset_io(void);
-void	exec_command(char **cmd_args, char **env);
-void	process_execution(t_input *data, char **env, int **pipe_fd,t_env **mini_env, t_env **new_export);
+void	exec_command(char **cmd_args, t_env **mini_env);
+void	process_execution(t_input *data, int **pipe_fd,t_env **mini_env, t_env **new_export);
 void	close_fds(int **pipe_fd);
 void	wait_for_children(int **pro_pid, int processes_num);
-void	fork_and_exec(t_input *data, char **env, int *process_pid, int **pipe_fd, t_env **mini_env, t_env **new_export);
+void	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_env, t_env **new_export);
 int		**pipes_init(int processes_num);
 int		**pid_init(int processes_num);
 void	handle_redirectors(t_input *data);
@@ -111,6 +110,7 @@ void	open_infile(t_line_data *data);
 void	open_outfile(t_line_data *data, char c);
 
 //builtins
+int		check_for_builtins(char **args, t_env **mini_env, t_env **new_export);
 int		check_for_builtins(char **args, t_env **mini_env, t_env **new_export);
 void	ft_echo(char **args);
 void	ft_env(t_env **mini_env, char **args);
@@ -122,16 +122,16 @@ void	print_export(t_env **new_export);
 char	*ft_strjoin_export(char const *s1, char const *s2, char c);
 void	ft_unset(char **args, t_env **mini_env, t_env **new_export);
 void	node_remove(t_env **node_remove, char *line, int i);
-int		check_for_append(char **args, t_env **mini_env, t_env **new_export,
-			int i);
-void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args);
-void	create_old_pwd(t_env **mini_env, t_env **new_export);
 char	*check_expander_and_rest(char *input_line, t_env **mini_env);
 void	ft_cd(t_env **mini_env, char **args, t_env **new_export);
+void    fill_env_and_export(t_env **new_export, t_env **mini_env, char *args);
+int check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
+void    create_old_pwd(t_env **mini_env, t_env **new_export);
 
 // utilities
 void	ft_free(char **paths_spleted, char *cmd, char *path);
 void	free_path(t_env *mini_env);
 void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd);
+char	**minienv_to_env(t_env **mini_env);
 
 #endif
