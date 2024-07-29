@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:08:51 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/28 06:50:09 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:48:10 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int check_if_valid(char **args, int i);
 
-int check_for_builtins(char **args, t_env **mini_env, t_env **new_export, char **env)
+int check_for_builtins(char **args, t_env **mini_env, t_env **new_export)
 {
 	// t_env *new_export;
 	// t_env *tmp;
@@ -57,7 +57,7 @@ int check_for_builtins(char **args, t_env **mini_env, t_env **new_export, char *
 	{
 		if (check_if_valid(args, 2) == 1)
 			return (1);
-        ft_cd(mini_env, args, env, new_export);
+        ft_cd(mini_env, args, new_export);
         return 0;
 	}
 	// if ((ft_strncmp(args[0], "exit", 4) == 0) || (ft_strncmp(args[0], "EXIT", 4) == 0))

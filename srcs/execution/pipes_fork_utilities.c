@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 19:57:17 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/28 03:29:30 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/29 19:59:10 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,32 @@ int **pid_init(int processes_num)
 		i++;
 	}
 	return (pro_pid);
+}
+char **minienv_to_env(t_env **mini_env)
+{
+	(void)mini_env;
+	char	**env;
+	int		counter;
+	int		i;
+	t_env	*tmp_count;
+	t_env	*tmp;
+
+	i = 0;
+	counter = 0;
+	tmp_count = *mini_env;
+	tmp = *mini_env;
+	while(tmp_count != NULL)
+	{
+		counter++;
+		tmp_count = tmp_count->next;
+	}
+	env = (char **)ft_malloc(sizeof(char *) * (counter + 1));
+	while(i < counter)
+	{
+		env[i] = ft_strdup(tmp->line);
+		i++;
+		tmp = tmp->next;
+	}
+	env[i] = NULL;
+	return (env);
 }

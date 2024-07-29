@@ -6,7 +6,7 @@
 #    By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/07/28 05:29:19 by rshatra          ###   ########.fr        #
+#    Updated: 2024/07/29 19:10:29 by rshatra          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,10 +45,12 @@ SRC = $(SRC_DIR)main.c \
 	  $(BUILTINS_DIR)pwd.c \
 	  $(BUILTINS_DIR)env.c \
 	  $(BUILTINS_DIR)export.c \
+	  $(BUILTINS_DIR)export_append.c \
 	  $(BUILTINS_DIR)export_remove.c \
 	  $(BUILTINS_DIR)unset.c \
 	  $(BUILTINS_DIR)exit.c \
 	  $(BUILTINS_DIR)cd.c \
+	  $(BUILTINS_DIR)cd_old.c \
 	  $(EXECUTION_DIR)pipes_fork_utilities.c \
 	  $(EXECUTION_DIR)errors_free.c \
 	  $(EXECUTION_DIR)build_nodes.c \

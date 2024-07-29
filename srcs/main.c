@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/28 05:28:50 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:49:16 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int	main(int argc, char **argv, char **env)
 		printf("This program doesn't take any arguments!\n");
 		return (1);
 	}
-	start_prompt(env, &mini_env, &new_export);
+	start_prompt(&mini_env, &new_export);
 	return (0);
 }
