@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+         #
+#    By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/14 15:40:36 by eperperi          #+#    #+#              #
-#    Updated: 2024/06/27 16:02:40 by eperperi         ###   ########.fr        #
+#    Updated: 2024/07/29 20:39:55 by rshatra          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ ft_tolower.c ft_toupper.c ft_strcmp.c
 
 SRCS_BONUS = ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c ft_lstlast_bonus.c ft_lstnew_bonus.c ft_lstsize_bonus.c \
 ft_lstdelone_bonus.c ft_lstclear_bonus.c ft_lstmap_bonus.c ft_lstiter_bonus.c
-  
+
 OFILES = $(SRCS:.c=.o)
 
 OFILES_BONUS = $(SRCS_BONUS:.c=.o)
