@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:45:17 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/29 20:14:29 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/29 22:55:15 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	split_pipes(char *whole_line, t_input **new_input_node)
 	i = 0;
 	j = 0;
 	processes_num = 0;
+	if (!whole_line)
+		return (0);
 	while (whole_line[i] != '\0')
 	{
 		if (whole_line[i] == '|')

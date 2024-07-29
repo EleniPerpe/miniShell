@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/29 20:14:35 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/30 01:41:14 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ void	start_prompt(t_env **mini_env, t_env **new_export)
 		i = 0;
 		reset_io(); // need to modify it to take STD IN and OUT from before the while
 		whole_line = readline("minishell >");
+		if (!whole_line) // EOF : ctrl+D
+		{
+			printf("exit\n");
+			exit (EXIT_FAILURE) ;
+		}
 		add_history(whole_line);
 		processes_num =  split_pipes(whole_line, &new_input_node);
 
@@ -66,7 +71,7 @@ void	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **
 	standard_io(data, pipe_fd, data->i, processes_num);
 	close_fds(pipe_fd);
 	if (check_for_builtins(data->cmd_args, mini_env, new_export) == 0)
-		;
+			/*setup_signal_init()*/;
 	else
 		exec_command(data->cmd_args, mini_env);
 	exit(EXIT_SUCCESS);
@@ -80,6 +85,7 @@ void	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_
 
 	cur_pro_pid = process_pid;
 	new_input_node = data;
+	setup_signal_exe();
 	cur_pro_pid[0] = fork();
 	if (cur_pro_pid[0] < 0)
 	{

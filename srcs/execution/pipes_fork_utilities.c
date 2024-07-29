@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 19:57:17 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/29 19:59:10 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/30 01:37:37 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int **pipes_init(int processes_num)
 	int		i;
 
 	i = 0;
+	if (processes_num == 0)
+		return (0);
 	pipe_fd = (int **)ft_malloc(sizeof(int *) * (processes_num - 1 + 1));
 	pipe_fd[processes_num - 1] =NULL;
 	while (i < (processes_num - 1))
@@ -34,6 +36,8 @@ void close_fds(int **pipe_fd)
 	int i;
 
 	i = 0;
+	if (!pipe_fd)
+		return ;
 	while (pipe_fd[i] != NULL)
 	{
 		close(pipe_fd[i][0]);
@@ -51,6 +55,7 @@ void	wait_for_children(int **pro_pid, int processes_num)
 		waitpid(pro_pid[i][0] , NULL, 0);
 		i++;
 	}
+	setup_signal_init();
 }
 
 int **pid_init(int processes_num)

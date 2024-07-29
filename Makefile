@@ -6,7 +6,7 @@
 #    By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/07/29 20:50:02 by rshatra          ###   ########.fr        #
+#    Updated: 2024/07/29 22:52:50 by rshatra          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ OBJ_DIR = ./objs/
 PARSING_DIR = ./srcs/parsing/
 BUILTINS_DIR = ./srcs/builtins/
 EXECUTION_DIR = ./srcs/execution/
+SIGNALS_DIR = ./srcs/signals/
 
 SRC = $(SRC_DIR)main.c \
       $(EXECUTION_DIR)standard_io.c \
@@ -54,6 +55,7 @@ SRC = $(SRC_DIR)main.c \
       $(EXECUTION_DIR)pipes_fork_utilities.c \
       $(EXECUTION_DIR)errors_free.c \
       $(EXECUTION_DIR)build_nodes.c \
+      $(SIGNALS_DIR)signals.c \
 
 OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
 LIB = Libft/libft.a
@@ -78,6 +80,10 @@ $(OBJ_DIR)%.o: $(BUILTINS_DIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR)%.o: $(EXECUTION_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(SIGNALS_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
