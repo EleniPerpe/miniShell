@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:49:34 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/29 20:09:28 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/30 01:07:38 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int argc, char **argv, char **env)
 
 	mini_env = NULL;
 	new_export = NULL;
+	setup_signal_init();
 	create_path(env, &mini_env);
 	create_export_path(&mini_env, &new_export);
 	(void)argv;

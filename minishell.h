@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/29 20:09:20 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/30 01:08:37 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,5 +133,9 @@ void	ft_free(char **paths_spleted, char *cmd, char *path);
 void	free_path(t_env *mini_env);
 void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd);
 char	**minienv_to_env(t_env **mini_env);
+
+//signals
+void	setup_signal_init();
+void	setup_signal_exe();
 
 #endif

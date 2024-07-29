@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:24:48 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/28 03:32:26 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/29 22:57:59 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,14 @@ void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd)
 	if (pro_pid != NULL)
 		free(pro_pid);
 	k = 0;
-	while (pipe_fd[k] != NULL)
+	if(pipe_fd)
 	{
-		free(pipe_fd[k]);
-		k++;
+		while (pipe_fd[k] != NULL)
+		{
+			free(pipe_fd[k]);
+			k++;
+		}
+		if (pipe_fd != NULL)
+			free(pipe_fd);
 	}
-	if (pipe_fd != NULL)
-		free(pipe_fd);
 }
