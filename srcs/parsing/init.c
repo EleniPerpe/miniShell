@@ -6,13 +6,13 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/28 07:03:57 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:28:20 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char *check_expander_and_rest(char *input_line, char **env);
+char *check_expander_and_rest(char *input_line, t_env **mini_env);
 
 void	add_node_to_commands_list(t_line_data **data,
 	t_commands_list **commands_list)
@@ -91,14 +91,14 @@ int	command_fill(char *line, int i, t_line_data **data)
 	return (i + j);
 }
 
-char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ char **env, t_input *input_node)
+char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini_env, t_input *input_node)
 {
 	int	i;
 	char **cmd_args;
 	t_line_data *line_data;
 
 	line_data = NULL;
-	input_line = check_expander_and_rest(input_line, env);
+	input_line = check_expander_and_rest(input_line, mini_env);
 	i = 0;
 	while (input_line[i] != '\0')
 	{
@@ -129,7 +129,7 @@ char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ char **env, 
 	input_node->data_node = line_data;
 	return (cmd_args);
 }
-char *check_expander_and_rest(char *input_line, char **env)
+char *check_expander_and_rest(char *input_line, t_env **mini_env)
 {
 	int i;
 
@@ -147,7 +147,7 @@ char *check_expander_and_rest(char *input_line, char **env)
 		}
 		if (input_line[i] == '$')
 		{
-			input_line = expander_fill(input_line, i, env);
+			input_line = expander_fill(input_line, i, mini_env);
 		}
 		i++;
 	}

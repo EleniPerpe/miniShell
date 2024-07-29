@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:45:17 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/28 07:01:20 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:29:32 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	split_pipes(char *whole_line, t_input **new_input_node)
 	}
 return (processes_num);
 }
-void	init_linked_list(t_input **new_input_node,char **env)
+void	init_linked_list(t_input **new_input_node,t_env **mini_env)
 {
 	t_input		*input_node;
 	char *input_line;
@@ -83,9 +83,7 @@ void	init_linked_list(t_input **new_input_node,char **env)
 	{
 		input_line = input_node->part_line;
 		if (input_line && (ft_strcmp(input_line, "") != 0))
-			{
-				input_node->cmd_args = ft_split_line(input_line, /*&line_data,*/ env, input_node);
-			}
+				input_node->cmd_args = ft_split_line(input_line, /*&line_data,*/ mini_env, input_node);
 		input_node = input_node->next;
 	}
 }

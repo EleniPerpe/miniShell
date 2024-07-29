@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:46:05 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/23 23:28:22 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:54:29 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,16 @@ char	*find_path(char *cmd, char **env)
 	return (NULL);
 }
 
-void	exec_command(char **cmd_args, char **env)
+void	exec_command(char **cmd_args, t_env **mini_env)
 {
 	char	*path;
-		if (cmd_args[0] != NULL)
-			path = find_path(cmd_args[0], env);
-		if (execve(path, cmd_args, env) == -1)
-			exit(EXIT_FAILURE);
+	char	**env;
+
+	env = minienv_to_env(mini_env);
+	if (cmd_args[0] != NULL)
+		path = find_path(cmd_args[0], env);
+	if (execve(path, cmd_args, env) == -1)
+		exit(EXIT_FAILURE);
 }
 
 char	**merge_free_command(t_line_data **data, int len)
