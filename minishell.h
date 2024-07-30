@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/30 14:12:30 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:13:13 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	add_path_to_list(t_env **mini_env, t_env *new_env);
 void	add_inputnode_tolist(t_input **data, t_input *new_line_data);
 
 //execution:
-void	start_prompt(t_env **mini_env, t_env **new_export);
+void	start_prompt(t_env **mini_env, t_env **new_export, int i);
 void	standard_io(t_input *data, int **pipe_fd, int i, int processes_num);
 void	reset_io(void);
 void	exec_command(char **cmd_args, t_env **mini_env);

@@ -6,20 +6,19 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/30 16:03:10 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:14:52 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	start_prompt(t_env **mini_env, t_env **new_export)
+void	start_prompt(t_env **mini_env, t_env **new_export, int i)
 {
 	char		*whole_line;
 	t_input		*new_input_node;
 	int			processes_num;
 	int			**pro_pid;
 	int			**pipe_fd;
-	int			i;
 
 	new_input_node = NULL;
 	while (1)
