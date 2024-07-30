@@ -9,3 +9,33 @@ I can clean and I can check for exit codes.
 
 I need to change the expander to take out env instead of the real one
 when I know how the execution works
+
+
+exit codes : 
+
+echo "Hello, World!"
+echo $?  # Output: 0
+
+ls nonexistentfile
+echo $?  # Output: 1
+
+exit 256
+echo $?  # Output: 2
+
+/bin/ls /root  # Assuming you don't have permissions
+echo $?  # Output: 126
+
+nonexistentcommand
+echo $?  # Output: 127
+
+kill -9 $$
+echo $?  # Output: 137 (This will kill the shell, so you won't see this output)
+
+sleep 10
+# Press Control-C during the sleep
+echo $?  # Output: 130
+
+exit 300
+echo $?  # Output: 255
+
+
