@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/30 01:08:37 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:12:30 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,9 @@ void	node_remove(t_env **node_remove, char *line, int i);
 char	*check_expander_and_rest(char *input_line, t_env **mini_env);
 void	ft_cd(t_env **mini_env, char **args, t_env **new_export);
 void    fill_env_and_export(t_env **new_export, t_env **mini_env, char *args);
-int check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
+int		check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
 void    create_old_pwd(t_env **mini_env, t_env **new_export);
+void	ft_exit(char **args);
 
 // utilities
 void	ft_free(char **paths_spleted, char *cmd, char *path);

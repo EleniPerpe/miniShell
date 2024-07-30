@@ -1,0 +1,11 @@
+total 6176
+drwxr-xr-x   86 eperperi  2023_heilbronn     2924 Jul 30 15:57 Libft
+-rw-r--r--    1 eperperi  2023_heilbronn     3466 Jul 30 13:37 Makefile
+-rwxr-xr-x    1 eperperi  2023_heilbronn   149256 Jul 30 15:57 minishell
+-rw-r--r--    1 eperperi  2023_heilbronn     5334 Jul 30 14:12 minishell.h
+drwxr-xr-x   28 eperperi  2023_heilbronn      952 Jul 30 15:57 objs
+-rw-r--r--    1 eperperi  2023_heilbronn      684 Jul 30 13:43 problems_to_solve
+drwxr-xr-x  124 eperperi  2023_heilbronn     4216 Jul 30 13:37 readline-8.1
+-rw-r--r--    1 eperperi  2023_heilbronn  2993288 Jul 30 13:37 readline-8.1.tar.gz
+drwxr-xr-x    7 eperperi  2023_heilbronn      238 Jul 30 13:37 srcs
+-rw-r--r--    1 eperperi  2023_heilbronn        0 Jul 30 16:15 zzz.txt

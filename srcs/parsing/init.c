@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/29 20:15:38 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/30 15:44:59 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char *check_expander_and_rest(char *input_line, t_env **mini_env);
+char	*check_expander_and_rest(char *input_line, t_env **mini_env);
 
 void	add_node_to_commands_list(t_line_data **data,
 	t_commands_list **commands_list)
@@ -93,9 +93,9 @@ int	command_fill(char *line, int i, t_line_data **data)
 
 char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini_env, t_input *input_node)
 {
-	int	i;
-	char **cmd_args;
-	t_line_data *line_data;
+	int			i;
+	char		**cmd_args;
+	t_line_data	*line_data;
 
 	line_data = NULL;
 	input_line = check_expander_and_rest(input_line, mini_env);

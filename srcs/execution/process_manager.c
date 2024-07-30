@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/30 01:41:14 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/30 16:03:10 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	start_prompt(t_env **mini_env, t_env **new_export)
 {
-	char 		*whole_line;
+	char		*whole_line;
 	t_input		*new_input_node;
 	int			processes_num;
 	int			**pro_pid;
 	int			**pipe_fd;
-	int i;
+	int			i;
 
 	new_input_node = NULL;
 	while (1)
@@ -38,7 +38,7 @@ void	start_prompt(t_env **mini_env, t_env **new_export)
 		init_linked_list(&new_input_node, mini_env);
 		pipe_fd =  pipes_init(processes_num);
 		pro_pid  = pid_init(processes_num);
-		if ( processes_num == 1 && check_for_builtins(new_input_node->cmd_args, mini_env, new_export)==0)
+		if (processes_num == 1 && check_for_builtins(new_input_node->cmd_args, mini_env, new_export) != 2)
 		{
 			new_input_node = NULL;
 			// new_input_node = new_input_node->next;
