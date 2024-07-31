@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/31 03:29:10 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/31 19:24:54 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,9 @@ void	open_outfile(t_line_data *data, char c);
 //builtins
 int		check_for_builtins(char **args, t_env **mini_env, t_env **new_export);
 int		check_for_builtins(char **args, t_env **mini_env, t_env **new_export);
-void	ft_echo(char **args);
+void    ft_echo(char **args, t_env **mini_env);
 void	ft_env(t_env **mini_env, char **args);
-void	ft_pwd(t_env **mini_env, char **args);
+void	ft_pwd(t_env **mini_env);
 void	ft_export(t_env **mini_env, char **args, t_env **new_export);
 void	create_export_path(t_env **mini_env, t_env **new_export);
 void	find_if_exists(t_env **new_export, char *line, t_env **mini_env);
@@ -128,7 +128,7 @@ void	ft_cd(t_env **mini_env, char **args, t_env **new_export);
 void    fill_env_and_export(t_env **new_export, t_env **mini_env, char *args);
 int		check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
 void    create_old_pwd(t_env **mini_env, t_env **new_export);
-void	ft_exit(char **args);
+void	ft_exit(char **args, t_env **mini_env);
 
 // utilities
 void	ft_free(char **paths_spleted, char *cmd, char *path);

@@ -6,26 +6,17 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:58:26 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/25 18:52:25 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/31 19:05:09 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	ft_pwd(t_env **mini_env, char **args)
+void	ft_pwd(t_env **mini_env)
 {
 	t_env	*tmp;
-	int		i;
 
 	tmp = *mini_env;
-	i = 0;
-	while (args[i] != NULL)
-		i++;
-	if (i > 1)
-	{
-		printf("pwd: too many arguments\n");
-		return ;
-	}
 	while (tmp != NULL)
 	{
 		if (ft_strncmp(tmp->line, "PWD=", 4) == 0)
@@ -35,4 +26,5 @@ void	ft_pwd(t_env **mini_env, char **args)
 		}
 		tmp = tmp->next;
 	}
+	change_status(mini_env, 0);
 }

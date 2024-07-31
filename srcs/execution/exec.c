@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:46:05 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/31 03:00:37 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/31 19:41:30 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,9 @@ int	exec_command(char **cmd_args, t_env **mini_env)
 		path = find_path(cmd_args[0], env);
 	if (execve(path, cmd_args, env) == -1)
 	{
-		if (!ft_strncmp("ls", cmd_args[0], 2))
-		{
-			printf("lss: %s: No such file or directory\n",cmd_args[1]);
-			change_status(mini_env, 1);
-			return (1);
-		}
-		else
-		{
 		printf("minishell: %s: command not found\n", cmd_args[0]);
 		change_status(mini_env, 127);
 		return (1);
-		}
 	}
 	return (0);
 }

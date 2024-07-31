@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:56:41 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/29 20:27:12 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/31 19:04:18 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 int     check_for_ns(char **args, int count);
 void    print_echo(char **args, int i);
-void    ft_echo(char **args)
+void    ft_echo(char **args, t_env **mini_env)
 {
     int i;
     i = 1;
@@ -31,6 +31,7 @@ void    ft_echo(char **args)
         if (args[1] != NULL)
             printf("\n");
     }
+	change_status(mini_env, 0);
 }
 void    print_echo(char **args, int i)
 {

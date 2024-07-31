@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:57:54 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/30 16:13:56 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/31 19:11:08 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,28 @@
 char	*create_export_line(char *env);
 void	print_export(t_env **new_export);
 void	fill_only_exp(t_env **new_export, char **args, int i, t_env **mini_env);
+int		check_and_fill(char **args, t_env **mini_env, t_env **new_export);
+
 
 void	ft_export(t_env **mini_env, char **args, t_env **new_export)
 {
 	int	i;
+	int exit_code;
 
 	i = 0;
 	while (args[i] != NULL)
 		i++;
 	if (i == 1)
 		print_export(new_export);
+	exit_code = check_and_fill(args, mini_env, new_export);
+	if (exit_code == 0)
+		change_status(mini_env, 0);
+}
+
+int		check_and_fill(char **args, t_env **mini_env, t_env **new_export)
+{
+	int	i;
+
 	i = 1;
 	while (args[i] != NULL)
 	{
@@ -38,12 +50,18 @@ void	ft_export(t_env **mini_env, char **args, t_env **new_export)
 		else
 		{
 			if (ft_isprint(args[i][0]) && !ft_isalpha(args[i][0]))
+			{
 				printf("minishell: %s: '%s': not a valid identifier\n",
 					args[0], args[i]);
+				change_status(mini_env, 1);
+				return (1);
+			}
 		}
 		i++;
 	}
+	return (0);
 }
+
 
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args)
 {

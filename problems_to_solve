@@ -7,10 +7,6 @@ $? (I need the status for the exit code). #:DONE
 
 I can clean and # Done: I can check for exit codes.
 
-I need to change the expander to take out env instead of the real one
-when I know how the execution works
-
-
 exit codes :
 
 #you can use the function change_status(t_env **mini_env, int status)

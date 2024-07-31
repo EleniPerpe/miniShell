@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/31 03:38:54 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/31 18:39:02 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **n
 {
 	int processes_num;
 	t_input *tmp;
+	int		builtin;
 
 	tmp = data;
 	while (tmp->next)
@@ -71,12 +72,11 @@ int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **n
 	if (standard_io(data, pipe_fd, data->i, processes_num, mini_env) != 0)
 		return (1);
 	close_fds(pipe_fd);
-	if (check_for_builtins(data->cmd_args, mini_env, new_export) == 0)
-			/*setup_signal_init()*/;
-	else
+	builtin = check_for_builtins(data->cmd_args, mini_env, new_export);
+	if (builtin == 2)
 	{
 		if (exec_command(data->cmd_args, mini_env) != 0 )
-			return (1);
+			return (1);		
 	}
 	return(0);
 }

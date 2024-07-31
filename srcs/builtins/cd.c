@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:23:28 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/29 20:25:02 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/31 19:09:50 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,51 @@
 void    change_other_envs(t_env **mini_env, t_env **new_export, char *line);
 void    replace_nodes(t_env **mini_env, char *line, int i);
 char    *create_previous_directory(t_env **mini_env);
-void    check_and_change_dir(char *dir);
+int	    check_and_change_dir(char *dir, t_env **mini_env);
+
 void    ft_cd(t_env **mini_env, char **args, t_env **new_export)
 {
     char    *new_pwd;
     char    *temp_pwd;
+	int		exit_code;
     create_old_pwd(mini_env, new_export);
     if (args[1] == NULL || (args[1][0] == '~' && args[1][1] == '\0'))
     {
         temp_pwd = getenv("HOME");
-        check_and_change_dir(temp_pwd);
+        exit_code = check_and_change_dir(temp_pwd, mini_env);
     }
     else if (args[1] != NULL && (ft_strncmp("..", args[1], 2)) == 0)
     {
         temp_pwd = create_previous_directory(mini_env);
-        check_and_change_dir(temp_pwd);
+        exit_code = check_and_change_dir(temp_pwd, mini_env);
     }
     else
     {
         temp_pwd = args[1];
-        check_and_change_dir(args[1]);
+        exit_code = check_and_change_dir(args[1], mini_env);
     }
     new_pwd = getcwd(NULL, 0);
     new_pwd = ft_strjoin("PWD=", temp_pwd);
     change_other_envs(mini_env, new_export, new_pwd);
+	if (exit_code == 0)
+		change_status(mini_env, 0);
     free(new_pwd);
 }
-void    check_and_change_dir(char *dir)
+int    check_and_change_dir(char *dir, t_env **mini_env)
 {
     if (dir == NULL)
+	{
         fprintf(stderr, "Cannot find environment variable\n");
+		change_status(mini_env, 1);
+		return (1);
+	}
     if (chdir(dir) != 0)
-        perror("chdir() error");
+	{
+		printf("minishell: cd: %s: No such file or directory\n", dir);
+		change_status(mini_env, 1);
+		return (1);
+	}
+	return (0);
 }
 char    *create_previous_directory(t_env **mini_env)
 {
