@@ -137,7 +137,7 @@ void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd);
 char	**minienv_to_env(t_env **mini_env);
 void	add_status(t_env **mini_env);
 void	change_status(t_env **mini_env, int status);
-
+void	increase_shlvl(t_env **mini_env);
 
 //signals
 void	setup_signal_init();
