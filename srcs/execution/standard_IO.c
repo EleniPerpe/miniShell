@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 07:21:24 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/28 07:21:27 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/31 02:35:39 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	open_outfile(t_line_data *data, char c)
 	}
 }
 
-void	open_infile(t_line_data *data)
+int	open_infile(t_line_data *data, t_env **mini_env)
 {
 	int	fd;
 
@@ -39,15 +39,16 @@ void	open_infile(t_line_data *data)
 	{
 		write(2,"minishell: ", 11);
 		write(2,data->after_redirctor,ft_strlen(data->after_redirctor));
-		write (2 ,": No such file or directory", ft_strlen(": No such file or directory"));
-		// signal to kill the process must ne sent from here
-		return ;
+		write (2 ,": No such file or directory\n", ft_strlen(": No such file or directory\n"));
+		change_status(mini_env, 1);
+		return (1);
 	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
+	return (0);
 }
 
-void	handle_redirectors(t_input *data)
+int	handle_redirectors(t_input *data, t_env **mini_env)
 {
 	t_line_data	*current_data;
 	t_line_data	*next_data;
@@ -59,15 +60,19 @@ void	handle_redirectors(t_input *data)
 		if (current_data->type == 5 || current_data->type == 4 || current_data->type == 3)
 			next_data = current_data->next;
 		if (current_data->type == 5)
-			open_infile(next_data);
+		{
+			if (open_infile(next_data, mini_env) != 0)
+				return (1);
+		}
 		else if (current_data->type == 4)
 			open_outfile(next_data, 'T');
 		else if (current_data->type == 3)
 			open_outfile(next_data, 'A');
 		current_data = current_data->next;
 	}
+	return (0);
 }
-void	standard_io(t_input *data, int **pipe_fd, int i, int processes_num)
+int	standard_io(t_input *data, int **pipe_fd, int i, int processes_num, t_env **mini_env)
 {
 	if (i == 0 && pipe_fd[i] != NULL)
 	{
@@ -90,7 +95,9 @@ void	standard_io(t_input *data, int **pipe_fd, int i, int processes_num)
 			dup2(pipe_fd[i][1], STDOUT_FILENO);
 			close(pipe_fd[i][1]);
 	}
-	handle_redirectors(data);
+	if (handle_redirectors(data, mini_env) != 0)
+		return (1);
+	return (0);
 }
 
 void	reset_io(void)

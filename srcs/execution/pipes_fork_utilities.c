@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 19:57:17 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/30 01:37:37 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/31 03:40:49 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,26 @@ void close_fds(int **pipe_fd)
 	}
 }
 
-void	wait_for_children(int **pro_pid, int processes_num)
+void	wait_for_children(int **pro_pid, int processes_num, t_env **mini_env)
 {
+	(void)mini_env;
+	int status;
 	int i;
+
 	i = 0;
 	while (i < processes_num)
 	{
-		waitpid(pro_pid[i][0] , NULL, 0);
+		waitpid(pro_pid[i][0] , &status, 0);
+		// if (WIFEXITED(status))
+		// {
+		// 	change_status(mini_env , WEXITSTATUS(status));
+		// 	printf("test test one\n");
+		// }
+		// if (WIFSIGNALED(status))
+		// {
+		// 	change_status (mini_env, WTERMSIG(status));
+		// 	printf("test test two\n");
+		// }
 		i++;
 	}
 	setup_signal_init();

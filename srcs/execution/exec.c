@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:46:05 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/29 20:06:40 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/31 03:00:37 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*find_path(char *cmd, char **env)
 	return (NULL);
 }
 
-void	exec_command(char **cmd_args, t_env **mini_env)
+int	exec_command(char **cmd_args, t_env **mini_env)
 {
 	char	*path;
 	char	**env;
@@ -89,7 +89,21 @@ void	exec_command(char **cmd_args, t_env **mini_env)
 	if (cmd_args[0] != NULL)
 		path = find_path(cmd_args[0], env);
 	if (execve(path, cmd_args, env) == -1)
-		exit(EXIT_FAILURE);
+	{
+		if (!ft_strncmp("ls", cmd_args[0], 2))
+		{
+			printf("lss: %s: No such file or directory\n",cmd_args[1]);
+			change_status(mini_env, 1);
+			return (1);
+		}
+		else
+		{
+		printf("minishell: %s: command not found\n", cmd_args[0]);
+		change_status(mini_env, 127);
+		return (1);
+		}
+	}
+	return (0);
 }
 
 char	**merge_free_command(t_line_data **data, int len)
