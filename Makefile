@@ -31,6 +31,7 @@ EXECUTION_DIR = ./srcs/execution/
 SIGNALS_DIR = ./srcs/signals/
 
 SRC = $(SRC_DIR)main.c \
+      $(SRC_DIR)main_utilities.c \
       $(EXECUTION_DIR)standard_io.c \
       $(EXECUTION_DIR)exec.c \
       $(EXECUTION_DIR)process_manager.c \
