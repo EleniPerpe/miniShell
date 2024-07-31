@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/31 18:39:02 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/31 21:09:47 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	start_prompt(t_env **mini_env, t_env **new_export, int i)
 		init_linked_list(&new_input_node, mini_env);
 		pipe_fd =  pipes_init(processes_num);
 		pro_pid  = pid_init(processes_num);
-		if (processes_num == 1 && check_for_builtins(new_input_node->cmd_args, mini_env, new_export) != 2)
+		if (processes_num == 1 && check_for_builtins(new_input_node->cmd_args, mini_env, new_export) != -2)
 		{
 			new_input_node = NULL;
 			// new_input_node = new_input_node->next;
@@ -73,9 +73,9 @@ int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **n
 		return (1);
 	close_fds(pipe_fd);
 	builtin = check_for_builtins(data->cmd_args, mini_env, new_export);
-	if (builtin == 2)
+	if (builtin == -2)
 	{
-		if (exec_command(data->cmd_args, mini_env) != 0 )
+		if (exec_command(data->cmd_args, mini_env) != 0)
 			return (1);		
 	}
 	return(0);

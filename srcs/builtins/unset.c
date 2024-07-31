@@ -6,26 +6,28 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:12:10 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/31 19:22:36 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/31 20:58:23 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void args_and_fill(char **args, t_env **mini_env, t_env **new_export, int i);
+int args_and_fill(char **args, t_env **mini_env, t_env **new_export, int i);
 
-void	ft_unset(char **args, t_env **mini_env, t_env **new_export)
+int	ft_unset(char **args, t_env **mini_env, t_env **new_export)
 {
 	int		i;
+	int		exit_code;
 	
 	i = 0;
 	while (args[i] != NULL)
 		i++;
 	if (i == 1)
-		return ;
-	args_and_fill(args, mini_env, new_export, 0);
+		return (0);
+	exit_code = args_and_fill(args, mini_env, new_export, 0);
+	return (exit_code);
 }
-void args_and_fill(char **args, t_env **mini_env, t_env **new_export, int i)
+int args_and_fill(char **args, t_env **mini_env, t_env **new_export, int i)
 {
 	int j;
 	char *string;
@@ -39,7 +41,7 @@ void args_and_fill(char **args, t_env **mini_env, t_env **new_export, int i)
 		{
 			printf("minishell: %s: '%s': not a valid identifier\n",
 				args[0], args[i]);
-			change_status(mini_env, 1);
+			return (1);
 		}
 		else
 		{	
@@ -47,8 +49,9 @@ void args_and_fill(char **args, t_env **mini_env, t_env **new_export, int i)
 			string = ft_strjoin("declare -x ", args[i]);
 			node_remove(new_export, string, j + 11);
 			free(string);
-			change_status(mini_env, 0);
+			return (0);
 		}
 		i++;
 	}
+	return (0);
 }

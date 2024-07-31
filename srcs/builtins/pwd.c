@@ -6,13 +6,13 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:58:26 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/31 19:05:09 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/31 20:57:17 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	ft_pwd(t_env **mini_env)
+int	ft_pwd(t_env **mini_env)
 {
 	t_env	*tmp;
 
@@ -22,9 +22,9 @@ void	ft_pwd(t_env **mini_env)
 		if (ft_strncmp(tmp->line, "PWD=", 4) == 0)
 		{
 			printf("%s\n", tmp->line + 4);
-			return ;
+			return (0);
 		}
 		tmp = tmp->next;
 	}
-	change_status(mini_env, 0);
+	return (0);
 }
