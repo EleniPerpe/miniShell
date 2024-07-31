@@ -6,7 +6,7 @@
 /*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:28:35 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/31 01:15:32 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/07/31 05:10:33 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,12 @@ void	ft_env(t_env **mini_env, char **args)
 	}
 	while (tmp != NULL)
 	{
-		// if (tmp->line[0] == '?' && tmp->line[1] == '=') // Do not print the status :D
-		// 	// tmp = tmp->next;
-		// 	;
-		// else
-		// {
+		if (tmp->line[0] == '?' && tmp->line[1] == '=') // Do not print the status :D
+			tmp = tmp->next;
+		else
+		{
 			printf("%s\n", tmp->line);
 			tmp = tmp->next;
-		// }
+		}
 	}
 }
