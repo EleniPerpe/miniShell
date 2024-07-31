@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:30:26 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/31 19:33:58 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/31 20:45:58 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_exit(char **args, t_env **mini_env)
 		else
 			ft_exit_now(255, mini_env);
 	}
+	
 }
 
 void	ft_exit_now(int i, t_env **mini_env)

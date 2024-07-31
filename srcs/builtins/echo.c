@@ -6,14 +6,15 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:56:41 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/31 19:04:18 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/31 20:29:41 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 int     check_for_ns(char **args, int count);
 void    print_echo(char **args, int i);
-void    ft_echo(char **args, t_env **mini_env)
+
+int    ft_echo(char **args)
 {
     int i;
     i = 1;
@@ -31,7 +32,7 @@ void    ft_echo(char **args, t_env **mini_env)
         if (args[1] != NULL)
             printf("\n");
     }
-	change_status(mini_env, 0);
+	return (0);
 }
 void    print_echo(char **args, int i)
 {
