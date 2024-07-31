@@ -6,11 +6,12 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:10:54 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/30 16:18:46 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/31 19:11:29 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
 void    append_export_and_env(t_env **mini_env, t_env **new_export,
             char *line, int j);
 void    new_append_addition(t_env **new_export, t_env **mini_env,

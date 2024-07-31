@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:23:27 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/30 15:10:43 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/31 19:33:15 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,13 @@ void    print_export(t_env **new_export)
     tmp = *new_export;
     while (tmp != NULL)
     {
-        printf("%s\n", tmp->line);
-        tmp = tmp->next;
+		if (tmp->line[0] == '?' && tmp->line[1] == '=') // Do not print the status :D
+			tmp = tmp->next;
+		else
+		{
+			printf("%s\n", tmp->line);
+			tmp = tmp->next;
+		}
     }
 }
 
