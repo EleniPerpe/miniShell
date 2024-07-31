@@ -56,11 +56,8 @@ void	wait_for_children(int **pro_pid, int processes_num, t_env **mini_env)
 	while (i < processes_num)
 	{
 		waitpid(pro_pid[i][0] , &status, 0);
-		// if (WIFEXITED(status))
-		// {
-		// 	change_status(mini_env , WEXITSTATUS(status));
-		// 	printf("test test one\n");
-		// }
+		if (WIFEXITED(status))
+			change_status(mini_env , WEXITSTATUS(status));
 		// if (WIFSIGNALED(status))
 		// {
 		// 	change_status (mini_env, WTERMSIG(status));
