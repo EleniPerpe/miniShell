@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/30 17:14:52 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/31 03:38:54 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,20 @@ void	start_prompt(t_env **mini_env, t_env **new_export, int i)
 		{
 			while (i < processes_num)
 			{
-				fork_and_exec(new_input_node, pro_pid[i], pipe_fd, mini_env, new_export);
+				if (fork_and_exec(new_input_node, pro_pid[i], pipe_fd, mini_env, new_export) == 0)
+					/*change_status(mini_env, 0)*/ ;
 				new_input_node = new_input_node->next;
 				i++;
 			}
 			close_fds(pipe_fd);
-			wait_for_children(pro_pid, processes_num);
+			wait_for_children(pro_pid, processes_num, mini_env);
 			free_all(&new_input_node, pro_pid, pipe_fd); // not done, need a lot of work
 		}
 	}
 }
 
 
-void	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **new_export)
+int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **new_export)
 {
 	int processes_num;
 	t_input *tmp;
@@ -67,16 +68,20 @@ void	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **
 	while (tmp->next)
 		tmp = tmp->next;
 	processes_num = tmp->i + 1;
-	standard_io(data, pipe_fd, data->i, processes_num);
+	if (standard_io(data, pipe_fd, data->i, processes_num, mini_env) != 0)
+		return (1);
 	close_fds(pipe_fd);
 	if (check_for_builtins(data->cmd_args, mini_env, new_export) == 0)
 			/*setup_signal_init()*/;
 	else
-		exec_command(data->cmd_args, mini_env);
-	exit(EXIT_SUCCESS);
+	{
+		if (exec_command(data->cmd_args, mini_env) != 0 )
+			return (1);
+	}
+	return(0);
 }
 
-void	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_env, t_env **new_export)
+int	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_env, t_env **new_export)
 {
 
 	t_input *new_input_node;
@@ -93,7 +98,9 @@ void	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_
 	}
 	else if (cur_pro_pid[0]== 0)
 	{
-		process_execution(new_input_node, pipe_fd, mini_env, new_export);
-		exit(EXIT_SUCCESS); // not necessary
+		if (process_execution(new_input_node, pipe_fd, mini_env, new_export) != 0)
+			return (1);
+			// exit(EXIT_SUCCESS); // not necessary
 	}
+	return (0);
 }

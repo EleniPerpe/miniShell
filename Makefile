@@ -6,7 +6,7 @@
 #    By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/07/29 22:52:50 by rshatra          ###   ########.fr        #
+#    Updated: 2024/07/31 01:28:43 by rshatra          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ SRC = $(SRC_DIR)main.c \
       $(EXECUTION_DIR)errors_free.c \
       $(EXECUTION_DIR)build_nodes.c \
       $(SIGNALS_DIR)signals.c \
+      $(SIGNALS_DIR)status.c \
 
 OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
 LIB = Libft/libft.a

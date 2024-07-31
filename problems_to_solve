@@ -3,39 +3,52 @@
 > out "ls
 check for seg fault".
 
-$? (I need the status for the exit code).
+$? (I need the status for the exit code). #:DONE
 
-I can clean and I can check for exit codes.
+I can clean and # Done: I can check for exit codes.
 
 I need to change the expander to take out env instead of the real one
 when I know how the execution works
 
 
-exit codes : 
+exit codes :
+
+#you can use the function change_status(t_env **mini_env, int status)
+anywhere you have an error to change the status
 
 echo "Hello, World!"
-echo $?  # Output: 0
+echo $?  # Output: 0 : DONE
 
 ls nonexistentfile
-echo $?  # Output: 1
+echo $?  # Output: 1 I don't know how to do it becuase the
+#execve is exciting the process and I can't change the
+#status, Look at exec.c after execve
 
 exit 256
-echo $?  # Output: 2
+echo $?  # Output: 2 I check it in bash it gives 0, I don't know
 
 /bin/ls /root  # Assuming you don't have permissions
 echo $?  # Output: 126
 
 nonexistentcommand
-echo $?  # Output: 127
+echo $?  # Output: 127 : DONE
 
 kill -9 $$
 echo $?  # Output: 137 (This will kill the shell, so you won't see this output)
 
 sleep 10
 # Press Control-C during the sleep
-echo $?  # Output: 130
+echo $?  # Output: 130 it is giving me 2 Don't know why
+# look at pipec_for_utilities.c wait_for_children()
 
 exit 300
 echo $?  # Output: 255
 
+# the status is not updating if the next command was executed successfully
+# it must returned to 0 look at process_manager.c line 50
 
+
+# Maybe in builtins there are some error cases which need to
+# change the status also, I didn't check that
+
+#signals must be in the builtins also

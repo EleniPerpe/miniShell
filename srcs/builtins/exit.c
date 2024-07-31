@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:30:26 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/30 16:03:36 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/31 02:55:42 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_exit(char **args)
 		i = 0;
 		while (args[1][i] != '\0')
 		{
-			if (!isdigit(args[1][i]) && !(i == 0 && (args[1][i] == '-' || args[1][i] == '+'))) 
+			if (!isdigit(args[1][i]) && !(i == 0 && (args[1][i] == '-' || args[1][i] == '+')))
 			{
 				printf("exit: %s: numeric argument required\n", args[1]);
 				ft_exit_now(255);
@@ -53,5 +53,6 @@ void	ft_exit_now(int i)
 	//free everything
 	// tcsetattr(0, TCSANOW, &g_data->new); what is that ?
 	printf("exit\n");
+	// change_status()
 	exit(i);
 }

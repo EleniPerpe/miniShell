@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/30 17:13:13 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/07/31 03:29:10 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <sys/wait.h>
 
 extern pid_t	child_pid;
 
@@ -96,17 +97,17 @@ void	add_inputnode_tolist(t_input **data, t_input *new_line_data);
 
 //execution:
 void	start_prompt(t_env **mini_env, t_env **new_export, int i);
-void	standard_io(t_input *data, int **pipe_fd, int i, int processes_num);
+int		standard_io(t_input *data, int **pipe_fd, int i, int processes_num, t_env **mini_env);
 void	reset_io(void);
-void	exec_command(char **cmd_args, t_env **mini_env);
-void	process_execution(t_input *data, int **pipe_fd,t_env **mini_env, t_env **new_export);
+int		exec_command(char **cmd_args, t_env **mini_env);
+int		process_execution(t_input *data, int **pipe_fd,t_env **mini_env, t_env **new_export);
 void	close_fds(int **pipe_fd);
-void	wait_for_children(int **pro_pid, int processes_num);
-void	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_env, t_env **new_export);
+void	wait_for_children(int **pro_pid, int processes_num, t_env **mini_env);
+int		fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_env, t_env **new_export);
 int		**pipes_init(int processes_num);
 int		**pid_init(int processes_num);
-void	handle_redirectors(t_input *data);
-void	open_infile(t_line_data *data);
+int		handle_redirectors(t_input *data, t_env **mini_env);
+int		open_infile(t_line_data *data, t_env **mini_env);
 void	open_outfile(t_line_data *data, char c);
 
 //builtins
@@ -134,6 +135,9 @@ void	ft_free(char **paths_spleted, char *cmd, char *path);
 void	free_path(t_env *mini_env);
 void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd);
 char	**minienv_to_env(t_env **mini_env);
+void	add_status(t_env **mini_env);
+void	change_status(t_env **mini_env, int status);
+
 
 //signals
 void	setup_signal_init();
