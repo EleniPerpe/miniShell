@@ -47,7 +47,7 @@ void	ft_exit(char **args, t_env **mini_env)
 		else
 			ft_exit_now(255, mini_env);
 	}
-	
+
 }
 
 void	ft_exit_now(int i, t_env **mini_env)
@@ -56,5 +56,5 @@ void	ft_exit_now(int i, t_env **mini_env)
 	// tcsetattr(0, TCSANOW, &g_data->new); what is that ?
 	printf("exit\n");
 	change_status(mini_env, i);
-	exit(i);
+	exit(i % 256);
 }
