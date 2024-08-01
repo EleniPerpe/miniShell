@@ -36,7 +36,7 @@ int	quote_token(char *line, int i, t_line_data **line_data)
 		tmp[j] = '\0';
 		if (flag == 7)
 			quotes_after_redireciton(tmp, j, line_data);
-		else if (flag == 2)
+		else if (flag == 2 || j == -1)
 			heredoc_init(line, i, line_data);
 		else if (flag == 0)
 			quotes_command(tmp, j, line_data);
@@ -97,6 +97,7 @@ int	check_quotes_cases(char *line, int *i)
 		if (line[*i + j] == '\0')
 		{
 			printf("The program does not interpret unclosed quotes\n");
+			return (-1);
 			// kill(child_pid, SIGKILL);
 			// exit(EXIT_FAILURE);
 			// send a signal to kill the child process

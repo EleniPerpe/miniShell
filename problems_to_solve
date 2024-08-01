@@ -1,7 +1,15 @@
 
 # case 1:
-> out "ls
-check for seg fault".
+"ls or 'ls
+you need to open heredoc, at quotes.c line 84 and 99.
+
+SHLVL to decrease.
+
+exit codes connect with the builtins.
+
+create a function to free the envs.
+
+
 
 $? (I need the status for the exit code). #:DONE
 

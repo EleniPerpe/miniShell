@@ -14,7 +14,7 @@
 
 NAME = minishell
 
-CC = gcc -g -fsanitize=address
+CC = gcc  -g # -fsanitize=address
 # LEAKS = -L../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next -I ../LeakSanitize
 CFLAGS = -Wall -Wextra -Werror -I$(HOME)/local/include
 LDFLAGS = -L $(HOME)/local/lib -lreadline -lhistory

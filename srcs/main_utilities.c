@@ -58,13 +58,11 @@ void	set_new_lvl(t_env **mini_env,int shlvl)
 
 void	increase_shlvl(t_env **mini_env)
 {
-	int		i;
 	int		shlvl;
 	char	*ch_shlvl;
 	t_env	*tmp;
 	(void)mini_env;
 	tmp = NULL;
-	i = 0;
 
 	tmp = *mini_env;
 	while (tmp != NULL)

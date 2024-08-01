@@ -145,9 +145,9 @@ int	cmd_args_counter(t_line_data **data)
 char	**command_merge(t_line_data **data)
 {
 	char		**cmd_args;
-	t_line_data	*tmp;
+	// t_line_data	*tmp;
 
-	tmp = *data;
+	// tmp = *data;
 	cmd_args = merge_free_command(data, cmd_args_counter(data));
 	return (cmd_args);
 }
