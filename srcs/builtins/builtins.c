@@ -26,6 +26,7 @@ int check_for_builtins(char **args, t_env **mini_env, t_env **new_export)
 		if (check_if_valid(args, 4) == 127)
 			return (127);
 		res = ft_echo(args);
+	printf("This is the res : %d\n", res);
 		return (res);
 	}
 	if ((ft_strncmp(args[0], "pwd", 3) == 0))
@@ -33,10 +34,12 @@ int check_for_builtins(char **args, t_env **mini_env, t_env **new_export)
 		if (check_if_valid(args, 3) == 1)
 			return (1);
 		res = ft_pwd(mini_env);
+	printf("This is the res : %d\n", res);
 		return (res);
 	}
 	if (res == -2)
 		res = check_for_builtins2(args, mini_env, new_export);
+	printf("This is the res : %d\n", res);
 	return (res);
 }
 

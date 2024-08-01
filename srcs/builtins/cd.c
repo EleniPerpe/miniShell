@@ -12,13 +12,14 @@
 
 #include "../../minishell.h"
 void    change_other_envs(t_env **mini_env, t_env **new_export, char *line);
-void    replace_nodes(t_env **mini_env, char *line, int i);
 char    *create_previous_directory(t_env **mini_env);
 int	    check_and_change_dir(char *dir);
+void	check_for_new_pwd(t_env **mini_env, t_env **new_export,
+		int exit_code, char *temp_pwd);
+
 
 int    ft_cd(t_env **mini_env, char **args, t_env **new_export)
 {
-    char    *new_pwd;
     char    *temp_pwd;
 	int		exit_code;
 
@@ -39,10 +40,8 @@ int    ft_cd(t_env **mini_env, char **args, t_env **new_export)
         temp_pwd = args[1];
         exit_code = check_and_change_dir(args[1]);
     }
-    new_pwd = getcwd(NULL, 0);
-    new_pwd = ft_strjoin("PWD=", temp_pwd);
-    change_other_envs(mini_env, new_export, new_pwd);
-    return (free(new_pwd), exit_code);
+	check_for_new_pwd(mini_env, new_export, exit_code, temp_pwd);
+    return (exit_code);
 }
 int    check_and_change_dir(char *dir)
 {
@@ -57,6 +56,20 @@ int    check_and_change_dir(char *dir)
 		return (1);
 	}
 	return (0);
+}
+
+void	check_for_new_pwd(t_env **mini_env, t_env **new_export,
+	int exit_code, char *temp_pwd)
+{
+	char *new_pwd;
+
+	if (exit_code == 0)
+	{
+    	new_pwd = getcwd(NULL, 0);
+    	new_pwd = ft_strjoin("PWD=", temp_pwd);
+    	change_other_envs(mini_env, new_export, new_pwd);
+		free(new_pwd);
+	}
 }
 char    *create_previous_directory(t_env **mini_env)
 {
@@ -74,35 +87,35 @@ char    *create_previous_directory(t_env **mini_env)
     final = ft_substr(temp->line, 4, len - 4);
     return (final);
 }
-void    change_other_envs(t_env **mini_env, t_env **new_export, char *line)
-{
-    int     i;
-    t_env   *curr_minienv;
-    t_env   *curexport;
-    char    *temp_export;
-    i = 0;
-    curr_minienv = *mini_env;
-    while (line[i] != '=' && line[i] != '\0')
-        i++;
-    while (curr_minienv != NULL && ft_strncmp(curr_minienv->line, line, i) != 0)
-        curr_minienv = curr_minienv->next;
-    if (curr_minienv != NULL)
-        replace_nodes(mini_env, line, i);
-    curexport = *new_export;
-    while (curexport != NULL && ft_strncmp(curexport->line + 11, line, i) != 0)
-        curexport = curexport->next;
-    if (curexport != NULL)
-    {
-        temp_export = ft_strjoin_export("declare -x PWD=", line + 4, '"');
-        replace_nodes(new_export, temp_export, i + 11);
-    }
-}
-void    replace_nodes(t_env **mini_env, char *line, int i)
-{
-    t_env   *temp_env;
-    node_remove(mini_env, line, i);
-    temp_env = (t_env *)ft_malloc(sizeof(t_env));
-    temp_env->line = ft_strdup(line);
-    temp_env->next = NULL;
-    add_path_to_list(mini_env, temp_env);
-}
+// void    change_other_envs(t_env **mini_env, t_env **new_export, char *line)
+// {
+//     int     i;
+//     t_env   *curr_minienv;
+//     t_env   *curexport;
+//     char    *temp_export;
+//     i = 0;
+//     curr_minienv = *mini_env;
+//     while (line[i] != '=' && line[i] != '\0')
+//         i++;
+//     while (curr_minienv != NULL && ft_strncmp(curr_minienv->line, line, i) != 0)
+//         curr_minienv = curr_minienv->next;
+//     if (curr_minienv != NULL)
+//         replace_nodes(mini_env, line, i);
+//     curexport = *new_export;
+//     while (curexport != NULL && ft_strncmp(curexport->line + 11, line, i) != 0)
+//         curexport = curexport->next;
+//     if (curexport != NULL)
+//     {
+//         temp_export = ft_strjoin_export("declare -x PWD=", line + 4, '"');
+//         replace_nodes(new_export, temp_export, i + 11);
+//     }
+// }
+// void    replace_nodes(t_env **mini_env, char *line, int i)
+// {
+//     t_env   *temp_env;
+//     node_remove(mini_env, line, i);
+//     temp_env = (t_env *)ft_malloc(sizeof(t_env));
+//     temp_env->line = ft_strdup(line);
+//     temp_env->next = NULL;
+//     add_path_to_list(mini_env, temp_env);
+// }
