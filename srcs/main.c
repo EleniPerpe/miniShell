@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **env)
 	new_export = NULL;
 	setup_signal_init();
 	create_path(env, &mini_env);
-	increase_shlvl(&mini_env);
+	modify_shlvl(&mini_env, '+');
 	create_export_path(&mini_env, &new_export);
 	(void)argv;
 	if (argc != 1)
