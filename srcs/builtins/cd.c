@@ -80,7 +80,7 @@ char    *create_previous_directory(t_env **mini_env)
     int     len;
     char    *rest;
     temp = *mini_env;
-	
+
     while (temp != NULL && ft_strncmp("PWD=", temp->line, 4) != 0)
         temp = temp->next;
     rest = ft_strrchr(temp->line, '/');

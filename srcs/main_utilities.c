@@ -56,7 +56,7 @@ void	set_new_lvl(t_env **mini_env,int shlvl)
 }
 
 
-void	increase_shlvl(t_env **mini_env)
+void	modify_shlvl(t_env **mini_env, char c)
 {
 	int		shlvl;
 	char	*ch_shlvl;
@@ -73,6 +73,9 @@ void	increase_shlvl(t_env **mini_env)
 	}
 	ch_shlvl = get_lvl(tmp);
 	shlvl = ft_atoi(ch_shlvl);
-	shlvl++;
+	if (c == '+')
+		shlvl++;
+	else if (c == '-')
+		shlvl--;
 	set_new_lvl(mini_env, shlvl);
 }

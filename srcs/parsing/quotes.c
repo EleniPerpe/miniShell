@@ -29,6 +29,8 @@ int	quote_token(char *line, int i, t_line_data **line_data)
 	while (line[i] == '"' || line[i] == '\'')
 		i++;
 	j = check_quotes_cases(line, &i);
+	if (line[j] == '\0')
+		return j;
 	if (j > 0)
 	{
 		tmp = (char *)ft_malloc(j + 1);
@@ -82,6 +84,7 @@ int	check_quotes_cases(char *line, int *i)
 		if (line[*i + j] == '\0')
 		{
 			printf("The program does not interpret unclosed quotes\n");
+			return (*i + j);
 			// kill(child_pid, SIGKILL);
 			// exit(EXIT_FAILURE);
 			// send a signal to kill the child process
@@ -97,7 +100,7 @@ int	check_quotes_cases(char *line, int *i)
 		if (line[*i + j] == '\0')
 		{
 			printf("The program does not interpret unclosed quotes\n");
-			return (-1);
+			return (*i + j);
 			// kill(child_pid, SIGKILL);
 			// exit(EXIT_FAILURE);
 			// send a signal to kill the child process
