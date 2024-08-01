@@ -24,7 +24,7 @@ int	ft_unset(char **args, t_env **mini_env, t_env **new_export)
 		i++;
 	if (i == 1)
 		return (0);
-	exit_code = args_and_fill(args, mini_env, new_export, 0);
+	exit_code = args_and_fill(args, mini_env, new_export, 1);
 	return (exit_code);
 }
 int args_and_fill(char **args, t_env **mini_env, t_env **new_export, int i)
