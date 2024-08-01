@@ -110,7 +110,11 @@ char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini
 				|| (input_line[i] == '\'' && input_line[i + 1] == '\''))
 				i = i + 2;
 			else
+			{
 				i = quote_token(input_line, i, &line_data);
+				if (i == -1)
+					break ;
+			}
 		}
 		else if (input_line[i] == '<' || input_line[i] == '>')
 		{
@@ -126,6 +130,7 @@ char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini
 	}
 	cmd_args = command_merge(&line_data);
 	input_node->data_node = line_data;
+	free (input_line);
 	return (cmd_args);
 	// in this step we already have the linked list of nodes
 	// now we must add it to the commands list

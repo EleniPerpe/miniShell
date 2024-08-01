@@ -79,7 +79,7 @@ int **pid_init(int processes_num)
 	while ( i < processes_num)
 	{
 		pro_pid[i] = (int *)ft_malloc(sizeof(int) * 2);
-		pro_pid[i][1] = (int)NULL;
+		pro_pid[i][1] = 0;
 		i++;
 	}
 	return (pro_pid);

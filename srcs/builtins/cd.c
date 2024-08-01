@@ -35,6 +35,8 @@ int    ft_cd(t_env **mini_env, char **args, t_env **new_export)
         temp_pwd = create_previous_directory(mini_env);
         exit_code = check_and_change_dir(temp_pwd);
     }
+	else if (args[1] != NULL && (ft_strncmp(".", args[1], 1)) == 0)
+		return (0);
     else
     {
         temp_pwd = args[1];

@@ -29,6 +29,7 @@ void	change_status(t_env **mini_env, int status)
 		}
 		current_env = current_env->next;
 	}
+	free(status_ch);
 }
 
 void	add_status(t_env **mini_env)

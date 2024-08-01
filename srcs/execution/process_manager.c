@@ -46,7 +46,10 @@ void	start_prompt(t_env **mini_env, t_env **new_export, int i)
 		{
 			while (i < processes_num)
 			{
-				if (fork_and_exec(new_input_node, pro_pid[i], pipe_fd, mini_env, new_export) == 0)
+				if (fork_and_exec(new_input_node, pro_pid[i], pipe_fd, mini_env, new_export) != 0)
+				{
+					exit(EXIT_FAILURE);
+				}
 					/*change_status(mini_env, 0)*/ ;
 				new_input_node = new_input_node->next;
 				i++;
