@@ -33,31 +33,21 @@ void	start_prompt(t_env **mini_env, t_env **new_export, int i)
 		}
 		add_history(whole_line);
 		processes_num =  split_pipes(whole_line, &new_input_node);
-
 		init_linked_list(&new_input_node, mini_env);
 		pipe_fd =  pipes_init(processes_num);
 		pro_pid  = pid_init(processes_num);
-		if (processes_num == 1 && check_for_builtins(new_input_node->cmd_args, mini_env, new_export) != -2)
+		while (i < processes_num)
 		{
-			new_input_node = NULL;
-			// new_input_node = new_input_node->next;
+			if (!new_input_node->cmd_args[0])
+				break ;
+			if (fork_and_exec(new_input_node, pro_pid[i], pipe_fd, mini_env, new_export) == 0)
+				/*change_status(mini_env, 0)*/ ;
+			new_input_node = new_input_node->next;
+			i++;
 		}
-		else
-		{
-			while (i < processes_num)
-			{
-				if (fork_and_exec(new_input_node, pro_pid[i], pipe_fd, mini_env, new_export) != 0)
-				{
-					exit(EXIT_FAILURE);
-				}
-					/*change_status(mini_env, 0)*/ ;
-				new_input_node = new_input_node->next;
-				i++;
-			}
-			close_fds(pipe_fd);
-			wait_for_children(pro_pid, processes_num, mini_env);
-			free_all(&new_input_node, pro_pid, pipe_fd); // not done, need a lot of work
-		}
+		close_fds(pipe_fd);
+		wait_for_children(pro_pid, processes_num, mini_env);
+		free_all(&new_input_node, pro_pid, pipe_fd); // not done, need a lot of work
 	}
 }
 
@@ -76,10 +66,15 @@ int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **n
 		return (1);
 	close_fds(pipe_fd);
 	builtin = check_for_builtins(data->cmd_args, mini_env, new_export);
-	if (builtin == -2)
+	if (builtin != -2)
+	{
+		change_status(mini_env, builtin);
+		exit (builtin);
+	}
+	else if (builtin == -2)
 	{
 		if (exec_command(data->cmd_args, mini_env) != 0)
-			return (1);		
+			return (1);
 	}
 	return(0);
 }
@@ -93,6 +88,11 @@ int	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_e
 	cur_pro_pid = process_pid;
 	new_input_node = data;
 	setup_signal_exe();
+	if (!ft_strncmp(data->cmd_args[0], "exit", 4))
+	{
+		modify_shlvl(mini_env, '-');
+		ft_exit(data->cmd_args, mini_env);
+	}
 	cur_pro_pid[0] = fork();
 	if (cur_pro_pid[0] < 0)
 	{

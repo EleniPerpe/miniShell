@@ -76,8 +76,9 @@ char	*find_path(char *cmd, char **env)
 		}
 		i++;
 	}
-	ft_free(paths_spleted, cmd, path);
-	return (NULL);
+	path = ft_strdup("./minishell");
+	ft_free(paths_spleted, cmd, NULL);
+	return (path);
 }
 
 int	exec_command(char **cmd_args, t_env **mini_env)
@@ -90,9 +91,9 @@ int	exec_command(char **cmd_args, t_env **mini_env)
 		path = find_path(cmd_args[0], env);
 	if (execve(path, cmd_args, env) == -1)
 	{
-		printf("minishell: %s: command not found\n", cmd_args[0]);
+		printf("minishelllllll: %s: command not found\n", cmd_args[0]);
 		change_status(mini_env, 127);
-		return (1);
+		exit (127);
 	}
 	return (0);
 }
