@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_nodes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:45:17 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/29 22:55:15 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/08/02 18:43:11 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	add_inputnode_tolist(t_input **data, t_input *new_line_data)
 	else
 	{
 		tmp = *data;
-		while (tmp->next != NULL)
+		while (tmp && tmp->next != NULL)
 			tmp = tmp->next;
 		tmp->next = new_line_data;
 	}
@@ -40,6 +40,7 @@ int	create_input_node(char *whole_line, int i,t_input **new_input_node, int k)
 	tmp->part_line = (char *)ft_malloc(j + 1);
 	tmp->part_line = ft_memcpy(tmp->part_line, &whole_line[i], j);
 	tmp->part_line[j] = '\0';
+	// printf("That's my node : %s\n", tmp->part_line);
 	tmp->next = NULL;
 	tmp->data_node = NULL;
 	// tmp->read_from_pipe = -99;
@@ -75,7 +76,7 @@ int	split_pipes(char *whole_line, t_input **new_input_node)
 	}
 return (processes_num);
 }
-void	init_linked_list(t_input **new_input_node,t_env **mini_env)
+int	init_linked_list(t_input **new_input_node,t_env **mini_env)
 {
 	t_input		*input_node;
 	char *input_line;
@@ -85,7 +86,15 @@ void	init_linked_list(t_input **new_input_node,t_env **mini_env)
 	{
 		input_line = input_node->part_line;
 		if (input_line && (ft_strcmp(input_line, "") != 0))
-				input_node->cmd_args = ft_split_line(input_line, /*&line_data,*/ mini_env, input_node);
+		{
+			input_node->cmd_args = ft_split_line(input_line, /*&line_data,*/ mini_env, input_node);
+			if (input_node->cmd_args == NULL)
+			{
+				// printf("Hi from null\n");
+				return (1);
+			}
+		}
 		input_node = input_node->next;
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 18:09:57 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/30 16:01:29 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/02 16:48:09 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*expander_fill(char *line, int i, t_env **mini_env)
 	j = 0;
 	i++;
 	expander = seperate_expander(line, i, &j);
+	if (expander == NULL)
+		return (NULL);
 	if (i > 1)
 	{
 		if (line[i - 2] == '\'')
@@ -50,7 +52,14 @@ char	*seperate_expander(char *line, int i, int *j)
 	while ((line[i + (*j)] != ' ' && line[i + (*j)] != '\''
 			&& line[i + (*j)] != '"') && line[i + (*j)] != '\0'
 		&& line[i + (*j)] != '$')
-		(*j)++;
+		{
+			if (line[i + (*j)] == ';' || line[i + (*j)] == '\\')
+			{
+				printf("The program can not interpret '\\' or ';'\n");
+				return (NULL);
+			}
+			(*j)++;
+		}
 	expander = (char *)ft_malloc(*j + 1);
 	ft_strlcpy(expander, &line[i], *j + 1);
 	expander[*j] = '\0';

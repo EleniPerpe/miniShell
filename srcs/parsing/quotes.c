@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/25 18:55:09 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/02 15:31:42 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	check_quotes_cases(char *line, int *i)
 		(*i)++;
 		while (line[*i] == ' ')
 			(*i)++;
-		while (line[*i + j] != '\'' || (line[*i + j] == '\0'))
+		while (line[*i + j] != '\'' && (line[*i + j] != '\0'))
 		{
 			j++;
 		}
@@ -85,9 +85,6 @@ int	check_quotes_cases(char *line, int *i)
 		{
 			printf("The program does not interpret unclosed quotes\n");
 			return (*i + j);
-			// kill(child_pid, SIGKILL);
-			// exit(EXIT_FAILURE);
-			// send a signal to kill the child process
 		}
 	}
 	else if (line[*i] == '"')
@@ -101,9 +98,6 @@ int	check_quotes_cases(char *line, int *i)
 		{
 			printf("The program does not interpret unclosed quotes\n");
 			return (*i + j);
-			// kill(child_pid, SIGKILL);
-			// exit(EXIT_FAILURE);
-			// send a signal to kill the child process
 		}
 	}
 	return (j);
