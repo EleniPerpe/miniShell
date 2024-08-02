@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:23:28 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/31 21:00:12 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:44:10 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char    *create_previous_directory(t_env **mini_env)
     int     len;
     char    *rest;
     temp = *mini_env;
-
+	
     while (temp != NULL && ft_strncmp("PWD=", temp->line, 4) != 0)
         temp = temp->next;
     rest = ft_strrchr(temp->line, '/');
@@ -89,35 +89,3 @@ char    *create_previous_directory(t_env **mini_env)
     final = ft_substr(temp->line, 4, len - 4);
     return (final);
 }
-// void    change_other_envs(t_env **mini_env, t_env **new_export, char *line)
-// {
-//     int     i;
-//     t_env   *curr_minienv;
-//     t_env   *curexport;
-//     char    *temp_export;
-//     i = 0;
-//     curr_minienv = *mini_env;
-//     while (line[i] != '=' && line[i] != '\0')
-//         i++;
-//     while (curr_minienv != NULL && ft_strncmp(curr_minienv->line, line, i) != 0)
-//         curr_minienv = curr_minienv->next;
-//     if (curr_minienv != NULL)
-//         replace_nodes(mini_env, line, i);
-//     curexport = *new_export;
-//     while (curexport != NULL && ft_strncmp(curexport->line + 11, line, i) != 0)
-//         curexport = curexport->next;
-//     if (curexport != NULL)
-//     {
-//         temp_export = ft_strjoin_export("declare -x PWD=", line + 4, '"');
-//         replace_nodes(new_export, temp_export, i + 11);
-//     }
-// }
-// void    replace_nodes(t_env **mini_env, char *line, int i)
-// {
-//     t_env   *temp_env;
-//     node_remove(mini_env, line, i);
-//     temp_env = (t_env *)ft_malloc(sizeof(t_env));
-//     temp_env->line = ft_strdup(line);
-//     temp_env->next = NULL;
-//     add_path_to_list(mini_env, temp_env);
-// }

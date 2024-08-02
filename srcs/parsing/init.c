@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/30 15:44:59 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:48:05 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini
 
 	line_data = NULL;
 	input_line = check_expander_and_rest(input_line, mini_env);
+	if (input_line == NULL)
+		return (NULL);
 	i = 0;
 	while (input_line[i] != '\0')
 	{
@@ -112,8 +114,8 @@ char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini
 			else
 			{
 				i = quote_token(input_line, i, &line_data);
-				if (i == -1)
-					break ;
+				if (input_line[i] == '\0')
+					return (NULL);
 			}
 		}
 		else if (input_line[i] == '<' || input_line[i] == '>')
@@ -145,18 +147,17 @@ char *check_expander_and_rest(char *input_line, t_env **mini_env)
 	i = 0;
 	if (!input_line)
 		return (NULL);
-	while (input_line[i] != '\0')
+	while (input_line[i] != '\0' && input_line[i] != ';' && input_line[i] != '\\')
 	{
 		if (input_line[i] == ';' || input_line[i] == '\\')
 		{
 			printf("The program can not interpret '\\' or ';'\n");
-				// kill(child_pid, SIGKILL);
-				// exit(EXIT_FAILURE);
-				// send a signal to kill the child process
 		}
 		if (input_line[i] == '$')
 		{
 			input_line = expander_fill(input_line, i, mini_env);
+			if (input_line == NULL)
+				return (NULL);
 		}
 		i++;
 	}
