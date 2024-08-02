@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/02 18:44:50 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/02 19:24:53 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,27 @@ void	start_prompt(t_env **mini_env, t_env **new_export, int i)
 			// init_linked_list(&new_input_node, mini_env);
 			pipe_fd =  pipes_init(processes_num);
 			pro_pid  = pid_init(processes_num);
-			while (i < processes_num)
+			if (processes_num == 1 && check_for_builtins(new_input_node->cmd_args, mini_env, new_export) != -2)
 			{
-				// if (new_input_node->cmd_args == NULL || !new_input_node->cmd_args[0])
-				// 	break ;
-				if (fork_and_exec(new_input_node, pro_pid[i], pipe_fd, mini_env, new_export) == 0)
-					/*change_status(mini_env, 0)*/ ;
-				new_input_node = new_input_node->next;
-				i++;
+				new_input_node = NULL;
+				// new_input_node = new_input_node->next;
 			}
-			close_fds(pipe_fd);
-			wait_for_children(pro_pid, processes_num, mini_env);
-			free_all(&new_input_node, pro_pid, pipe_fd); // not done, need a lot of work
+			else
+			{
+				while (i < processes_num)
+				{
+					if (fork_and_exec(new_input_node, pro_pid[i], pipe_fd, mini_env, new_export) != 0)
+					{
+						exit(EXIT_FAILURE);
+					}
+						/*change_status(mini_env, 0)*/ ;
+					new_input_node = new_input_node->next;
+					i++;
+				}
+				close_fds(pipe_fd);
+				wait_for_children(pro_pid, processes_num, mini_env);
+				free_all(&new_input_node, pro_pid, pipe_fd); // not done, need a lot of work
+			}
 		}
 		else
 			new_input_node = new_input_node->next;
@@ -73,7 +82,7 @@ int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **n
 	builtin = check_for_builtins(data->cmd_args, mini_env, new_export);
 	if (builtin != -2)
 	{
-		data = NULL;
+		// data = NULL;
 		change_status(mini_env, builtin);
 		exit (builtin);
 	}
