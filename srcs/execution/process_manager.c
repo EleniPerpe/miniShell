@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/02 19:24:53 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/02 19:34:35 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	start_prompt(t_env **mini_env, t_env **new_export, int i)
 	int			processes_num;
 	int			**pro_pid;
 	int			**pipe_fd;
+	int exit2;
 
 	new_input_node = NULL;
 	while (1)
@@ -38,8 +39,10 @@ void	start_prompt(t_env **mini_env, t_env **new_export, int i)
 			// init_linked_list(&new_input_node, mini_env);
 			pipe_fd =  pipes_init(processes_num);
 			pro_pid  = pid_init(processes_num);
-			if (processes_num == 1 && check_for_builtins(new_input_node->cmd_args, mini_env, new_export) != -2)
+			exit2 = check_for_builtins(new_input_node->cmd_args, mini_env, new_export);
+			if (processes_num == 1 && exit2 != -2)
 			{
+				change_status(mini_env, exit2);
 				new_input_node = NULL;
 				// new_input_node = new_input_node->next;
 			}
