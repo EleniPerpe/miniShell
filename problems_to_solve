@@ -53,3 +53,11 @@
 echo $?  # Output: 126
 
 create a function to free the envs.
+
+cd to a sub-folder doesn't update PWD with the whole path, it only give /sub-folder-name
+
+echo $hahahahahaha must print new line only
+echo $?hahahaha must print 0hahahaha or exit_codehahahaha like 127hahahaha
+echo "haha" must print haha
+echo "$USER" must print the username, it will work if you fixed the prevouis
+"gfgfg" must print minishell: gfgfg: command not found

@@ -44,6 +44,7 @@ SRC = $(SRC_DIR)main.c \
       $(PARSING_DIR)utils_parsing.c \
       $(BUILTINS_DIR)echo.c \
       $(BUILTINS_DIR)builtins.c \
+      $(BUILTINS_DIR)builtins_checker.c \
       $(BUILTINS_DIR)pwd.c \
       $(BUILTINS_DIR)env.c \
       $(BUILTINS_DIR)export.c \
