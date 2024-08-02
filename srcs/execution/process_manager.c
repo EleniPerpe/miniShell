@@ -19,7 +19,8 @@ void	start_prompt(t_env **mini_env, t_env **new_export, int i)
 	int			processes_num;
 	int			**pro_pid;
 	int			**pipe_fd;
-	int exit2;
+	int		check_builtin;
+	int		exit_buildin;
 
 	new_input_node = NULL;
 	while (1)
@@ -39,10 +40,11 @@ void	start_prompt(t_env **mini_env, t_env **new_export, int i)
 			// init_linked_list(&new_input_node, mini_env);
 			pipe_fd =  pipes_init(processes_num);
 			pro_pid  = pid_init(processes_num);
-			exit2 = check_for_builtins(new_input_node->cmd_args, mini_env, new_export);
-			if (processes_num == 1 && exit2 != -2)
+			check_builtin = check_for_builtins(new_input_node->cmd_args);
+			if (processes_num == 1 && check_builtin != -2)
 			{
-				change_status(mini_env, exit2);
+				exit_buildin = execute_builtins(new_input_node->cmd_args, mini_env, new_export);
+				change_status(mini_env, exit_buildin);
 				new_input_node = NULL;
 				// new_input_node = new_input_node->next;
 			}
@@ -73,7 +75,8 @@ int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **n
 {
 	int processes_num;
 	t_input *tmp;
-	int		builtin;
+	int		check_builtin;
+	int		exit_buildin;
 
 	tmp = data;
 	while (tmp->next)
@@ -82,14 +85,15 @@ int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **n
 	if (standard_io(data, pipe_fd, data->i, processes_num, mini_env) != 0)
 		return (1);
 	close_fds(pipe_fd);
-	builtin = check_for_builtins(data->cmd_args, mini_env, new_export);
-	if (builtin != -2)
+	check_builtin = check_for_builtins(data->cmd_args);
+	if (check_builtin != -2)
 	{
+		exit_buildin = execute_builtins(data->cmd_args, mini_env, new_export);
 		// data = NULL;
-		change_status(mini_env, builtin);
-		exit (builtin);
+		change_status(mini_env, exit_buildin);
+		exit (exit_buildin);
 	}
-	else if (builtin == -2)
+	else if (check_builtin == -2)
 	{
 		if (exec_command(data->cmd_args, mini_env) != 0)
 			return (1);
