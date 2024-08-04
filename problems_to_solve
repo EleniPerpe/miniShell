@@ -54,10 +54,8 @@ echo $?  # Output: 126
 
 create a function to free the envs.
 
-cd to a sub-folder doesn't update PWD with the whole path, it only give /sub-folder-name
+cd to a sub-folder doesn't update PWD with the whole path, it only give /sub-folder-name DONE
 
 echo $hahahahahaha must print new line only
-echo $?hahahaha must print 0hahahaha or exit_codehahahaha like 127hahahaha
-echo ; must print a new line
 
-
+cd -- to fix
