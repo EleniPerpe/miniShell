@@ -58,4 +58,6 @@ cd to a sub-folder doesn't update PWD with the whole path, it only give /sub-fol
 
 echo $hahahahahaha must print new line only
 echo $?hahahaha must print 0hahahaha or exit_codehahahaha like 127hahahaha
+echo ; must print a new line
+
 

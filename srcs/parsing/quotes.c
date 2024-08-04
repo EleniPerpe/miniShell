@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/04 13:53:36 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/04 13:58:34 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	check_quotes_cases(char *line, int *i)
 		if (line[*i + j] == '\0')
 		{
 			printf("The program does not interpret unclosed quotes\n");
-			// return (*i + j);
 			return (-1);
 		}
 	}
@@ -98,7 +97,6 @@ int	check_quotes_cases(char *line, int *i)
 		if (line[*i + j] == '\0')
 		{
 			printf("The program does not interpret unclosed quotes\n");
-			// return (*i + j);
 			return (-1);
 		}
 	}
