@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 18:09:57 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/02 16:48:09 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/04 14:51:15 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	*expander_fill(char *line, int i, t_env **mini_env)
 		}
 	}
 	env_line = find_expander(expander, mini_env);
+	if (env_line == NULL)
+		return (NULL);
 	env_value = create_final_env(env_line);
 	final = final_string(env_value, line, i, j);
 	free(expander);
@@ -49,17 +51,22 @@ char	*seperate_expander(char *line, int i, int *j)
 {
 	char	*expander;
 
-	while ((line[i + (*j)] != ' ' && line[i + (*j)] != '\''
-			&& line[i + (*j)] != '"') && line[i + (*j)] != '\0'
-		&& line[i + (*j)] != '$')
-		{
-			if (line[i + (*j)] == ';' || line[i + (*j)] == '\\')
+	if (line[i + (*j)] == '?')
+		(*j)++;
+	else
+	{
+		while ((line[i + (*j)] != ' ' && line[i + (*j)] != '\''
+				&& line[i + (*j)] != '"') && line[i + (*j)] != '\0'
+			&& line[i + (*j)] != '$')
 			{
-				printf("The program can not interpret '\\' or ';'\n");
-				return (NULL);
+				if (line[i + (*j)] == ';' || line[i + (*j)] == '\\')
+				{
+					printf("The program can not interpret '\\' or ';'\n");
+					return (NULL);
+				}
+				(*j)++;
 			}
-			(*j)++;
-		}
+	}
 	expander = (char *)ft_malloc(*j + 1);
 	ft_strlcpy(expander, &line[i], *j + 1);
 	expander[*j] = '\0';
@@ -129,5 +136,5 @@ char	*find_expander(char *expander, t_env **mini_env)
 		}
 		temp = temp->next;
 	}
-	return (" ");
+	return (NULL);
 }
