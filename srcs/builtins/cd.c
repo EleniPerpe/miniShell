@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:23:28 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/02 19:08:47 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:03:01 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int    ft_cd(t_env **mini_env, char **args, t_env **new_export)
     else
     {
         temp_pwd = args[1];
-        exit_code = check_and_change_dir(args[1]);
+        exit_code = check_and_change_dir(temp_pwd);
     }
 	check_for_new_pwd(mini_env, new_export, exit_code, temp_pwd);
     return (exit_code);
@@ -64,14 +64,32 @@ void	check_for_new_pwd(t_env **mini_env, t_env **new_export,
 	int exit_code, char *temp_pwd)
 {
 	char *new_pwd;
-
-	if (exit_code == 0)
+	t_env *temp;
+	
+	temp = *mini_env;
+	if (exit_code == 0 && temp_pwd[0] != '/')
+	{
+		while (temp != NULL)
+		{
+			if (ft_strncmp("PWD=", temp->line, 4) == 0)
+			{
+				new_pwd = ft_strjoin(temp->line, "/");
+				new_pwd = ft_strjoin(new_pwd, temp_pwd);  	
+				change_other_envs(mini_env, new_export, new_pwd);
+				free(new_pwd);
+				break ;
+			}
+			temp = temp->next;
+		}
+	}
+	else if (temp_pwd[0] == '/' && exit_code == 0)
 	{
     	new_pwd = getcwd(NULL, 0);
     	new_pwd = ft_strjoin("PWD=", temp_pwd);
-    	change_other_envs(mini_env, new_export, new_pwd);
+		change_other_envs(mini_env, new_export, new_pwd);
 		free(new_pwd);
 	}
+
 }
 char    *create_previous_directory(t_env **mini_env)
 {

@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/04 14:17:47 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/04 14:59:49 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,12 +147,18 @@ char *check_expander_and_rest(char *input_line, t_env **mini_env)
 	i = 0;
 	if (!input_line)
 		return (NULL);
-	while (input_line[i] != '\0' && input_line[i] != ';' && input_line[i] != '\\')
+	while (input_line[i] != '\0')
 	{
 		if (input_line[i] == ';' || input_line[i] == '\\')
 		{
 			printf("The program can not interpret '\\' or ';'\n");
+			return (NULL);
 		}
+		i++;
+	}
+	i = 0;
+	while (input_line[i] != '\0')
+	{
 		if (input_line[i] == '$')
 		{
 			input_line = expander_fill(input_line, i, mini_env);
