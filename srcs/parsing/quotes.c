@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/02 15:31:42 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/04 13:53:36 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	quote_token(char *line, int i, t_line_data **line_data)
 	while (line[i] == '"' || line[i] == '\'')
 		i++;
 	j = check_quotes_cases(line, &i);
-	if (line[j] == '\0')
+	if (j == -1)
 		return j;
 	if (j > 0)
 	{
@@ -84,7 +84,8 @@ int	check_quotes_cases(char *line, int *i)
 		if (line[*i + j] == '\0')
 		{
 			printf("The program does not interpret unclosed quotes\n");
-			return (*i + j);
+			// return (*i + j);
+			return (-1);
 		}
 	}
 	else if (line[*i] == '"')
@@ -97,7 +98,8 @@ int	check_quotes_cases(char *line, int *i)
 		if (line[*i + j] == '\0')
 		{
 			printf("The program does not interpret unclosed quotes\n");
-			return (*i + j);
+			// return (*i + j);
+			return (-1);
 		}
 	}
 	return (j);

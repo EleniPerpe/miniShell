@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/02 18:48:05 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/04 13:55:12 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini
 			else
 			{
 				i = quote_token(input_line, i, &line_data);
-				if (input_line[i] == '\0')
+				if (i == -1)
 					return (NULL);
 			}
 		}
