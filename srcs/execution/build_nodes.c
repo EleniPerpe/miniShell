@@ -78,8 +78,8 @@ return (processes_num);
 }
 int	init_linked_list(t_input **new_input_node,t_env **mini_env)
 {
-	t_input		*input_node;
-	char *input_line;
+	t_input	*input_node;
+	char	*input_line;
 
 	input_node = *new_input_node;
 	while (input_node != NULL)
@@ -87,12 +87,9 @@ int	init_linked_list(t_input **new_input_node,t_env **mini_env)
 		input_line = input_node->part_line;
 		if (input_line && (ft_strcmp(input_line, "") != 0))
 		{
-			input_node->cmd_args = ft_split_line(input_line, /*&line_data,*/ mini_env, input_node);
+			input_node->cmd_args = ft_split_line(input_line, mini_env, input_node);
 			if (input_node->cmd_args == NULL)
-			{
-				// printf("Hi from null\n");
 				return (1);
-			}
 		}
 		input_node = input_node->next;
 	}

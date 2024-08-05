@@ -14,14 +14,14 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_env		*mini_env;
-	t_env		*new_export;
-	int			i;
+	t_env	*mini_env;
+	t_env	*new_export;
+	t_inout	main_inout;
 
-	i = 0;
 	mini_env = NULL;
 	new_export = NULL;
 	setup_signal_init();
+	dup_inout(&main_inout);
 	create_path(env, &mini_env);
 	modify_shlvl(&mini_env, '+');
 	create_export_path(&mini_env, &new_export);
@@ -31,6 +31,6 @@ int	main(int argc, char **argv, char **env)
 		printf("This program doesn't take any arguments!\n");
 		return (1);
 	}
-	start_prompt(&mini_env, &new_export, i);
+	start_prompt(&mini_env, &new_export, main_inout);
 	return (0);
 }
