@@ -12,8 +12,6 @@
 
 #include "../../minishell.h"
 
-// we will use this function to free the allocated memory
-// after execute the command
 void	ft_free(char **paths_spleted, char *cmd, char *path)
 {
 	int	i;
@@ -37,22 +35,20 @@ void	delete_node(t_line_data **data, t_line_data *tmp)
 	t_line_data	*tmp2;
 
 	tmp2 = *data;
-	if (tmp == *data) // if the node  we want to delete is the first node
+	if (tmp == *data)
 	{
-		*data = tmp->next; // move to the next node
-		free(tmp);	// free the node we need to delete
+		*data = tmp->next;
+		free(tmp);
 	}
 	else
 	{
-		while (tmp2->next != tmp) //as long as we don't reach the node to delete
-			tmp2 = tmp2->next; // move to the next node
+		while (tmp2->next != tmp)
+			tmp2 = tmp2->next;
 		tmp2->next = tmp->next;
 		free(tmp);
 	}
 }
 
-// this function will find the path of the command
-// it is just from pipe_x project
 char	*find_path(char *cmd, char **env)
 {
 	char	*paths;
@@ -61,28 +57,24 @@ char	*find_path(char *cmd, char **env)
 	int		i;
 
 	i = 0;
-	while (ft_strnstr(*env, "PATH", 4) == NULL)
-		env++;
-	paths = (*env + 5);
-	paths_spleted = ft_split(paths, ':');
-	cmd = ft_strjoin("/", cmd);
-	while (paths_spleted[i])
+	if(env != NULL)
 	{
-		path = ft_strjoin(paths_spleted[i], cmd);
-		if (access(path, F_OK | X_OK | R_OK) == 0)
+		while ((*env) && (ft_strnstr(*env, "PATH", 4) == NULL))
+			env++;
+		if (*env)
 		{
-			ft_free(paths_spleted, cmd, NULL);
-			return (path);
+			paths = (*env + 5);
+			paths_spleted = ft_split(paths, ':');
+			cmd = ft_strjoin("/", cmd);
+			while (paths_spleted[i])
+			{
+				path = ft_strjoin(paths_spleted[i++], cmd);
+				if (access(path, F_OK | X_OK | R_OK) == 0)
+					return (ft_free(paths_spleted, cmd, NULL),path);
+			}
+			ft_free(paths_spleted, cmd, path);
 		}
-		i++;
 	}
-	if (!(ft_strncmp(cmd, "./minishell", 11)))
-	{
-		path = ft_strdup("./minishell");
-		ft_free(paths_spleted, cmd, NULL);
-		return (path);
-	}
-	ft_free(paths_spleted, cmd, path);
 	return (NULL);
 }
 
@@ -91,9 +83,12 @@ int	exec_command(char **cmd_args, t_env **mini_env)
 	char	*path;
 	char	**env;
 
+	path = NULL;
 	env = minienv_to_env(mini_env);
 	if (cmd_args[0] != NULL)
 		path = find_path(cmd_args[0], env);
+	if (path == NULL)
+		path = ft_strjoin("./", cmd_args[0]);
 	if (execve(path, cmd_args, env) == -1)
 	{
 		printf("minishell: %s: command not found\n", cmd_args[0]);

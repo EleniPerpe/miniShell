@@ -20,14 +20,14 @@ int execute_builtins(char **args, t_env **mini_env, t_env **new_export)
 	int res;
 
 	res = -2;
-	if ((ft_strncmp(args[0], "echo", 4) == 0))
+	if ((args[0] != NULL) && (ft_strncmp(args[0], "echo", 4) == 0))
 	{
 		if (check_if_valid(args, 4) == 127)
 			return (127);
 		res = ft_echo(args);
 		return (res);
 	}
-	if ((ft_strncmp(args[0], "pwd", 3) == 0))
+	if ((args[0] != NULL) && (ft_strncmp(args[0], "pwd", 3) == 0))
 	{
 		if (check_if_valid(args, 3) == 1)
 			return (1);
@@ -44,14 +44,14 @@ int	execute_builtins2(char **args, t_env **mini_env, t_env **new_export)
 	int res;
 
 	res = -2;
-	if ((ft_strncmp(args[0], "env", 3) == 0))
+	if ((args[0] != NULL) && (ft_strncmp(args[0], "env", 3) == 0))
 	{
 		if (check_if_valid(args, 3) == 127)
 			return (127);
 		res = ft_env(mini_env, args);
 		return (res);
 	}
-	if ((ft_strncmp(args[0], "export", 6) == 0))
+	if ((args[0] != NULL) && (ft_strncmp(args[0], "export", 6) == 0))
 	{
 		if (check_if_valid(args, 6) == 127)
 			return (127);
@@ -68,21 +68,21 @@ int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export)
 	int res;
 
 	res = -2;
-	if ((ft_strncmp(args[0], "unset", 5) == 0))
+	if ((args[0] != NULL) && (ft_strncmp(args[0], "unset", 5) == 0))
 	{
 		if (check_if_valid(args, 5) == 127)
 			return (127);
 		res = ft_unset(args, mini_env, new_export);
 		return (res);
 	}
-	if ((ft_strncmp(args[0], "cd", 2) == 0))
+	if ((args[0] != NULL) && (ft_strncmp(args[0], "cd", 2) == 0))
 	{
 		if (check_if_valid(args, 2) == 127)
 			return (127);
 		res = ft_cd(mini_env, args, new_export);
 		return (res);
 	}
-	if ((ft_strncmp(args[0], "exit", 4) == 0) || (ft_strncmp(args[0], "EXIT", 4) == 0))
+	if ((args[0] != NULL) && (ft_strncmp(args[0], "exit", 4) == 0))
 	{
 		if (check_if_valid(args, 4) == 127)
 			return (127);
