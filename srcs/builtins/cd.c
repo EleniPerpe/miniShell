@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:23:28 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/04 16:03:01 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:09:06 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,17 @@ char    *create_previous_directory(t_env **mini_env);
 int	    check_and_change_dir(char *dir);
 void	check_for_new_pwd(t_env **mini_env, t_env **new_export,
 		int exit_code, char *temp_pwd);
-
+char	*keep_old_pwd(t_env **mini_env);
+int		switch_directories(char *old_pwd);
 
 int    ft_cd(t_env **mini_env, char **args, t_env **new_export)
 {
     char    *temp_pwd;
 	int		exit_code;
+	char 	*old_pwd;
 
 	exit_code = 0;
+	old_pwd = keep_old_pwd(mini_env);
     create_old_pwd(mini_env, new_export);
     if (args[1] == NULL || (args[1][0] == '~' && args[1][1] == '\0'))
     {
@@ -35,6 +38,11 @@ int    ft_cd(t_env **mini_env, char **args, t_env **new_export)
         temp_pwd = create_previous_directory(mini_env);
         exit_code = check_and_change_dir(temp_pwd);
     }
+	else if (args[1] != NULL && (ft_strncmp("-", args[1], 1)) == 0)
+    {
+		temp_pwd = ft_substr(old_pwd, 7, ft_strlen(old_pwd) - 7);		
+		exit_code = switch_directories(old_pwd);
+    }
 	else if (args[1] != NULL && (ft_strncmp(".", args[1], 1)) == 0)
 		return (0);
     else
@@ -42,8 +50,49 @@ int    ft_cd(t_env **mini_env, char **args, t_env **new_export)
         temp_pwd = args[1];
         exit_code = check_and_change_dir(temp_pwd);
     }
-	check_for_new_pwd(mini_env, new_export, exit_code, temp_pwd);
+	if (exit_code == 0)
+		check_for_new_pwd(mini_env, new_export, exit_code, temp_pwd);
     return (exit_code);
+}
+
+int switch_directories(char *old_pwd)
+{
+	char *temp_pwd;
+	int exit_code;
+	
+	temp_pwd = NULL;
+	if (old_pwd == NULL)
+	{
+		printf("minishell: cd: OLDPWD not set\n");
+		return (1);
+	}
+	else
+		temp_pwd = ft_substr(old_pwd, 3, ft_strlen(old_pwd) - 3);
+	if (temp_pwd != NULL)
+	{	
+    	exit_code = check_and_change_dir(temp_pwd + 4);
+		return (exit_code);
+	}
+	else
+		return (0);
+}
+
+char *keep_old_pwd(t_env **mini_env)
+{
+	t_env *temp;
+	char *temp_old_pwd;
+	
+	temp = *mini_env;
+	while (temp != NULL)
+	{
+		if (ft_strncmp("OLDPWD", temp->line, 6) == 0)
+		{	
+			temp_old_pwd = ft_substr(temp->line, 0, ft_strlen(temp->line));
+			return (temp_old_pwd);
+		}
+		temp = temp->next;
+	}
+	return (NULL);
 }
 int    check_and_change_dir(char *dir)
 {
@@ -89,7 +138,6 @@ void	check_for_new_pwd(t_env **mini_env, t_env **new_export,
 		change_other_envs(mini_env, new_export, new_pwd);
 		free(new_pwd);
 	}
-
 }
 char    *create_previous_directory(t_env **mini_env)
 {
@@ -103,7 +151,7 @@ char    *create_previous_directory(t_env **mini_env)
         temp = temp->next;
     rest = ft_strrchr(temp->line, '/');
     len = ft_strlen(temp->line) - ft_strlen(rest);
-    final = (char *)ft_malloc(len + 1);
+    // final = (char *)ft_malloc(len + 1);
     final = ft_substr(temp->line, 4, len - 4);
     return (final);
 }
