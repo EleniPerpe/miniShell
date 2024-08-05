@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:24:48 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/29 22:57:59 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:47:56 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,19 @@ void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd)
 		if (pipe_fd != NULL)
 			free(pipe_fd);
 	}
+}
+
+void free_env_list(t_env **env)
+{
+    t_env *current = *env;
+    t_env *next;
+
+    while (current != NULL)
+    {
+        next = current->next;
+        free(current->line);
+        free(current);
+        current = next;
+    }
+    *env = NULL;
 }
