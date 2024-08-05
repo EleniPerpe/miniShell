@@ -51,6 +51,12 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_inout
+{
+	int input;
+	int output;
+}	t_inout;
+
 typedef struct s_commands_list
 {
 	t_line_data				*commands_node;
@@ -96,9 +102,9 @@ void	add_path_to_list(t_env **mini_env, t_env *new_env);
 void	add_inputnode_tolist(t_input **data, t_input *new_line_data);
 
 //execution:
-void	start_prompt(t_env **mini_env, t_env **new_export, int i);
+void	start_prompt(t_env **mini_env, t_env **new_export, t_inout inout_main);
 int		standard_io(t_input *data, int **pipe_fd, int i, int processes_num, t_env **mini_env);
-void	reset_io(void);
+void	reset_io(t_inout inout_main);
 int		exec_command(char **cmd_args, t_env **mini_env);
 int		process_execution(t_input *data, int **pipe_fd,t_env **mini_env, t_env **new_export);
 void	close_fds(int **pipe_fd);
@@ -140,6 +146,7 @@ char	**minienv_to_env(t_env **mini_env);
 void	add_status(t_env **mini_env);
 void	change_status(t_env **mini_env, int status);
 void	modify_shlvl(t_env **mini_env, char c);
+void	dup_inout(t_inout *inout_main);
 
 //signals
 void	setup_signal_init();

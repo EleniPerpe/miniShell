@@ -80,3 +80,13 @@ void	modify_shlvl(t_env **mini_env, char c)
 		shlvl--;
 	set_new_lvl(mini_env, shlvl);
 }
+void	dup_inout(t_inout *inout_main)
+{
+	inout_main->input = dup(STDIN_FILENO);
+	inout_main->output = dup(STDOUT_FILENO);
+}
+void	reset_io(t_inout inout_main)
+{
+	dup2(inout_main.input, STDIN_FILENO);
+	dup2(inout_main.output, STDOUT_FILENO);
+}
