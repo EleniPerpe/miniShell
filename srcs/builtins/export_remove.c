@@ -6,13 +6,14 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:23:27 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/02 19:02:32 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:18:33 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 void    node_remove(t_env **new_export, char *line, int i);
 char    *ft_strjoin_export(char const *s1, char const *s2, char c);
+
 void    find_if_exists(t_env **new_export, char *line, t_env **mini_env)
 {
     int i;
@@ -30,6 +31,7 @@ void    find_if_exists(t_env **new_export, char *line, t_env **mini_env)
         node_remove(mini_env, line, i);
     }
 }
+
 void    node_remove(t_env **node_remove, char *line, int i)
 {
     t_env   *curr;
@@ -56,6 +58,7 @@ void    node_remove(t_env **node_remove, char *line, int i)
         curr = curr->next;
     }
 }
+
 char    *ft_strjoin_export(char const *s1, char const *s2, char c)
 {
     size_t  s1len;
@@ -83,6 +86,7 @@ char    *ft_strjoin_export(char const *s1, char const *s2, char c)
     ptr[s1len + i + 1] = c;
     return (ptr[s1len + s2len + 2] = '\0', ptr);
 }
+
 void    print_export(t_env **new_export)
 {
     t_env   *tmp;
@@ -99,3 +103,30 @@ void    print_export(t_env **new_export)
     }
 }
 
+void	create_export_path(t_env **mini_env, t_env **new_export)
+{
+	t_env	*new_env;
+	int		len;
+	char	*export_line;
+	t_env	*tmp;
+
+	len = 0;
+	tmp = *mini_env;
+	while (tmp != NULL)
+	{
+		len = ft_strlen(tmp->line) + 13;
+		export_line = create_export_line(tmp->line);
+		new_env = (t_env *)ft_malloc(sizeof(t_env));
+		new_env->line = (char *)ft_malloc(len + 1);
+		new_env->line = export_line;
+		new_env->line[len] = '\0';
+		if (!new_env->line)
+		{
+			free(new_env);
+			exit(EXIT_FAILURE);
+		}
+		new_env->next = NULL;
+		add_path_to_list(new_export, new_env);
+		tmp = tmp->next;
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/02 17:27:07 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:13:26 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,9 @@ int		check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
 void	create_old_pwd(t_env **mini_env, t_env **new_export);
 void	ft_exit(char **args, t_env **mini_env);
 void	change_other_envs(t_env **mini_env, t_env **new_export, char *line);
+char	*keep_old_pwd(t_env **mini_env);
+int		switch_directories(char *old_pwd);
+int	    check_and_change_dir(char *dir);
 
 // utilities
 void	ft_free(char **paths_spleted, char *cmd, char *path);

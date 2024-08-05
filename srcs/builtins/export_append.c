@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:10:54 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/31 19:11:29 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:18:57 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void    append_export_and_env(t_env **mini_env, t_env **new_export,
 void    new_append_addition(t_env **new_export, t_env **mini_env,
             char *line, int pos);
 void    append_export(char *temp, char *line, t_env **new_export, int j);
+
 int check_for_append(char **args, t_env **mini_env, t_env **new_export, int i)
 {
     int     j;
@@ -37,6 +38,7 @@ int check_for_append(char **args, t_env **mini_env, t_env **new_export, int i)
     }
     return (0);
 }
+
 void    append_export_and_env(t_env **mini_env, t_env **new_export,
         char *line, int j)
 {
@@ -61,6 +63,7 @@ void    append_export_and_env(t_env **mini_env, t_env **new_export,
         append_export(temp, line, new_export, j);
     free(cmp_temp);
 }
+
 void    append_export(char *temp, char *line, t_env **new_export, int j)
 {
     t_env   *export;
@@ -83,6 +86,7 @@ void    append_export(char *temp, char *line, t_env **new_export, int j)
     free(line);
     free(cmp_temp);
 }
+
 void    new_append_addition(t_env **new_export, t_env **mini_env,
     char *line, int pos)
 {

@@ -6,7 +6,7 @@
 #    By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/08/05 15:23:55 by eperperi         ###   ########.fr        #
+#    Updated: 2024/08/05 16:13:05 by eperperi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRC = $(SRC_DIR)main.c \
       $(BUILTINS_DIR)exit.c \
       $(BUILTINS_DIR)cd.c \
       $(BUILTINS_DIR)cd_old.c \
+      $(BUILTINS_DIR)cd_back.c \
       $(BUILTINS_DIR)export_append.c \
       $(EXECUTION_DIR)pipes_fork_utilities.c \
       $(EXECUTION_DIR)errors_free.c \
