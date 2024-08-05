@@ -6,11 +6,12 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:23:28 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/05 18:12:05 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:36:40 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
 void    change_other_envs(t_env **mini_env, t_env **new_export, char *line);
 char    *create_previous_directory(t_env **mini_env);
 void	check_for_new_pwd(t_env **mini_env, t_env **new_export,
