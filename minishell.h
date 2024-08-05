@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/05 16:13:26 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:37:27 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	init_nodes_redirctor(t_line_data **data, int type);
 void	*ft_malloc(size_t size);
 int		command_fill(char *line, int i, t_line_data **data);
 void	add_node_to_list(t_line_data **data, t_line_data *new_line_data);
-int		quote_token(char *line, int i, t_line_data **line_data);
+int		quote_token(char *line, int i, t_line_data **line_data, int j);
 void	create_path(char **env, t_env **mini_env);
 char	*find_path(char *cmd, char **env);
 char	**command_merge(t_line_data **data);
@@ -87,7 +87,7 @@ char	**merge_free_command(t_line_data **data, int len);
 int		heredoc_init(char *line, int i, t_line_data **data);
 int		after_redirection_decision(char *line, int i, t_line_data **data);
 int		after_redi_len(char *line, int i);
-char	*expander_fill(char *line, int i, t_env **mini_env);
+char	*expander_fill(char *line, int i, int j, t_env **mini_env);
 void	free_path(t_env *mini_env);
 int		init_linked_list(t_input **new_input_node,t_env **mini_env);
 int		split_pipes(char *whole_line, t_input **new_input_node);
@@ -124,7 +124,7 @@ void	print_export(t_env **new_export);
 char	*ft_strjoin_export(char const *s1, char const *s2, char c);
 int		ft_unset(char **args, t_env **mini_env, t_env **new_export);
 void	node_remove(t_env **node_remove, char *line, int i);
-char	*check_expander_and_rest(char *input_line, t_env **mini_env);
+char	*check_expander_and_rest(char *input_line, t_env **mini_env, int i);
 int		ft_cd(t_env **mini_env, char **args, t_env **new_export);
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args);
 int		check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
@@ -134,6 +134,9 @@ void	change_other_envs(t_env **mini_env, t_env **new_export, char *line);
 char	*keep_old_pwd(t_env **mini_env);
 int		switch_directories(char *old_pwd);
 int	    check_and_change_dir(char *dir);
+char	*create_export_line(char *line);
+void	quotes_after_redireciton(char *line, int j, t_line_data **data);
+void	quotes_command(char *line, int j, t_line_data **data);
 
 // utilities
 void	ft_free(char **paths_spleted, char *cmd, char *path);

@@ -6,13 +6,11 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/04 14:59:49 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:26:03 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-char	*check_expander_and_rest(char *input_line, t_env **mini_env);
 
 void	add_node_to_commands_list(t_line_data **data,
 	t_commands_list **commands_list)
@@ -98,7 +96,7 @@ char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini
 	t_line_data	*line_data;
 
 	line_data = NULL;
-	input_line = check_expander_and_rest(input_line, mini_env);
+	input_line = check_expander_and_rest(input_line, mini_env, 0);
 	if (input_line == NULL)
 		return (NULL);
 	i = 0;
@@ -113,7 +111,7 @@ char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini
 				i = i + 2;
 			else
 			{
-				i = quote_token(input_line, i, &line_data);
+				i = quote_token(input_line, i, &line_data, 0);
 				if (i == -1)
 					return (NULL);
 			}
@@ -140,11 +138,8 @@ char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini
 	// add_node_to_commands_list(line_data, &commands_list); // must know where to define the first commands_list .. here in this function or in start_prompt
 														// t_commands_list *commands_list; // definee the commands list
 }
-char *check_expander_and_rest(char *input_line, t_env **mini_env)
+char *check_expander_and_rest(char *input_line, t_env **mini_env, int i)
 {
-	int	i;
-
-	i = 0;
 	if (!input_line)
 		return (NULL);
 	while (input_line[i] != '\0')
@@ -161,7 +156,7 @@ char *check_expander_and_rest(char *input_line, t_env **mini_env)
 	{
 		if (input_line[i] == '$')
 		{
-			input_line = expander_fill(input_line, i, mini_env);
+			input_line = expander_fill(input_line, i, 0, mini_env);
 			if (input_line == NULL)
 				return (NULL);
 		}

@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:11:31 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/05 18:09:39 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:39:48 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int switch_directories(char *old_pwd)
 
 int    check_and_change_dir(char *dir)
 {
-	printf("dir : %s\n", dir);
     if (dir == NULL)
 	{
         fprintf(stderr, "Cannot find environment variable\n");

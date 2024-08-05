@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 18:09:57 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/04 14:51:15 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:23:44 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,13 @@ char	*find_expander(char *expander, t_env **mini_env);
 char	*final_string(char *expander, char *line, int i, int j);
 char	*seperate_expander(char *line, int i, int *j);
 
-char	*expander_fill(char *line, int i, t_env **mini_env)
+char	*expander_fill(char *line, int i, int j, t_env **mini_env)
 {
 	char	*expander;
-	int		j;
 	char	*env_line;
 	char	*final;
 	char	*env_value;
 
-	j = 0;
 	i++;
 	expander = seperate_expander(line, i, &j);
 	if (expander == NULL)

@@ -6,7 +6,7 @@
 #    By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/08/05 16:13:05 by eperperi         ###   ########.fr        #
+#    Updated: 2024/08/05 18:37:59 by eperperi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRC = $(SRC_DIR)main.c \
       $(PARSING_DIR)heredoc_handle.c \
       $(PARSING_DIR)init.c \
       $(PARSING_DIR)quotes.c \
+      $(PARSING_DIR)quotes_nodes.c \
       $(PARSING_DIR)init_redirector.c \
       $(PARSING_DIR)path.c \
       $(PARSING_DIR)expander.c \

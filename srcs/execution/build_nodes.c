@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:45:17 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/02 18:43:11 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:19:31 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	split_pipes(char *whole_line, t_input **new_input_node)
 	}
 return (processes_num);
 }
+
 int	init_linked_list(t_input **new_input_node,t_env **mini_env)
 {
 	t_input		*input_node;
