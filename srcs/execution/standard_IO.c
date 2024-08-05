@@ -99,16 +99,3 @@ int	standard_io(t_input *data, int **pipe_fd, int i, int processes_num, t_env **
 		return (1);
 	return (0);
 }
-
-void	reset_io(void)
-{
-		int	stand_in;
-		int	stand_out;
-		stand_in = dup(STDIN_FILENO);
-		stand_out = dup(STDOUT_FILENO);
-
-		dup2(stand_in, STDIN_FILENO);
-		dup2(stand_out , STDOUT_FILENO);
-		close(stand_in);
-		close(stand_out);
-}

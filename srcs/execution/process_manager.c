@@ -12,61 +12,80 @@
 
 #include "../../minishell.h"
 
-void	start_prompt(t_env **mini_env, t_env **new_export, int i)
+char *ft_readline()
+{
+	char *whole_line;
+
+	whole_line = readline("minishell >");
+	if (!whole_line) // EOF : ctrl+D (!(*whole_line))
+	{
+		printf("exit\n");
+		exit (EXIT_FAILURE) ;
+	}
+	if(is_empty(whole_line))
+		add_history(whole_line);
+	return (whole_line);
+}
+
+void	execute_with_pipes(t_input **input_node, int processes_num, t_env **mini_env, t_env **new_export)
+{
+	int		**pro_pid;
+	int		**pipe_fd;
+	t_input	*new_input_node;
+	int		i;
+
+	i = 0;
+	new_input_node = *input_node;
+	pipe_fd =  pipes_init(processes_num);
+	pro_pid  = pid_init(processes_num);
+	while (i < processes_num)
+	{
+		if (fork_and_exec(new_input_node, pro_pid[i], pipe_fd, mini_env, new_export) != 0)
+		{
+			exit(EXIT_FAILURE);
+		}
+		new_input_node = new_input_node->next;
+		i++;
+	}
+	close_fds(pipe_fd);
+	wait_for_children(pro_pid, processes_num, mini_env);
+	free_all(&new_input_node, pro_pid, pipe_fd);
+}
+
+void	start_prompt(t_env **mini_env, t_env **new_export, t_inout inout_main)
 {
 	char		*whole_line;
 	t_input		*new_input_node;
 	int			processes_num;
-	int			**pro_pid;
-	int			**pipe_fd;
-	int		check_builtin;
-	int		exit_buildin;
+	int			check_builtin;
+	int			exit_buildin;
 
 	new_input_node = NULL;
 	while (1)
 	{
-		i = 0;
-		reset_io(); // need to modify it to take STD IN and OUT from before the while
-		whole_line = readline("minishell >");
-		if (!whole_line) // EOF : ctrl+D
-		{
-			printf("exit\n");
-			exit (EXIT_FAILURE) ;
-		}
-		add_history(whole_line);
+		reset_io(inout_main);
+		whole_line = ft_readline();
 		processes_num =  split_pipes(whole_line, &new_input_node);
-		if (init_linked_list(&new_input_node, mini_env) == 0)
+		if (init_linked_list(&new_input_node, mini_env) == 0 && processes_num != -1)
 		{
-			// init_linked_list(&new_input_node, mini_env);
-			pipe_fd =  pipes_init(processes_num);
-			pro_pid  = pid_init(processes_num);
-			check_builtin = check_for_builtins(new_input_node->cmd_args, mini_env, new_export);
-			if (processes_num == 1 && check_builtin != -2)
+			if (new_input_node)
 			{
-				exit_buildin = execute_builtins(new_input_node->cmd_args, mini_env, new_export);
-				change_status(mini_env, exit_buildin);
-				new_input_node = NULL;
-				// new_input_node = new_input_node->next;
-			}
-			else
-			{
-				while (i < processes_num)
+				check_builtin = check_for_builtins(new_input_node->cmd_args);
+				if (processes_num == 1 && check_builtin != -2)
 				{
-					if (fork_and_exec(new_input_node, pro_pid[i], pipe_fd, mini_env, new_export) != 0)
-					{
-						exit(EXIT_FAILURE);
-					}
-						/*change_status(mini_env, 0)*/ ;
-					new_input_node = new_input_node->next;
-					i++;
+					exit_buildin = execute_builtins(new_input_node->cmd_args, mini_env, new_export);
+					new_input_node = NULL;
+					change_status(mini_env, exit_buildin);
 				}
-				close_fds(pipe_fd);
-				wait_for_children(pro_pid, processes_num, mini_env);
-				free_all(&new_input_node, pro_pid, pipe_fd); // not done, need a lot of work
+				else
+				{
+					execute_with_pipes(&new_input_node,processes_num,mini_env,new_export);
+					new_input_node = NULL;
+				}
 			}
 		}
 		else
-			new_input_node = new_input_node->next;
+			new_input_node = NULL;
 	}
 }
 
