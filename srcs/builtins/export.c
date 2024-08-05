@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:57:54 by eperperi          #+#    #+#             */
-/*   Updated: 2024/07/31 20:41:39 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:18:20 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int		check_and_fill(char **args, t_env **mini_env, t_env **new_export)
 	return (0);
 }
 
-
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args)
 {
 	t_env	*new_env;
@@ -104,33 +103,33 @@ void	fill_only_exp(t_env **new_export, char **args, int i, t_env **mini_env)
 	add_path_to_list(new_export, new_export_line);
 }
 
-void	create_export_path(t_env **mini_env, t_env **new_export)
-{
-	t_env	*new_env;
-	int		len;
-	char	*export_line;
-	t_env	*tmp;
+// void	create_export_path(t_env **mini_env, t_env **new_export)
+// {
+// 	t_env	*new_env;
+// 	int		len;
+// 	char	*export_line;
+// 	t_env	*tmp;
 
-	len = 0;
-	tmp = *mini_env;
-	while (tmp != NULL)
-	{
-		len = ft_strlen(tmp->line) + 13;
-		export_line = create_export_line(tmp->line);
-		new_env = (t_env *)ft_malloc(sizeof(t_env));
-		new_env->line = (char *)ft_malloc(len + 1);
-		new_env->line = export_line;
-		new_env->line[len] = '\0';
-		if (!new_env->line)
-		{
-			free(new_env);
-			exit(EXIT_FAILURE);
-		}
-		new_env->next = NULL;
-		add_path_to_list(new_export, new_env);
-		tmp = tmp->next;
-	}
-}
+// 	len = 0;
+// 	tmp = *mini_env;
+// 	while (tmp != NULL)
+// 	{
+// 		len = ft_strlen(tmp->line) + 13;
+// 		export_line = create_export_line(tmp->line);
+// 		new_env = (t_env *)ft_malloc(sizeof(t_env));
+// 		new_env->line = (char *)ft_malloc(len + 1);
+// 		new_env->line = export_line;
+// 		new_env->line[len] = '\0';
+// 		if (!new_env->line)
+// 		{
+// 			free(new_env);
+// 			exit(EXIT_FAILURE);
+// 		}
+// 		new_env->next = NULL;
+// 		add_path_to_list(new_export, new_env);
+// 		tmp = tmp->next;
+// 	}
+// }
 
 char	*create_export_line(char *line)
 {
