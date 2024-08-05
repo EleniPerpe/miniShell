@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 18:09:57 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/05 18:23:44 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/05 20:07:27 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*expander_fill(char *line, int i, int j, t_env **mini_env)
 	env_value = create_final_env(env_line);
 	final = final_string(env_value, line, i, j);
 	free(expander);
+	free(env_value);
 	return (final);
 }
 
