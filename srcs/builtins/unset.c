@@ -18,7 +18,7 @@ int	ft_unset(char **args, t_env **mini_env, t_env **new_export)
 {
 	int		i;
 	int		exit_code;
-	
+
 	i = 0;
 	while (args[i] != NULL)
 		i++;
@@ -40,12 +40,12 @@ int args_and_fill(char **args, t_env **mini_env, t_env **new_export, int i)
 			j++;
 		if (ft_isprint(args[i][0]) && !ft_isalpha(args[i][0]))
 		{
-			printf("minishell: %s: '%s': not a valid identifier\n",
+			printf("minishell: %s: `%s': not a valid identifier\n",
 				args[0], args[i]);
 			return (1);
 		}
 		else
-		{	
+		{
 			node_remove(mini_env, args[i], j);
 			string = ft_strjoin("declare -x ", args[i]);
 			node_remove(new_export, string, j + 11);

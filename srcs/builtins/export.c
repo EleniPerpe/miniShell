@@ -50,7 +50,7 @@ int		check_and_fill(char **args, t_env **mini_env, t_env **new_export)
 		{
 			if (ft_isprint(args[i][0]) && !ft_isalpha(args[i][0]))
 			{
-				printf("minishell: %s: '%s': not a valid identifier\n",
+				printf("minishell: %s: `%s': not a valid identifier\n",
 					args[0], args[i]);
 				return (1);
 			}
