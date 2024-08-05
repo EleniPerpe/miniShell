@@ -70,7 +70,7 @@ void	start_prompt(t_env **mini_env, t_env **new_export, t_inout inout_main)
 		{
 			if (new_input_node)
 			{
-				check_builtin = check_for_builtins(new_input_node->cmd_args);
+				check_builtin = check_for_builtins(new_input_node->cmd_args, mini_env, new_export);
 				if (processes_num == 1 && check_builtin != -2)
 				{
 					exit_buildin = execute_builtins(new_input_node->cmd_args, mini_env, new_export);
