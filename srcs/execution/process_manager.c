@@ -77,10 +77,10 @@ void	start_prompt(t_env **mini_env, t_env **new_export, t_inout inout_main)
 		reset_io(inout_main);
 		whole_line = ft_readline();
 		processes_num =  split_pipes(whole_line, &new_input_node);
-		if (init_linked_list(&new_input_node, mini_env) == 0 && processes_num != -1)
+		if (init_linked_list(&new_input_node, mini_env, processes_num) == 0 && processes_num != -1)
 		{
 			if ((new_input_node) && (new_input_node->cmd_args[0] != NULL))
-				check_builtin = check_for_builtins(new_input_node->cmd_args);
+				check_builtin = check_for_builtins(new_input_node->cmd_args, mini_env, new_export);
 			if (processes_num == 1 && check_builtin != -2)
 			{
 				handle_one_builtin(&new_input_node, mini_env, new_export);
@@ -110,14 +110,14 @@ int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **n
 	while (tmp->next)
 		tmp = tmp->next;
 	processes_num = tmp->i + 1;
-	if (standard_io(data, pipe_fd, data->i, processes_num, mini_env) != 0)
+	if (standard_io(data, pipe_fd, data->i, processes_num, mini_env) != 0 ||
+			data->cmd_args[0] == NULL)
 		return (1);
 	close_fds(pipe_fd);
 	check_builtin = check_for_builtins(data->cmd_args, mini_env, new_export);
 	if (check_builtin != -2)
 	{
 		exit_buildin = execute_builtins(data->cmd_args, mini_env, new_export);
-		// data = NULL;
 		change_status(mini_env, exit_buildin);
 		exit (exit_buildin);
 	}
@@ -138,7 +138,7 @@ int	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_e
 	cur_pro_pid = process_pid;
 	new_input_node = data;
 	setup_signal_exe();
-	if (!ft_strncmp(data->cmd_args[0], "exit", 4))
+	if ((data->cmd_args[0] != NULL) && (!ft_strncmp(data->cmd_args[0], "exit", 4)))
 	{
 		modify_shlvl(mini_env, '-');
 		ft_exit(data->cmd_args, mini_env, new_export);
@@ -153,7 +153,6 @@ int	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_e
 	{
 		if (process_execution(new_input_node, pipe_fd, mini_env, new_export) != 0)
 			return (1);
-			// exit(EXIT_SUCCESS); // not necessary
 	}
 	return (0);
 }

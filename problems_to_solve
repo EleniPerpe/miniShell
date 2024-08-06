@@ -47,6 +47,25 @@
 #> out "ls
 #check for seg fault".
 ######################################################################################################
+							# MK PROBLEMS
+# if only spacessssss : DONE
+
+
+# minishell >
+# minishell: syntax error near unexpected token `|'
+# (i wrote one space)
+
+
+# unset PATH
+# cd /bin
+# ls   //it should work because the executable is in the current working directroy '/bin'
+
+# echo hi cat >zazaza
+
+# echo hello world > out.txt
+
+# shlvl negative, minishell starts with 0
+# if shlvl alphabetica, minishell starts with 1
 								STILL:
 
 /bin/ls /root  # Assuming you don't have permissions
@@ -63,7 +82,6 @@ cd -- to fix
 cd - at the begining
 
 
-if only spacessssss
 
 heredoc check with pipes and with
 
@@ -76,11 +94,8 @@ heredoc check with pipes and with
  >>
  <<
 
-minishell >
-minishell: syntax error near unexpected token `|'
-(i wrote one space)
 
-""
+"" fixed the seg fault but must print: command not found
 "  "
 
 
@@ -90,9 +105,6 @@ minishell: syntax error near unexpected token `|'
 
 (also if the PATH is unset in the terminal session where we launch minishell from, in the beginning)
 
-unset PATH
-cd /bin
-ls   //it should work because the executable is in the current working directroy '/bin'
 
 export alone should print alphabetical
 
@@ -123,14 +135,12 @@ Absolute paths for executables, like:
 /bin/ls
 
 
-only if there is a lot of time:
--shlvl negative, minishell starts with 0
-- if shlvl alphabetica, minishell starts with 1
 
 
-echo hi cat >zazaza
-
-echo hello world > out.txt
 
 
 SIGNALS IN HEREDOC
+
+
+<<"af | cat >pm
+<<hi wc | cat >zap

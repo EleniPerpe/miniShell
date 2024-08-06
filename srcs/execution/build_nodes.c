@@ -82,7 +82,7 @@ int	split_pipes(char *whole_line, t_input **new_input_node)
 return (processes_num);
 }
 
-int	init_linked_list(t_input **new_input_node,t_env **mini_env)
+int	init_linked_list(t_input **new_input_node,t_env **mini_env, int processes_num)
 {
 	t_input	*input_node;
 	char	*input_line;
@@ -91,13 +91,14 @@ int	init_linked_list(t_input **new_input_node,t_env **mini_env)
 	while (input_node != NULL)
 	{
 		input_line = input_node->part_line;
-		if((input_line == NULL) || (is_empty(input_line) == 0))
+		if((input_line == NULL) || !(is_empty(input_line)))
 		{
 			input_node = NULL;
-			printf("minishell: syntax error near unexpected token `|'\n");
+			if (processes_num > 1)
+				printf("minishell: syntax error near unexpected token `|'\n");
 			return (1);
 		}
-		if (input_line && (ft_strcmp(input_line, "") != 0))
+		if (input_line != NULL && (ft_strcmp(input_line, "") != 0))
 		{
 			input_node->cmd_args = ft_split_line(input_line, mini_env, input_node);
 			if (input_node->cmd_args == NULL)
