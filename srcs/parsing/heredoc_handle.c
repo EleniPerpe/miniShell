@@ -40,6 +40,8 @@ int	heredoc_init(char *line, int i, t_line_data **data)
 	file = "Libft/tmp_file";
 	while (line[i] == ' ')
 		i++;
+	if (line[i] == '\0')
+		return(i);
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	in_put = readline(">");
 	if (in_put != NULL)

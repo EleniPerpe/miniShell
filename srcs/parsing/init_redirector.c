@@ -82,7 +82,7 @@ int	after_redirection_fill(char *line, int i, t_line_data **data)
 	while (line[i] == ' ')
 		i++;
 	while (line[i + j] != ' ' && line[i + j] != '\0' && line[i + j] != '\''
-		&& line[i + j] != '"' && line[i + j] != '|')
+		&& line[i + j] != '"' && line[i + j] != '>' && line[i + j] != '<')
 		j++;
 	new_line_data->after_redirctor = (char *)ft_malloc(j + 1);
 	new_line_data->after_redirctor = ft_memcpy(new_line_data->after_redirctor,
