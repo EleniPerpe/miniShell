@@ -12,6 +12,12 @@
 
 #include "../minishell.h"
 
+void	dup_inout(t_inout *inout_main)
+{
+	inout_main->input = dup(STDIN_FILENO);
+	inout_main->output = dup(STDOUT_FILENO);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_env	*mini_env;

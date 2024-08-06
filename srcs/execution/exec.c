@@ -87,7 +87,7 @@ int	exec_command(char **cmd_args, t_env **mini_env)
 	env = minienv_to_env(mini_env);
 	if (cmd_args[0] != NULL)
 		path = find_path(cmd_args[0], env);
-	if (path == NULL)
+	if (path == NULL && cmd_args[0] != NULL)
 		path = ft_strjoin("./", cmd_args[0]);
 	if (execve(path, cmd_args, env) == -1)
 	{

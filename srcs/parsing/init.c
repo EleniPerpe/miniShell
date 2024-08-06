@@ -99,6 +99,7 @@ char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini
 	input_line = check_expander_and_rest(input_line, mini_env, 0);
 	if (input_line == NULL)
 		return (NULL);
+	printf("line is : %s\n", input_line);
 	i = 0;
 	while (input_line[i] != '\0')
 	{
@@ -112,6 +113,7 @@ char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini
 			else
 			{
 				i = quote_token(input_line, i, &line_data, 0);
+				printf("i is: %d\n", i);
 				if (i == -1)
 					return (NULL);
 			}

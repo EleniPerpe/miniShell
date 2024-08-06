@@ -33,7 +33,6 @@ void	open_outfile(t_line_data *data, char c)
 int	open_infile(t_line_data *data, t_env **mini_env)
 {
 	int	fd;
-
 	fd = open(data->after_redirctor, O_RDONLY);
 	if (fd < 0)
 	{
