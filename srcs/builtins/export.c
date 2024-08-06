@@ -6,33 +6,34 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:57:54 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/05 20:02:18 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:07:06 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char	*create_export_line(char *env);
 void	print_export(t_env **new_export);
 void	fill_only_exp(t_env **new_export, char **args, int i, t_env **mini_env);
-int		check_and_fill(char **args, t_env **mini_env, t_env **new_export);
-
+int		check_and_fill(char **args, t_env **mini_env, t_env **new_export, int flag);
+int		return_flag(int flag);
 
 int	ft_export(t_env **mini_env, char **args, t_env **new_export)
 {
 	int	i;
 	int exit_code;
+	int flag;
 
+	flag = 0;
 	i = 0;
 	while (args[i] != NULL)
 		i++;
 	if (i == 1)
 		print_export(new_export);
-	exit_code = check_and_fill(args, mini_env, new_export);
+	exit_code = check_and_fill(args, mini_env, new_export, flag);
 	return (exit_code);
 }
 
-int		check_and_fill(char **args, t_env **mini_env, t_env **new_export)
+int		check_and_fill(char **args, t_env **mini_env, t_env **new_export, int flag)
 {
 	int	i;
 
@@ -50,15 +51,16 @@ int		check_and_fill(char **args, t_env **mini_env, t_env **new_export)
 		{
 			if (ft_isprint(args[i][0]) && !ft_isalpha(args[i][0]))
 			{
-				printf("minishell: %s: `%s': not a valid identifier\n",
+				printf("minishell: %s: '%s': not a valid identifier\n",
 					args[0], args[i]);
-				return (1);
+				flag = 1;
 			}
 		}
 		i++;
 	}
-	return (0);
+	return (flag);
 }
+
 
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args)
 {
@@ -103,28 +105,102 @@ void	fill_only_exp(t_env **new_export, char **args, int i, t_env **mini_env)
 	add_path_to_list(new_export, new_export_line);
 }
 
-char	*create_export_line(char *line)
-{
-	int		i;
-	char	*first_sub_env;
-	char	*second_sub_env;
-	char	*first_part;
-	char	*second_part;
+// int	ft_export(t_env **mini_env, char **args, t_env **new_export)
+// {
+// 	int	i;
+// 	int exit_code;
+// 	int flag;
 
-	i = 0;
-	if (ft_strchr(line, '=') == NULL)
-	{
-		second_part = ft_strjoin("declare -x ", line);
-		return (second_part);
-	}
-	while (line[i] != '=')
-		i++;
-	first_sub_env = ft_substr(line, 0, i + 1);
-	second_sub_env = ft_substr(line, i + 1, ft_strlen(line) - i);
-	first_part = ft_strjoin("declare -x ", first_sub_env);
-	second_part = ft_strjoin_export(first_part, second_sub_env, '"');
-	free(first_sub_env);
-	free(second_sub_env);
-	free(first_part);
-	return (second_part);
-}
+// 	i = 0;
+// 	flag = 0;
+// 	while (args[i] != NULL)
+// 		i++;
+// 	if (i == 1)
+// 		print_export(new_export);
+// 	exit_code = check_and_fill(args, mini_env, new_export, flag);
+// 	return (exit_code);
+// }
+
+// int		check_and_fill(char **args, t_env **mini_env, t_env **new_export, int flag)
+// {
+// 	int	i;
+
+// 	i = 1;
+// 	while (args[i] != NULL)
+// 	{
+// 		if (check_for_append(args, mini_env, new_export, i) == 0)
+// 			break ;
+// 		if (ft_strchr(args[i], '=') != NULL && (ft_isalpha(args[i][0])
+// 			|| args[i][0] == '_'))
+// 			fill_env_and_export(new_export, mini_env, args[i]);
+// 		else if (ft_isalpha(args[i][0]) || args[i][0] == '_')
+// 			fill_only_exp(new_export, args, i, mini_env);
+// 		else
+// 		{
+// 			if (ft_isprint(args[i][0]) && !ft_isalpha(args[i][0]))
+// 			{
+// 				printf("minishell: %s: `%s': not a valid identifier\n",
+// 					args[0], args[i]);
+// 				flag = 1;
+// 			}
+// 		}
+// 		i++;
+// 	}
+// 	return (return_flag(flag));
+// 	// if (flag == 1)
+// 	// 	return (1);
+// 	// else
+// 	// return (0);
+// }
+
+// int return_flag(int flag)
+// {
+// 	if (flag == 1)
+// 		return (1);
+// 	else
+// 	return (0);
+// }
+
+// void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args)
+// {
+// 	t_env	*new_env;
+// 	t_env	*new_export_line;
+
+// 	new_env = (t_env *)ft_malloc(sizeof(t_env));
+// 	new_env->line = ft_strdup(args);
+// 	if (!new_env->line)
+// 	{
+// 		free(new_env);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	find_if_exists(mini_env, args, mini_env);
+// 	new_env->next = NULL;
+// 	add_path_to_list(mini_env, new_env);
+// 	new_export_line = (t_env *)ft_malloc(sizeof(t_env));
+// 	new_export_line->line = create_export_line(args);
+// 	find_if_exists(new_export, new_export_line->line, mini_env);
+// 	if (!new_export_line->line)
+// 	{
+// 		free(new_export_line);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	new_export_line->next = NULL;
+// 	add_path_to_list(new_export, new_export_line);
+// }
+
+// void	fill_only_exp(t_env **new_export, char **args, int i, t_env **mini_env)
+// {
+// 	t_env	*new_export_line;
+
+// 	new_export_line = (t_env *)ft_malloc(sizeof(t_env));
+// 	new_export_line->line = create_export_line(args[i]);
+// 	if (!new_export_line->line)
+// 	{
+// 		free(new_export_line);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	find_if_exists(new_export, new_export_line->line, mini_env);
+// 	new_export_line->next = NULL;
+// 	add_path_to_list(new_export, new_export_line);
+// }
+

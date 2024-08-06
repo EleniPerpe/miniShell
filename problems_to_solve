@@ -58,9 +58,9 @@ cd to a sub-folder doesn't update PWD with the whole path, it only give /sub-fol
 
 echo $hahahahahaha must print new line only
 
-cd -- to fix
+cd -- to fix DONE
 
-cd - at the begining
+cd - at the begining DONE
 
 
 if only spacessssss
@@ -102,21 +102,16 @@ declare -x test
 declare -x test="whaaaat"
 -> same first characters of the name of the variable in export and unset.
 
-bash-3.2$ export 35fg dgh kjg 452 fgs
-bash: export: `35fg': not a valid identifier
-bash: export: `452': not a valid identifier
-->parsing of all arguments in unset and export, not only the first
-
-cd - -->prints the current pwd (where it took you)
+cd - -->prints the current pwd (where it took you) DONE
 
 cd ../../Desktop     // the .. and .  can be as many times inside
 cd ~/Downloads/
 cd ./objs/
 
-bash-3.2$ cd "   "
-bash: cd:    : No such file or directory
+bash-3.2$ cd "   "     CAN NOT BE DONE
+bash: cd:    : No such file or directory  CAN NOT BE DONE
 
-bash-3.2$ cd ""
+bash-3.2$ cd ""  CAN NOT BE DONE
 
 Absolute paths for executables, like:
 /usr/bin/wc

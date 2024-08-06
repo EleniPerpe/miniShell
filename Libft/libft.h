@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 18:52:31 by eperperi          #+#    #+#             */
-/*   Updated: 2024/06/27 16:04:28 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:34:34 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <string.h>
 # include <stdarg.h>
 
+size_t		till_char(const char *s, char x);
 void		ft_bzero(void *s, size_t a);
 int			ft_isalnum(char c);
 int			ft_isalpha(int c);

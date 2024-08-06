@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:12:10 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/05 18:19:06 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:26:24 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,28 @@ int args_and_fill(char **args, t_env **mini_env, t_env **new_export, int i)
 {
 	int j;
 	char *string;
+	int flag;
 
+	flag = 0;
 	while (args[i] != NULL)
 	{
 		j = 0;
-		while (args[i][j] != '=' && args[i][j] != '\0')
+		while (args[i][j] != '\0')
+		{
+			if (args[i][j] == '=')
+			{
+				printf("unset: %s: invalid parameter name\n", args[i]);
+				flag = 2;
+				i++;
+				break ;
+			}
 			j++;
+		}
 		if (ft_isprint(args[i][0]) && !ft_isalpha(args[i][0]))
 		{
 			printf("minishell: %s: `%s': not a valid identifier\n",
 				args[0], args[i]);
-			return (1);
+			flag = 1;
 		}
 		else
 		{
@@ -50,9 +61,10 @@ int args_and_fill(char **args, t_env **mini_env, t_env **new_export, int i)
 			string = ft_strjoin("declare -x ", args[i]);
 			node_remove(new_export, string, j + 11);
 			free(string);
-			return (0);
 		}
 		i++;
 	}
-	return (0);
+	if (flag == 2)
+		return (1);
+	return (flag);
 }

@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/05 20:01:35 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:21:33 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	start_prompt(t_env **mini_env, t_env **new_export, t_inout inout_main)
 		if (init_linked_list(&new_input_node, mini_env) == 0 && processes_num != -1)
 		{
 			if ((new_input_node) && (new_input_node->cmd_args[0] != NULL))
-				check_builtin = check_for_builtins(new_input_node->cmd_args);
+				check_builtin = check_for_builtins(new_input_node->cmd_args, mini_env, new_export);
 			if (processes_num == 1 && check_builtin != -2)
 			{
 				handle_one_builtin(&new_input_node, mini_env, new_export);

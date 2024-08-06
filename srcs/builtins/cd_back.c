@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:11:31 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/05 18:39:48 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/06 20:26:35 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int switch_directories(char *old_pwd)
 	if (temp_pwd != NULL)
 	{	
     	exit_code = check_and_change_dir(temp_pwd + 4);
+		printf("%s\n", temp_pwd + 4);
 		return (exit_code);
 	}
 	else
@@ -65,4 +66,33 @@ int    check_and_change_dir(char *dir)
 		return (1);
 	}
 	return (0);
+}
+
+char *check_for_available_old(char *old_pwd)
+{
+	char *temp_pwd;
+	
+	if (old_pwd == NULL)
+		return (NULL);
+	else
+	{
+		temp_pwd = ft_substr(old_pwd, 7, ft_strlen(old_pwd) - 7);
+		return (temp_pwd);
+	}
+}
+
+char *find_full_or_sub(char *args, char *old_pwd)
+{
+	char *temp;
+	char *final;
+
+	if (args[0] == '/')
+		return (args);
+	else
+	{
+		temp = ft_strjoin(old_pwd, "/");
+		final = ft_strjoin(temp, final);
+		free (temp);
+		return (final);
+	}
 }
