@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:23:27 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/05 18:18:33 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:24:25 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void    find_if_exists(t_env **new_export, char *line, t_env **mini_env)
         node_remove(mini_env, line, i);
     }
 }
-
 void    node_remove(t_env **node_remove, char *line, int i)
 {
     t_env   *curr;

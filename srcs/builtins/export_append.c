@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:10:54 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/05 20:03:03 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:37:25 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,30 @@ void    new_append_addition(t_env **new_export, t_env **mini_env,
     free(final1);
     free(final2);
     free(final);
+}
+
+char	*create_export_line(char *line)
+{
+	int		i;
+	char	*first_sub_env;
+	char	*second_sub_env;
+	char	*first_part;
+	char	*second_part;
+
+	i = 0;
+	if (ft_strchr(line, '=') == NULL)
+	{
+		second_part = ft_strjoin("declare -x ", line);
+		return (second_part);
+	}
+	while (line[i] != '=')
+		i++;
+	first_sub_env = ft_substr(line, 0, i + 1);
+	second_sub_env = ft_substr(line, i + 1, ft_strlen(line) - i);
+	first_part = ft_strjoin("declare -x ", first_sub_env);
+	second_part = ft_strjoin_export(first_part, second_sub_env, '"');
+	free(first_sub_env);
+	free(second_sub_env);
+	free(first_part);
+	return (second_part);
 }

@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:09:26 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/05 18:12:35 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/06 20:12:51 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,3 +92,4 @@ void    replace_nodes(t_env **mini_env, char *line, int i)
     temp_env->next = NULL;
     add_path_to_list(mini_env, temp_env);
 }
+
