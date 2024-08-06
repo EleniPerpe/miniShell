@@ -66,81 +66,64 @@
 
 # shlvl negative, minishell starts with 0
 # if shlvl alphabetica, minishell starts with 1
-								STILL:
+#cd - -->prints the current pwd (where it took you)
 
-/bin/ls /root  # Assuming you don't have permissions
-echo $?  # Output: 126
+#cd ../../Desktop     // the .. and .  can be as many times inside
+#cd ~/Downloads/
+#cd ./objs/
+#cd to a sub-folder doesn't update PWD with the whole path, it only give /sub-folder-name DONE
+
+#cd -- to fix
+
+#cd - at the begining
+# export alone should print alphabetical
+#
+# declare -x test123="dkgag"
+# declare -x test1="hiiiiiiiii"
+# declare -x test
+# declare -x test="whaaaat"
+# -> same first characters of the name of the variable in export and unset.
+#
+# bash-3.2$ export 35fg dgh kjg 452 fgs
+# bash: export: `35fg': not a valid identifier
+# bash: export: `452': not a valid identifier
+# ->parsing of all arguments in unset and export, not only the first
+# "" fixed the seg fault but must print: command not found
+# "  "
+
+# !!!!! unset PATH -->anything after, even normal 'ls' segfaults
+
+# (also if the PATH is unset in the terminal session where we launch minishell from, in the beginning)
+
+
+# ./minishell //inside minishell
+#
+# Absolute paths for executables, like:
+# /usr/bin/wc
+# /bin/ls
+
+# <>
+# |<
+# >|
+# ><
+# >>
+# <<
+
+# | ls | cat to fix
+								STILL:
 
 create a function to free the envs.
 
-cd to a sub-folder doesn't update PWD with the whole path, it only give /sub-folder-name DONE
-
-echo $hahahahahaha must print new line only
-
-cd -- to fix
-
-cd - at the begining
-
-
-
 heredoc check with pipes and with
 
-| ls | cat to fix
-
-<>
-|<
->|
-><
- >>
- <<
 
 
-"" fixed the seg fault but must print: command not found
-"  "
+<<hi wc | cat >zap
 
-
-./minishell //inside minishell
-
-!!!!! unset PATH -->anything after, even normal 'ls' segfaults
-
-(also if the PATH is unset in the terminal session where we launch minishell from, in the beginning)
-
-
-export alone should print alphabetical
-
-declare -x test123="dkgag"
-declare -x test1="hiiiiiiiii"
-declare -x test
-declare -x test="whaaaat"
--> same first characters of the name of the variable in export and unset.
-
-bash-3.2$ export 35fg dgh kjg 452 fgs
-bash: export: `35fg': not a valid identifier
-bash: export: `452': not a valid identifier
-->parsing of all arguments in unset and export, not only the first
-
-cd - -->prints the current pwd (where it took you)
-
-cd ../../Desktop     // the .. and .  can be as many times inside
-cd ~/Downloads/
-cd ./objs/
-
-bash-3.2$ cd "   "
-bash: cd:    : No such file or directory
-
-bash-3.2$ cd ""
-
-Absolute paths for executables, like:
-/usr/bin/wc
-/bin/ls
-
-
-
-
-
+have to fix the UNSET
 
 SIGNALS IN HEREDOC
 
+<<"af | cat >pm Eleni
+function with 5 parameters
 
-<<"af | cat >pm
-<<hi wc | cat >zap
