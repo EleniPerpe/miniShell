@@ -94,11 +94,14 @@ int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export)
 
 int	check_if_valid(char **args, t_env **mini_env, t_env **new_export, int i)
 {
+	(void)mini_env;
+	(void)new_export;
 	if (args[0][i] != '\0')
 	{
 		printf("minishell: %s: command not found\n", args[0]);
-		free_env_list(mini_env);
-		free_env_list(new_export);
+		// free_env_list(mini_env);
+		// free_env_list(new_export); // we need them for the next command
+		change_status(mini_env, 127);
 		return (127);
 	}
 	return (0);
