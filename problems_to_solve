@@ -121,12 +121,16 @@
 # >>
 # <<
 
-# | ls | cat to fix
+# | ls | cat to fix DONE
 
 # heredoc check with pipes and with
-# <<hi wc | cat >zap
+# <<hi wc | cat >zap DONE
 
-# function with 5 parameters
+# function with 5 parameters DONE
+
+# <"zi" wc | cat | cat >"ro" seg fault DONE
+
+# <<"af | cat >pm Eleni DONE
 								STILL:
 
 create a function to free the envs.
@@ -135,6 +139,5 @@ have to fix the UNSET
 
 SIGNALS IN HEREDOC
 
-<<"af | cat >pm Eleni
-<"zi" wc | cat | cat >"ro" seg fault
+Delete the fking file standard_IO.c
 
