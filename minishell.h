@@ -23,6 +23,7 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <sys/wait.h>
+#include <termios.h>
 
 extern pid_t	child_pid;
 

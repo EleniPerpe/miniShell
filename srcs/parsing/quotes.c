@@ -53,15 +53,35 @@ int	check_for_flag(char *line, int i)
 	flag = 0;
 	while (i > 0 && (line[i] == ' ' || line[i] == '"' || line[i] == '\''))
 		i--;
-	if (line[i] == '<' && line[i - 1] == '<')
-		flag = 2;
-	else if ((line[i] == '<' || line[i] == '>') && (line[i - 1] != '<'))
-		flag = 7;
+	if (line[i] == '<' || line[i] == '>')
+	{
+		if(i > 0 && line[i - 1] == '<')
+			flag = 2;
+		else
+			flag = 7;
+	}
 	else
 		flag = 0;
 	i++;
 	return (flag);
 }
+
+// int	check_for_flag(char *line, int i)
+// {
+// 	int	flag;
+
+// 	flag = 0;
+// 	while (i > 0 && (line[i] == ' ' || line[i] == '"' || line[i] == '\''))
+// 		i--;
+// 	if (line[i] == '<' && line[i - 1] == '<')
+// 		flag = 2;
+// 	else if ((line[i] == '<' || line[i] == '>') && (line[i - 1] != '<'))
+// 		flag = 7;
+// 	else
+// 		flag = 0;
+// 	i++;
+// 	return (flag);
+// }
 
 int	check_quotes_cases(char *line, int *i)
 {

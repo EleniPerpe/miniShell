@@ -48,7 +48,6 @@ int	after_heredoc_fill(char *line, int i, t_line_data **data)
 	new_line_data->next = NULL;
 	new_line_data->command = NULL;
 	new_line_data->redirctor = NULL;
-	printf("herdoc is: %s\n", new_line_data->after_redirctor );
 	add_node_to_list(data, new_line_data);
 	return (i + j);
 }

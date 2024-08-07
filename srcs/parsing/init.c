@@ -110,16 +110,17 @@ char	**ft_split_line(char *input_line,t_env **mini_env, t_input *input_node)
 				|| (input_line[i] == '\'' && input_line[i + 1] == '\''))
 				i = i + 2;
 			else
-			{
 				i = quote_token(input_line, i, &line_data, 0);
-				if (i == -1)
-					return (NULL);
-			}
 		}
 		else if (input_line[i] == '<' || input_line[i] == '>')
 			i = redirection_fill(input_line, i, &line_data);
 		else
 			i = command_fill(input_line, i, &line_data);
+		if (i == -1)
+		{
+			change_status(mini_env, 127);
+			return (NULL);
+		}
 	}
 	cmd_args = command_merge(&line_data);
 	input_node->data_node = line_data;
@@ -135,6 +136,7 @@ char *check_expander_and_rest(char *input_line, t_env **mini_env, int i)
 		if (input_line[i] == ';' || input_line[i] == '\\')
 		{
 			printf("The program can not interpret '\\' or ';'\n");
+			change_status(mini_env, 127);
 			return (NULL);
 		}
 		i++;
