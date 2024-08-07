@@ -83,6 +83,8 @@ int	handle_redirectors(t_input *data, t_env **mini_env)
 			open_outfile(next_data, 'T');
 		else if (current_data->type == 3)
 			open_outfile(next_data, 'A');
+		else if (current_data->type == 2)
+			open_infile(next_data, mini_env);
 		current_data = current_data->next;
 	}
 	return (0);

@@ -41,9 +41,7 @@ void	execute_with_pipes(t_input **input_node, int processes_num, t_env **mini_en
 	while (i < processes_num)
 	{
 		if (fork_and_exec(new_input_node, pro_pid[i], pipe_fd, mini_env, new_export) != 0)
-		{
 			exit(EXIT_FAILURE);
-		}
 		new_input_node = new_input_node->next;
 		i++;
 	}
@@ -69,7 +67,6 @@ void	start_prompt(t_env **mini_env, t_env **new_export, t_inout inout_main)
 	t_input		*new_input_node;
 	int			processes_num;
 	int			check_builtin;
-	// int			exit_buildin;
 
 	new_input_node = NULL;
 	while (1)
