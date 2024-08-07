@@ -57,6 +57,12 @@ typedef struct s_inout
 	int output;
 }	t_inout;
 
+typedef struct s_envexpo
+{
+	t_env	**exe_env;
+	t_env	**exe_export;
+}	t_envexpo;
+
 typedef struct s_commands_list
 {
 	t_line_data				*commands_node;
@@ -65,12 +71,7 @@ typedef struct s_commands_list
 
 typedef struct s_input
 {
-	char			*part_line; // string of characters between two pipes or the end of the line
-	// int				write_to_pipe;
-	// int				read_from_pipe;
-	// int				pipe_in;
-	// int				pipe_out;
-	// pid_t			pro_pid;
+	char			*part_line;
 	t_line_data		*data_node;
 	char			**cmd_args;
 	int				i;
@@ -95,11 +96,12 @@ int		after_redirection_decision(char *line, int i, t_line_data **data);
 int		after_redi_len(char *line, int i);
 char	*expander_fill(char *line, int i, int j, t_env **mini_env);
 void	free_path(t_env *mini_env);
-int		init_linked_list(t_input **new_input_node,t_env **mini_env);
+int		init_linked_list(t_input **new_input_node,t_env **mini_env, int processes_num);
 int		split_pipes(char *whole_line, t_input **new_input_node);
 int		create_input_node(char *whole_line, int i,t_input **new_input_node, int k);
 void	add_path_to_list(t_env **mini_env, t_env *new_env);
 void	add_inputnode_tolist(t_input **data, t_input *new_line_data);
+int		after_heredoc_fill(char *line, int i, t_line_data **data);
 
 //execution:
 void	start_prompt(t_env **mini_env, t_env **new_export, t_inout inout_main);
@@ -109,7 +111,7 @@ int		exec_command(char **cmd_args, t_env **mini_env);
 int		process_execution(t_input *data, int **pipe_fd,t_env **mini_env, t_env **new_export);
 void	close_fds(int **pipe_fd);
 void	wait_for_children(int **pro_pid, int processes_num, t_env **mini_env);
-int		fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_env, t_env **new_export);
+int		fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_envexpo exe_envexport);
 int		**pipes_init(int processes_num);
 int		**pid_init(int processes_num);
 int		handle_redirectors(t_input *data, t_env **mini_env);

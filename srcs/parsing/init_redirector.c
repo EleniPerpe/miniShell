@@ -82,7 +82,7 @@ int	after_redirection_fill(char *line, int i, t_line_data **data)
 	while (line[i] == ' ')
 		i++;
 	while (line[i + j] != ' ' && line[i + j] != '\0' && line[i + j] != '\''
-		&& line[i + j] != '"' && line[i + j] != '|')
+		&& line[i + j] != '"' && line[i + j] != '>' && line[i + j] != '<')
 		j++;
 	new_line_data->after_redirctor = (char *)ft_malloc(j + 1);
 	new_line_data->after_redirctor = ft_memcpy(new_line_data->after_redirctor,
@@ -92,6 +92,7 @@ int	after_redirection_fill(char *line, int i, t_line_data **data)
 	new_line_data->next = NULL;
 	new_line_data->command = NULL;
 	new_line_data->redirctor = NULL;
+	printf("herdoc is: %s\n", new_line_data->after_redirctor );
 	add_node_to_list(data, new_line_data);
 	return (i + j);
 }

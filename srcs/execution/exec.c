@@ -78,20 +78,76 @@ char	*find_path(char *cmd, char **env)
 	return (NULL);
 }
 
+void	create_cmd(char **cmd_args)
+{
+	char *cmd;
+	char *cmd_only;
+	int	len;
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	cmd = *cmd_args;
+	len = ft_strlen(cmd);
+	while (cmd[i] != '\0')
+		i++;
+	i--;
+	while (cmd[i] != '/')
+		i--;
+	cmd_only = (char *)ft_malloc(len - i + 1);
+	i++;
+	while(cmd[i] != '\0')
+		cmd_only[j++] = cmd[i++];
+	cmd_only[j] = '\0';
+	free(*cmd_args);
+	*cmd_args = cmd_only;
+}
+
+char *handle_path_cmd(char **cmd_args)
+{
+	int	i;
+	int	len;
+	char	*cmd;
+	char	*path;
+
+	i = 0;
+	cmd = *cmd_args;
+	len = ft_strlen(cmd);
+	while (cmd[i] != '\0' && cmd[i] != '/')
+		i++;
+	if ( i != len)
+	{
+		path = ft_strdup(*cmd_args);
+		create_cmd(cmd_args);
+		return (path);
+	}
+	return (NULL);
+}
+
 int	exec_command(char **cmd_args, t_env **mini_env)
 {
 	char	*path;
 	char	**env;
 
-	path = NULL;
 	env = minienv_to_env(mini_env);
-	if (cmd_args[0] != NULL)
-		path = find_path(cmd_args[0], env);
-	if (path == NULL)
-		path = ft_strjoin("./", cmd_args[0]);
+	path = handle_path_cmd(cmd_args);
+	if (!path)
+	{
+		if (cmd_args[0] != NULL)
+			path = find_path(cmd_args[0], env);
+		if (path == NULL && cmd_args[0] != NULL)
+			path = ft_strjoin("./", cmd_args[0]);
+			if (execve(path, cmd_args, env) == -1)
+			{
+				printf("minishell: %s: command not found\n", cmd_args[0]);
+				change_status(mini_env, 127);
+				exit (127);
+			}
+	}
 	if (execve(path, cmd_args, env) == -1)
 	{
-		printf("minishell: %s: command not found\n", cmd_args[0]);
+		printf("minishell: %s: No such file or directory\n", path);
 		change_status(mini_env, 127);
 		exit (127);
 	}
