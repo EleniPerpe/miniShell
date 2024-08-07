@@ -31,6 +31,28 @@ int	after_redi_len(char *line, int i)
 	return (len);
 }
 
+int	after_heredoc_fill(char *line, int i, t_line_data **data)
+{
+	t_line_data	*new_line_data;
+	int			j;
+
+	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
+	j = 0;
+	while (line[i] == ' ')
+		i++;
+	while (line[i + j] != ' ' && line[i + j] != '\0' && line[i + j] != '\''
+		&& line[i + j] != '"' && line[i + j] != '>' && line[i + j] != '<')
+		j++;
+	new_line_data->after_redirctor = ft_strdup("Libft/tmp_file");
+	new_line_data->type = 7;
+	new_line_data->next = NULL;
+	new_line_data->command = NULL;
+	new_line_data->redirctor = NULL;
+	printf("herdoc is: %s\n", new_line_data->after_redirctor );
+	add_node_to_list(data, new_line_data);
+	return (i + j);
+}
+
 int	heredoc_init(char *line, int i, t_line_data **data)
 {
 	int			fd;
@@ -55,6 +77,6 @@ int	heredoc_init(char *line, int i, t_line_data **data)
 				break ;
 		}
 	}
-	fd = after_redirection_fill(line, i, data);
+	fd = after_heredoc_fill(line, i, data);
 	return (fd);
 }
