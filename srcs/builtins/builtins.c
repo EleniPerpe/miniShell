@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:08:51 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/05 20:01:20 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:28:38 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export)
 	{
 		if (check_if_valid(args, mini_env, new_export, 2) == 127)
 			return (127);
-		res = ft_cd(mini_env, args, new_export);
+		res = ft_cd(mini_env, args, new_export, 0);
 		return (res);
 	}
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "exit", 4) == 0))

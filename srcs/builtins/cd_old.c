@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:09:26 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/06 20:12:51 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:30:24 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void    create_old_pwd(t_env **mini_env, t_env **new_export)
     size_t  size;
     t_env   *pwd_export;
     t_env   *pwd_env;
+	
     size = 1024;
     check_if_exists(mini_env);
     check_if_exists(new_export);
@@ -55,10 +56,12 @@ void    check_if_exists(t_env **envs)
         {
             temp_export = ft_strjoin("declare -x ", temp_envs->line);
             node_remove(envs, temp_export, 6);
+			free(temp_export);
         }
         temp_envs = next_env;
     }
 }
+
 void    change_other_envs(t_env **mini_env, t_env **new_export, char *line)
 {
     int     i;
@@ -93,3 +96,18 @@ void    replace_nodes(t_env **mini_env, char *line, int i)
     add_path_to_list(mini_env, temp_env);
 }
 
+char    *create_previous_directory(t_env **mini_env)
+{
+    t_env   *temp;
+    char    *final;
+    int     len;
+    char    *rest;
+
+    temp = *mini_env;
+		while (temp != NULL && ft_strncmp("PWD=", temp->line, 4) != 0)
+			temp = temp->next;
+		rest = ft_strrchr(temp->line, '/');
+		len = ft_strlen(temp->line) - ft_strlen(rest);
+		final = ft_substr(temp->line, 4, len - 4);
+    return (final);
+}

@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 22:23:47 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/02 18:14:09 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:12:15 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	set_new_lvl(t_env **mini_env,int shlvl)
 	}
 	if (tmp->line != NULL)
 		free(tmp->line);
-	tmp->line = (char *)ft_malloc(ft_strlen("SHLVL=") + ft_strlen(ch_shlvl));
+	// tmp->line = (char *)ft_malloc(ft_strlen("SHLVL=") + ft_strlen(ch_shlvl));
 	tmp->line = ft_strjoin("SHLVL=", ch_shlvl);
 	free(ch_shlvl);
 }
@@ -78,6 +78,7 @@ void	modify_shlvl(t_env **mini_env, char c)
 		shlvl++;
 	else if (c == '-')
 		shlvl--;
+	free(ch_shlvl);
 	set_new_lvl(mini_env, shlvl);
 }
 void	dup_inout(t_inout *inout_main)

@@ -6,13 +6,15 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:12:10 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/06 14:26:24 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 17:10:16 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 int args_and_fill(char **args, t_env **mini_env, t_env **new_export, int i);
+int count_arg_size(char **args, int i, int *flag);
+int if_invalid(char **args, int i,  int *exit_code);
 
 int	ft_unset(char **args, t_env **mini_env, t_env **new_export)
 {
@@ -33,38 +35,55 @@ int args_and_fill(char **args, t_env **mini_env, t_env **new_export, int i)
 	int j;
 	char *string;
 	int flag;
+	int exit_code;
 
+	exit_code = 0;
 	flag = 0;
 	while (args[i] != NULL)
 	{
-		j = 0;
-		while (args[i][j] != '\0')
+		j = count_arg_size(args, i, &flag);
+		if (flag == 0)
 		{
-			if (args[i][j] == '=')
+			if (!if_invalid(args, i, &exit_code))
 			{
-				printf("unset: %s: invalid parameter name\n", args[i]);
-				flag = 2;
-				i++;
-				break ;
+				node_remove(mini_env, args[i], j);
+				string = ft_strjoin("declare -x ", args[i]);
+				node_remove(new_export, string, j + 11);
+				free(string);
 			}
-			j++;
-		}
-		if (ft_isprint(args[i][0]) && !ft_isalpha(args[i][0]))
-		{
-			printf("minishell: %s: `%s': not a valid identifier\n",
-				args[0], args[i]);
-			flag = 1;
-		}
-		else
-		{
-			node_remove(mini_env, args[i], j);
-			string = ft_strjoin("declare -x ", args[i]);
-			node_remove(new_export, string, j + 11);
-			free(string);
 		}
 		i++;
+		flag = 0;
 	}
-	if (flag == 2)
+	return (exit_code);
+}
+
+int if_invalid(char **args, int i,  int *exit_code)
+{
+	if (ft_isprint(args[i][0]) && !ft_isalpha(args[i][0]))
+	{
+		printf("minishell: %s: `%s': not a valid identifier\n",
+			args[0], args[i]);
+		*exit_code = 1;
 		return (1);
-	return (flag);
+	}
+	return (0);
+}
+
+int count_arg_size(char **args, int i, int *flag)
+{
+	int j;
+	
+	j = 0;
+	while (args[i][j] != '\0')
+	{
+		if (args[i][j] == '=')
+		{
+			printf("unset: %s: invalid parameter name\n", args[i]);
+			*flag = 1;
+			break ;
+		}
+		j++;
+	}
+	return (j);
 }
