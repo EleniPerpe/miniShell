@@ -40,13 +40,8 @@ int	create_input_node(char *whole_line, int i,t_input **new_input_node, int k)
 	tmp->part_line = (char *)ft_malloc(j + 1);
 	tmp->part_line = ft_memcpy(tmp->part_line, &whole_line[i], j);
 	tmp->part_line[j] = '\0';
-	// printf("That's my node : %s\n", tmp->part_line);
 	tmp->next = NULL;
 	tmp->data_node = NULL;
-	// tmp->read_from_pipe = -99;
-	// tmp->write_to_pipe = -99;
-	// tmp->pipe_in = -99;
-	// tmp->pipe_out = -99;
 	tmp->i = k;
 	add_inputnode_tolist(new_input_node, tmp);
 	return (i + j);
@@ -75,8 +70,7 @@ int	split_pipes(char *whole_line, t_input **new_input_node)
 		else
 		{
 			processes_num++;
-			i = create_input_node(whole_line, i, new_input_node, j);
-			j++;
+			i = create_input_node(whole_line, i, new_input_node, j++);
 		}
 	}
 return (processes_num);

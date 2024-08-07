@@ -29,8 +29,8 @@ int check_for_builtins(char **args, t_env **mini_env, t_env **new_export)
 	}
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "pwd", 3) == 0))
 	{
-		if (check_if_valid(args, mini_env, new_export, 3) == 1)
-			return (1);
+		if (check_if_valid(args, mini_env, new_export, 3) == 127)
+			return (127);
 		else
 			return (0);
 	}

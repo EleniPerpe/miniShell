@@ -71,12 +71,7 @@ typedef struct s_commands_list
 
 typedef struct s_input
 {
-	char			*part_line; // string of characters between two pipes or the end of the line
-	// int				write_to_pipe;
-	// int				read_from_pipe;
-	// int				pipe_in;
-	// int				pipe_out;
-	// pid_t			pro_pid;
+	char			*part_line;
 	t_line_data		*data_node;
 	char			**cmd_args;
 	int				i;
@@ -116,7 +111,7 @@ int		exec_command(char **cmd_args, t_env **mini_env);
 int		process_execution(t_input *data, int **pipe_fd,t_env **mini_env, t_env **new_export);
 void	close_fds(int **pipe_fd);
 void	wait_for_children(int **pro_pid, int processes_num, t_env **mini_env);
-int		fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_env, t_env **new_export);
+int		fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_envexpo exe_envexport);
 int		**pipes_init(int processes_num);
 int		**pid_init(int processes_num);
 int		handle_redirectors(t_input *data, t_env **mini_env);

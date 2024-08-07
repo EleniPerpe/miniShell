@@ -115,6 +115,7 @@
 # <<hi wc | cat >zap
 
 
+# function with 5 parameters
 								STILL:
 
 create a function to free the envs.
@@ -125,6 +126,4 @@ SIGNALS IN HEREDOC
 
 <<"af | cat >pm Eleni
 <"zi" wc | cat | cat >"ro" seg fault
-
-function with 5 parameters
 
