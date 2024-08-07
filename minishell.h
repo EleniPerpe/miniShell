@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/06 20:17:09 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:29:15 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ typedef struct s_inout
 	int input;
 	int output;
 }	t_inout;
+
+typedef struct s_pwd
+{
+	int temp_pwd;
+	int old_pwd;
+}	t_pwd;
 
 typedef struct s_commands_list
 {
@@ -131,7 +137,7 @@ char	*ft_strjoin_export(char const *s1, char const *s2, char c);
 int		ft_unset(char **args, t_env **mini_env, t_env **new_export);
 void	node_remove(t_env **node_remove, char *line, int i);
 char	*check_expander_and_rest(char *input_line, t_env **mini_env, int i);
-int		ft_cd(t_env **mini_env, char **args, t_env **new_export);
+int    ft_cd(t_env **mini_env, char **args, t_env **new_export, int i);
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args);
 int		check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
 void	create_old_pwd(t_env **mini_env, t_env **new_export);
@@ -157,6 +163,7 @@ void	modify_shlvl(t_env **mini_env, char c);
 void	free_env_list(t_env **env);
 void	dup_inout(t_inout *inout_main);
 int		is_empty(char *str);
+void	free_split(char **args);
 
 //signals
 void	setup_signal_init();

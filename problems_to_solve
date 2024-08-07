@@ -129,3 +129,15 @@ echo hello world > out.txt
 
 
 SIGNALS IN HEREDOC
+
+
+
+
+MEMORY LEAKS
+
+I have a function to clean the (char **) : void free_split(char **args)
+
+in merge free command I don't understand what you are doing :P
+
+
+command not found doens't return 127 :/

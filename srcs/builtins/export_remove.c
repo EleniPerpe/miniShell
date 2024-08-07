@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:23:27 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/06 18:24:25 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:33:50 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,21 @@ void    find_if_exists(t_env **new_export, char *line, t_env **mini_env)
     if (*new_export == NULL)
         return ;
     if (ft_strncmp("declare -x ", line, 11) == 0)
-    {
-        node_remove(new_export, line, i);
-    }
+		node_remove(new_export, line, i);
     else
-    {
         node_remove(mini_env, line, i);
-    }
 }
+
 void    node_remove(t_env **node_remove, char *line, int i)
 {
     t_env   *curr;
     t_env   *remove;
-    if (ft_strncmp(line, (*node_remove)->line, i) == 0)
-    {
-        remove = *node_remove;
-        *node_remove = (*node_remove)->next;
-        free(remove->line);
-        free(remove);
-        return ;
-    }
+
     curr = *node_remove;
     while (curr->next != NULL)
     {
-        if (ft_strncmp(line, curr->next->line, i) == 0)
+        if (ft_strncmp(line, curr->next->line, i) == 0 \
+		&& (curr->next->line[i] == '=' || curr->next->line[i] == '\0'))
         {
             remove = curr->next;
             curr->next = curr->next->next;
@@ -67,9 +58,7 @@ char    *ft_strjoin_export(char const *s1, char const *s2, char c)
     i = 0;
     s1len = ft_strlen(s1);
     s2len = ft_strlen(s2);
-    ptr = (char *)malloc((s1len + s2len + 3) * sizeof(char));
-    if (ptr == NULL)
-        return (NULL);
+    ptr = (char *)ft_malloc((s1len + s2len + 3) * sizeof(char));
     while (i < s1len)
     {
         ptr[i] = s1[i];
@@ -116,7 +105,7 @@ void	create_export_path(t_env **mini_env, t_env **new_export)
 		len = ft_strlen(tmp->line) + 13;
 		export_line = create_export_line(tmp->line);
 		new_env = (t_env *)ft_malloc(sizeof(t_env));
-		new_env->line = (char *)ft_malloc(len + 1);
+		// new_env->line = (char *)ft_malloc(len + 1);
 		new_env->line = export_line;
 		new_env->line[len] = '\0';
 		if (!new_env->line)

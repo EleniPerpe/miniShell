@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:24:48 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/05 19:47:56 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:39:11 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,19 @@ void free_env_list(t_env **env)
         current = next;
     }
     *env = NULL;
+}
+void free_split(char **args)
+{
+	int i;
+
+	if (args == NULL || *args == NULL)
+		return;
+	i = 0;
+	while (args[i] != NULL)
+	{
+		free(args[i]);
+		i++;
+	}
+	free(args);
+	args = NULL;
 }

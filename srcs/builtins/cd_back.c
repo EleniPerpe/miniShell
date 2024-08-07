@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:11:31 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/06 20:26:35 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:31:47 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,29 @@ char *check_for_available_old(char *old_pwd)
 		return (temp_pwd);
 	}
 }
-
-char *find_full_or_sub(char *args, char *old_pwd)
+char *join_the_pwd(t_env **mini_env, t_env **new_export, char *temp_pwd)
 {
-	char *temp;
-	char *final;
-
-	if (args[0] == '/')
-		return (args);
-	else
+	t_env *temp;
+	char *new_pwd;
+	char *temp_str;
+	
+	temp = *mini_env;
+	new_pwd = NULL;
+	while (temp != NULL)
 	{
-		temp = ft_strjoin(old_pwd, "/");
-		final = ft_strjoin(temp, final);
-		free (temp);
-		return (final);
+		if (ft_strncmp("PWD=", temp->line, 4) == 0)
+		{
+			temp_str = ft_strjoin(temp->line, "/");
+			new_pwd = ft_strjoin(temp_str, temp_pwd);
+			free(temp_str);
+			change_other_envs(mini_env, new_export, new_pwd);
+			free(new_pwd);
+			break ;
+		}
+		temp = temp->next;
 	}
+	if (new_pwd != NULL)
+		return (new_pwd);
+	else
+		return (NULL);
 }
