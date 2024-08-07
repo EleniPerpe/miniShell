@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 01:20:46 by rshatra           #+#    #+#             */
-/*   Updated: 2024/07/31 17:32:46 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:45:33 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ void	change_status(t_env **mini_env, int status)
 {
 	t_env	*current_env;
 	char	*status_ch;
+	char *temp;
 
-	status_ch =  ft_strjoin("?=",ft_itoa(status));
+	temp = ft_itoa(status);
+	status_ch =  ft_strjoin("?=", temp);
 
 	current_env = *mini_env;
 	while (current_env != NULL)
@@ -30,6 +32,7 @@ void	change_status(t_env **mini_env, int status)
 		current_env = current_env->next;
 	}
 	free(status_ch);
+	free(temp);
 }
 
 void	add_status(t_env **mini_env)

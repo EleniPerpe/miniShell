@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:23:28 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/07 16:32:48 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:41:04 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int    ft_cd(t_env **mini_env, char **args, t_env **new_export, int i)
 				check_for_new_pwd(mini_env, new_export, exit_code, temp_pwd);
 			cd_args++;
 		}
+		free_split(cd_args);
 	}
 	else
 	{

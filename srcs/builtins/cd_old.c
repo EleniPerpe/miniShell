@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:09:26 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/07 16:30:24 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:25:51 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void    change_other_envs(t_env **mini_env, t_env **new_export, char *line)
     {
         temp_export = ft_strjoin_export("declare -x PWD=", line + 4, '"');
         replace_nodes(new_export, temp_export, i + 11);
+		free(temp_export);
     }
 }
 

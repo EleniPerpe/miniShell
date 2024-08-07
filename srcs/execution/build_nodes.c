@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:45:17 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/07 13:57:51 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:51:36 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,11 @@ int	create_input_node(char *whole_line, int i,t_input **new_input_node, int k)
 	tmp->part_line = (char *)ft_malloc(j + 1);
 	tmp->part_line = ft_memcpy(tmp->part_line, &whole_line[i], j);
 	tmp->part_line[j] = '\0';
-	// printf("That's my node : %s\n", tmp->part_line);
 	tmp->next = NULL;
 	tmp->data_node = NULL;
-	// tmp->read_from_pipe = -99;
-	// tmp->write_to_pipe = -99;
-	// tmp->pipe_in = -99;
-	// tmp->pipe_out = -99;
 	tmp->i = k;
 	add_inputnode_tolist(new_input_node, tmp);
+	
 	return (i + j);
 }
 
