@@ -16,12 +16,12 @@ char *keep_old_pwd(t_env **mini_env)
 {
 	t_env *temp;
 	char *temp_old_pwd;
-	
+
 	temp = *mini_env;
 	while (temp != NULL)
 	{
 		if (ft_strncmp("OLDPWD", temp->line, 6) == 0)
-		{	
+		{
 			temp_old_pwd = ft_substr(temp->line, 0, ft_strlen(temp->line));
 			return (temp_old_pwd);
 		}
@@ -34,7 +34,7 @@ int switch_directories(char *old_pwd)
 {
 	char *temp_pwd;
 	int exit_code;
-	
+
 	temp_pwd = NULL;
 	if (old_pwd == NULL)
 	{
@@ -44,7 +44,7 @@ int switch_directories(char *old_pwd)
 	else
 		temp_pwd = ft_substr(old_pwd, 3, ft_strlen(old_pwd) - 3);
 	if (temp_pwd != NULL)
-	{	
+	{
     	exit_code = check_and_change_dir(temp_pwd + 4);
 		printf("%s\n", temp_pwd + 4);
 		return (exit_code);
@@ -71,7 +71,7 @@ int    check_and_change_dir(char *dir)
 char *check_for_available_old(char *old_pwd)
 {
 	char *temp_pwd;
-	
+
 	if (old_pwd == NULL)
 		return (NULL);
 	else
@@ -86,6 +86,7 @@ char *find_full_or_sub(char *args, char *old_pwd)
 	char *temp;
 	char *final;
 
+	final = NULL;
 	if (args[0] == '/')
 		return (args);
 	else

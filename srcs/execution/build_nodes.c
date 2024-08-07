@@ -47,6 +47,36 @@ int	create_input_node(char *whole_line, int i,t_input **new_input_node, int k)
 	return (i + j);
 }
 
+int check_pipe_syntax(const char *str)
+{
+	int		len;
+	int		i;
+	bool	prev_was_pipe;
+
+	i = 0;
+	prev_was_pipe = false;
+	len = strlen(str);
+	if (len == 0)
+		return (-1);
+	while (i < len)
+	{
+		if (str[i] == '|')
+		{
+			if (i == 0 || i == len - 1 || prev_was_pipe)
+				return (-1);
+			prev_was_pipe = true;
+		}
+		else if (str[i] != ' ')
+			prev_was_pipe = false;
+		i++;
+	}
+	if (prev_was_pipe)
+		return (-1);
+	else
+		return (0);
+}
+
+
 int	split_pipes(char *whole_line, t_input **new_input_node)
 {
 	int		i;
@@ -58,14 +88,14 @@ int	split_pipes(char *whole_line, t_input **new_input_node)
 	processes_num = 0;
 	if (!whole_line)
 		return (0);
+	if (check_pipe_syntax(whole_line) == -1)
+	{
+		printf("minishell: syntax error near unexpected token `|'\n");
+		return	(-1);
+	}
 	while (whole_line[i] != '\0')
 	{
-		if ((whole_line[i] == '|') && (whole_line[i + 1] == '|'))
-		{
-			printf("minishell: syntax error near unexpected token `|'\n");
-			return (-1);
-		}
-		else if ((whole_line[i] == '|') && (whole_line[i + 1] != '|'))
+		if ((whole_line[i] == '|') && (whole_line[i + 1] != '|'))
 			i++;
 		else
 		{

@@ -26,7 +26,7 @@ int    ft_cd(t_env **mini_env, char **args, t_env **new_export)
 	char 	*old_pwd;
 	char	**cd_args;
 	int		i;
-	
+
 	exit_code = 0;
 	i = 0;
 	cd_args = NULL;
@@ -40,7 +40,7 @@ int    ft_cd(t_env **mini_env, char **args, t_env **new_export)
 		temp_pwd = handle_cd_args(mini_env, args[1], old_pwd, &exit_code);
 		if (exit_code == 0 && temp_pwd != NULL)
 			check_for_new_pwd(mini_env, new_export, exit_code, temp_pwd);
-			return (exit_code);	
+		return (exit_code);
 	}
 	if (cd_args != NULL)
 	{
@@ -89,9 +89,9 @@ void	check_for_new_pwd(t_env **mini_env, t_env **new_export,
 	int exit_code, char *temp_pwd)
 {
 	char *new_pwd;
-	t_env *temp;
-	
-	temp = *mini_env;
+	// t_env *temp;
+
+	// temp = *mini_env;
 	if (exit_code == 0 && temp_pwd[0] != '/')
 	{
 		new_pwd = join_the_pwd(mini_env, new_export, temp_pwd);
@@ -109,7 +109,7 @@ char *join_the_pwd(t_env **mini_env, t_env **new_export, char *temp_pwd)
 	t_env *temp;
 	char *new_pwd;
 	char *temp_str;
-	
+
 	temp = *mini_env;
 	new_pwd = NULL;
 	while (temp != NULL)
@@ -138,7 +138,7 @@ char    *create_previous_directory(t_env **mini_env)
     int     len;
     char    *rest;
 	// int 	i;
-	
+
 	// i = 2;
     temp = *mini_env;
 	// while (arg[i] != NULL && ft_strncmp("/..", arg[i], 3) == 0)
