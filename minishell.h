@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/07 16:29:15 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:31:32 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,7 @@ typedef struct s_commands_list
 
 typedef struct s_input
 {
-	char			*part_line; // string of characters between two pipes or the end of the line
-	// int				write_to_pipe;
-	// int				read_from_pipe;
-	// int				pipe_in;
-	// int				pipe_out;
-	// pid_t			pro_pid;
+	char			*part_line;
 	t_line_data		*data_node;
 	char			**cmd_args;
 	int				i;
@@ -164,6 +159,7 @@ void	free_env_list(t_env **env);
 void	dup_inout(t_inout *inout_main);
 int		is_empty(char *str);
 void	free_split(char **args);
+void	free_nodes(t_input **input_node);
 
 //signals
 void	setup_signal_init();

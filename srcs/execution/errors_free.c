@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:24:48 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/07 13:39:11 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:34:36 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,31 @@ void free_split(char **args)
 		i++;
 	}
 	free(args);
-	args = NULL;
+	// args = NULL;
+}
+
+void free_nodes(t_input **input_node)
+{
+	t_input *free_input_node;
+	t_input *tmp;
+	t_line_data *free_node;
+	t_line_data *tmp2;
+		
+	if (input_node != NULL)
+	{	
+		free_input_node = *input_node;
+		while (free_input_node != NULL)
+		{
+			free_node = free_input_node->data_node;
+			while (free_node != NULL)
+			{
+				tmp2 = free_node;
+				free_node = free_node->next;
+				free(tmp2);
+			}
+			tmp = free_input_node;
+			free_input_node = free_input_node->next;
+			free(tmp);
+		}
+	}
 }
