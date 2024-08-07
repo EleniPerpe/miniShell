@@ -86,7 +86,7 @@ int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export)
 	{
 		if (check_if_valid(args, mini_env, new_export, 4) == 127)
 			return (127);
-		res = ft_exit(args, mini_env, new_export);
+		res = ft_exit(args);
 		return (res);
 	}
 	return (res);

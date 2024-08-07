@@ -14,11 +14,10 @@
 // #include <termios.h>
 
 void	ft_exit_now(int i);
-void	exit_conditions(t_env **mini_env, char **args, int i);
+void	exit_conditions(char **args, int i);
 
-int	ft_exit(char **args, t_env **mini_env, t_env **new_export)
+int	ft_exit(char **args)
 {
-	(void)new_export;
 	int	i;
 
 	i = 0;
@@ -32,11 +31,11 @@ int	ft_exit(char **args, t_env **mini_env, t_env **new_export)
 		return (1);
 	}
 	else
-		exit_conditions(mini_env, args, i);
+		exit_conditions(args, i);
 	return (0);
 }
 
-void exit_conditions(t_env **mini_env, char **args, int i)
+void exit_conditions(char **args, int i)
 {
 	if (i == 1)
 			ft_exit_now(0);
