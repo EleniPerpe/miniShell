@@ -138,7 +138,7 @@ int		ft_cd(t_env **mini_env, char **args, t_env **new_export);
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args);
 int		check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
 void	create_old_pwd(t_env **mini_env, t_env **new_export);
-void	ft_exit(char **args, t_env **mini_env, t_env **new_export);
+int		ft_exit(char **args, t_env **mini_env, t_env **new_export);
 void	change_other_envs(t_env **mini_env, t_env **new_export, char *line);
 char	*keep_old_pwd(t_env **mini_env);
 int		switch_directories(char *old_pwd);

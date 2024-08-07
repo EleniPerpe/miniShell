@@ -128,6 +128,8 @@
 
 # function with 5 parameters DONE
 
+# SIGNALS IN HEREDOC
+
 # <"zi" wc | cat | cat >"ro" seg fault DONE
 
 # <<"af | cat >pm Eleni DONE
@@ -137,7 +139,6 @@ create a function to free the envs.
 
 have to fix the UNSET
 
-SIGNALS IN HEREDOC
 
 Delete the fking file standard_IO.c
 

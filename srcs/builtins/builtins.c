@@ -29,8 +29,8 @@ int execute_builtins(char **args, t_env **mini_env, t_env **new_export)
 	}
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "pwd", 3) == 0))
 	{
-		if (check_if_valid(args, mini_env, new_export, 3) == 1)
-			return (1);
+		if (check_if_valid(args, mini_env, new_export, 3) == 127)
+			return (127);
 		res = ft_pwd(mini_env);
 		return (res);
 	}
@@ -86,8 +86,8 @@ int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export)
 	{
 		if (check_if_valid(args, mini_env, new_export, 4) == 127)
 			return (127);
-        ft_exit(args, mini_env, new_export);
-        return 0;
+		res = ft_exit(args, mini_env, new_export);
+		return (res);
 	}
 	return (res);
 }
