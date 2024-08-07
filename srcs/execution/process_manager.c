@@ -32,15 +32,18 @@ void	execute_with_pipes(t_input **input_node, int processes_num, t_env **mini_en
 	int		**pro_pid;
 	int		**pipe_fd;
 	t_input	*new_input_node;
+	t_envexpo	exe_envexport;
 	int		i;
 
 	i = 0;
+	exe_envexport.exe_env = mini_env;
+	exe_envexport.exe_export = new_export;
 	new_input_node = *input_node;
 	pipe_fd =  pipes_init(processes_num);
 	pro_pid  = pid_init(processes_num);
 	while (i < processes_num)
 	{
-		if (fork_and_exec(new_input_node, pro_pid[i], pipe_fd, mini_env, new_export) != 0)
+		if (fork_and_exec(new_input_node, pro_pid[i], pipe_fd, exe_envexport) != 0)
 			exit(EXIT_FAILURE);
 		new_input_node = new_input_node->next;
 		i++;
@@ -78,17 +81,11 @@ void	start_prompt(t_env **mini_env, t_env **new_export, t_inout inout_main)
 		{
 			if ((new_input_node) && (new_input_node->cmd_args[0] != NULL))
 				check_builtin = check_for_builtins(new_input_node->cmd_args, mini_env, new_export);
-			if (processes_num == 1 && check_builtin != -2)
-			{
+			if (processes_num == 1 && check_builtin != -2 && check_builtin != 127)
 				handle_one_builtin(&new_input_node, mini_env, new_export);
-				new_input_node = NULL;
-			}
-			else
-			{
+			else if (check_builtin != 127)
 				execute_with_pipes(&new_input_node,processes_num,mini_env,new_export);
-				new_input_node = NULL;
-			}
-				// new_input_node = NULL;
+			new_input_node = NULL;
 		}
 		else
 			new_input_node = NULL;
@@ -126,7 +123,7 @@ int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **n
 	return(0);
 }
 
-int	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_env, t_env **new_export)
+int	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_envexpo exe_envexport)
 {
 
 	t_input *new_input_node;
@@ -137,8 +134,8 @@ int	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_e
 	setup_signal_exe();
 	if ((data->cmd_args[0] != NULL) && (!ft_strncmp(data->cmd_args[0], "exit", 4)))
 	{
-		modify_shlvl(mini_env, '-');
-		ft_exit(data->cmd_args, mini_env, new_export);
+		modify_shlvl(exe_envexport.exe_env, '-');
+		ft_exit(data->cmd_args,exe_envexport.exe_env, exe_envexport.exe_export);
 	}
 	cur_pro_pid[0] = fork();
 	if (cur_pro_pid[0] < 0)
@@ -148,7 +145,7 @@ int	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_e
 	}
 	else if (cur_pro_pid[0]== 0)
 	{
-		if (process_execution(new_input_node, pipe_fd, mini_env, new_export) != 0)
+		if (process_execution(new_input_node, pipe_fd, exe_envexport.exe_env, exe_envexport.exe_export) != 0)
 			return (1);
 	}
 	return (0);
