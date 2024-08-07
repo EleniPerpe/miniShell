@@ -97,7 +97,6 @@ int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **n
 {
 	int processes_num;
 	t_input *tmp;
-	int		check_builtin;
 	int		exit_buildin;
 
 	tmp = data;
@@ -108,14 +107,13 @@ int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **n
 			data->cmd_args[0] == NULL)
 		return (1);
 	close_fds(pipe_fd);
-	check_builtin = check_for_builtins(data->cmd_args, mini_env, new_export);
-	if (check_builtin != -2)
+	if (check_for_builtins(data->cmd_args, mini_env, new_export) != -2)
 	{
 		exit_buildin = execute_builtins(data->cmd_args, mini_env, new_export);
 		change_status(mini_env, exit_buildin);
 		exit (exit_buildin);
 	}
-	else if (check_builtin == -2)
+	else
 	{
 		if (exec_command(data->cmd_args, mini_env) != 0)
 			return (1);

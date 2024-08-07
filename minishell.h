@@ -24,6 +24,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 #include <termios.h>
+#include <stdbool.h>
 
 extern pid_t	child_pid;
 

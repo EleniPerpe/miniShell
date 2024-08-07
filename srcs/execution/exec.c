@@ -138,12 +138,12 @@ int	exec_command(char **cmd_args, t_env **mini_env)
 			path = find_path(cmd_args[0], env);
 		if (path == NULL && cmd_args[0] != NULL)
 			path = ft_strjoin("./", cmd_args[0]);
-			if (execve(path, cmd_args, env) == -1)
-			{
-				printf("minishell: %s: command not found\n", cmd_args[0]);
-				change_status(mini_env, 127);
-				exit (127);
-			}
+		if (execve(path, cmd_args, env) == -1)
+		{
+			printf("minishell: %s: command not found\n", cmd_args[0]);
+			change_status(mini_env, 127);
+			exit (127);
+		}
 	}
 	if (execve(path, cmd_args, env) == -1)
 	{
