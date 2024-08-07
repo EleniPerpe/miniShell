@@ -135,7 +135,7 @@ int	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_envexpo exe_
 	if ((data->cmd_args[0] != NULL) && (!ft_strncmp(data->cmd_args[0], "exit", 4)))
 	{
 		modify_shlvl(exe_envexport.exe_env, '-');
-		ft_exit(data->cmd_args,exe_envexport.exe_env, exe_envexport.exe_export);
+		ft_exit(data->cmd_args);
 	}
 	cur_pro_pid[0] = fork();
 	if (cur_pro_pid[0] < 0)
