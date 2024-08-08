@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/07 19:13:11 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/08 17:05:34 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_envexpo exe_
 	cur_pro_pid[0] = fork();
 	if (cur_pro_pid[0] < 0)
 	{
-		// eroor_handle
+		// error_handle
 		exit(EXIT_FAILURE);
 	}
 	else if (cur_pro_pid[0]== 0)
