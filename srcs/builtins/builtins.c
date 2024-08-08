@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:08:51 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/07 18:23:35 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:11:10 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int execute_builtins(char **args, t_env **mini_env, t_env **new_export)
 	}
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "pwd", 3) == 0))
 	{
-		if (check_if_valid(args, mini_env, new_export, 3) == 1)
-			return (1);
+		if (check_if_valid(args, mini_env, new_export, 3) == 127)
+			return (127);
 		res = ft_pwd(mini_env);
 		return (res);
 	}
@@ -86,19 +86,22 @@ int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export)
 	{
 		if (check_if_valid(args, mini_env, new_export, 4) == 127)
 			return (127);
-        ft_exit(args, mini_env, new_export);
-        return 0;
+		res = ft_exit(args, mini_env, new_export);
+		return (res);
 	}
 	return (res);
 }
 
 int	check_if_valid(char **args, t_env **mini_env, t_env **new_export, int i)
 {
+	(void)mini_env;
+	(void)new_export;
 	if (args[0][i] != '\0')
 	{
 		printf("minishell: %s: command not found\n", args[0]);
-		free_env_list(mini_env);
-		free_env_list(new_export);
+		// free_env_list(mini_env);
+		// free_env_list(new_export); // we need them for the next command
+		change_status(mini_env, 127);
 		return (127);
 	}
 	return (0);
