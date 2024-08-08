@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/08 17:01:36 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/08 17:07:33 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ char	*create_export_line(char *line);
 void	quotes_after_redireciton(char *line, int j, t_line_data **data);
 void	quotes_command(char *line, int j, t_line_data **data);
 char	*check_for_available_old(char *old_pwd);
-char	*find_full_or_sub(char *args, char *old_pwd);
+// char	*find_full_or_sub(char *args, char *old_pwd);
 
 // utilities
 void	ft_free(char **paths_spleted, char *cmd, char *path);

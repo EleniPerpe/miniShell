@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:08:51 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/07 19:11:10 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/08 17:15:48 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export, t_input
 {
 	int res;
 
+	(void)free_input;
 	res = -2;
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "unset", 5) == 0))
 	{

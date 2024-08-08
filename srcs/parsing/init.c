@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:55:01 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/05 18:26:03 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:45:50 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ int	command_fill(char *line, int i, t_line_data **data)
 	int			j;
 
 	j = 0;
-	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
-	new_line_data->type = 0;
 	while ((line[i + j] != '\0') && (line[i + j] != '<' && line[i + j] != '>')
 		&& (line[i + j] != '|') && (line[i + j] != ' ') && (line[i + j] != '"')
 		&& (line[i + j] != '\''))
 		j++;
-	if (j != 0)
+	if (j > 0)
 	{
+		new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
+		new_line_data->type = 0;
 		tmp_command = (char *)ft_malloc(j + 1);
 		tmp_command = ft_memcpy(tmp_command, &line[i], j);
 		tmp_command[j] = '\0';

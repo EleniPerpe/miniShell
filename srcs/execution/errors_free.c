@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:24:48 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/07 18:34:36 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:31:19 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@ void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd)
 	t_input *tmp;
 	t_line_data *free_node;
 	t_line_data *tmp2;
-	int k = 0;
 
 	(void)pro_pid;
 	(void)pipe_fd;
 	free_input_node = *input_node;
 	while (free_input_node != NULL)
 	{
-		// printf("free: %s\n", free_input_node->part_line);
 		free_node = free_input_node->data_node;
 		while (free_node != NULL)
 		{
@@ -34,11 +32,10 @@ void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd)
 			free_node = free_node->next;
 			free(tmp2);
 		}
-		// while (free_input_node->cmd_args)
-		// {
-		// 	free(free_input_node->cmd_args[k]);
-		// 	k++;
-		// }
+		if (free_input_node->cmd_args != NULL)
+		{
+			free_split(free_input_node->cmd_args);
+		}
 		tmp = free_input_node;
 		free_input_node = free_input_node->next;
 		free(tmp);
