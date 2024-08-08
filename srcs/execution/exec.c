@@ -52,7 +52,7 @@ void	delete_node(t_line_data **data, t_line_data *tmp)
 char	*find_path(char *cmd, char **env)
 {
 	char	*paths;
-	char	**paths_spleted;
+	char	**path_splitted;
 	char	*path;
 	int		i;
 
@@ -64,15 +64,17 @@ char	*find_path(char *cmd, char **env)
 		if (*env)
 		{
 			paths = (*env + 5);
-			paths_spleted = ft_split(paths, ':');
+			path_splitted = ft_split(paths, ':');
 			cmd = ft_strjoin("/", cmd);
-			while (paths_spleted[i])
+			while (path_splitted[i])
 			{
-				path = ft_strjoin(paths_spleted[i++], cmd);
+				path = ft_strjoin(path_splitted[i++], cmd);
 				if (access(path, F_OK | X_OK | R_OK) == 0)
-					return (ft_free(paths_spleted, cmd, NULL),path);
+					return (ft_free(path_splitted, cmd, NULL), path);
+				if(path)
+					free(path);
 			}
-			ft_free(paths_spleted, cmd, path);
+			ft_free(path_splitted, cmd, NULL);
 		}
 	}
 	return (NULL);
@@ -125,6 +127,17 @@ char *handle_path_cmd(char **cmd_args)
 	return (NULL);
 }
 
+void	ft_execve(char *path, char **cmd_args, t_env **mini_env, char **env)
+{
+	if (execve(path, cmd_args, env) == -1)
+	{
+		free(path);
+		printf("minishell: %s: command not found\n", cmd_args[0]);
+		change_status(mini_env, 127);
+		exit (127);
+	}
+}
+
 int	exec_command(char **cmd_args, t_env **mini_env)
 {
 	char	*path;
@@ -138,19 +151,9 @@ int	exec_command(char **cmd_args, t_env **mini_env)
 			path = find_path(cmd_args[0], env);
 		if (path == NULL && cmd_args[0] != NULL)
 			path = ft_strjoin("./", cmd_args[0]);
-		if (execve(path, cmd_args, env) == -1)
-		{
-			printf("minishell: %s: command not found\n", cmd_args[0]);
-			change_status(mini_env, 127);
-			exit (127);
-		}
+		ft_execve(path, cmd_args, mini_env, env);
 	}
-	if (execve(path, cmd_args, env) == -1)
-	{
-		printf("minishell: %s: No such file or directory\n", path);
-		change_status(mini_env, 127);
-		exit (127);
-	}
+	ft_execve(path, cmd_args, mini_env, env);
 	return (0);
 }
 
