@@ -89,7 +89,7 @@ int	command_fill(char *line, int i, t_line_data **data)
 	return (i + j);
 }
 
-char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini_env, t_input *input_node)
+char	**ft_split_line(char *input_line,t_env **mini_env, t_input *input_node)
 {
 	int			i;
 	char		**cmd_args;
@@ -110,34 +110,23 @@ char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini
 				|| (input_line[i] == '\'' && input_line[i + 1] == '\''))
 				i = i + 2;
 			else
-			{
 				i = quote_token(input_line, i, &line_data, 0);
-				if (i == -1)
-					return (NULL);
-			}
 		}
 		else if (input_line[i] == '<' || input_line[i] == '>')
-		{
 			i = redirection_fill(input_line, i, &line_data);
-		}
 		else
-		{
 			i = command_fill(input_line, i, &line_data);
+		if (i == -1)
+		{
+			change_status(mini_env, 127);
+			return (NULL);
 		}
-		// to add later:
-		// else if (input_line[i] == '|')
-		// 		i = ft_split_pipe(input_line, line_data, i, '|', env);
 	}
 	cmd_args = command_merge(&line_data);
 	input_node->data_node = line_data;
-	free (input_line);
-	return (cmd_args);
-	// in this step we already have the linked list of nodes
-	// now we must add it to the commands list
-	// to handle the pipes so each part will be in command node and will be executed in a different process
-	// add_node_to_commands_list(line_data, &commands_list); // must know where to define the first commands_list .. here in this function or in start_prompt
-														// t_commands_list *commands_list; // definee the commands list
+	return (free (input_line), cmd_args);
 }
+
 char *check_expander_and_rest(char *input_line, t_env **mini_env, int i)
 {
 	if (!input_line)
@@ -147,6 +136,7 @@ char *check_expander_and_rest(char *input_line, t_env **mini_env, int i)
 		if (input_line[i] == ';' || input_line[i] == '\\')
 		{
 			printf("The program can not interpret '\\' or ';'\n");
+			change_status(mini_env, 127);
 			return (NULL);
 		}
 		i++;

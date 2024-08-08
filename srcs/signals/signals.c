@@ -43,23 +43,30 @@ void handle_sigint(int sig)
 void	sig_exit(int signal_recived)
 {
 	if (signal_recived == SIGQUIT)
-		write(1, "Quit: 3", 7);
+		write(1, "^\\Quit: 3", 9);
+	if (signal_recived == SIGINT)
+		write(1, "^C", 2);
 	write(1, "\n", 1);
 }
 
 void	setup_signal_init()
 {
 	struct sigaction sa_int;
+	struct	termios new_termios;
 
 	// Handle SIGINT (Ctrl-C)
 	sa_int.sa_handler = handle_sigint;
 	sigemptyset(&sa_int.sa_mask); // This is part of configuring a sigaction structure
 									// for setting up a signal handler.
+
 	sa_int.sa_flags = SA_RESTART; // Restart interrupted system calls
 	sigaction(SIGINT, &sa_int, NULL);
 	// handle SIGQUIT
 	signal(SIGQUIT, SIG_IGN); // if the signals was ctrl+/ just call the function SIG_IGN
 							// which is used usually to ignor signals
+	tcgetattr(STDIN_FILENO, &new_termios); // Get current terminal attributes
+	new_termios.c_lflag &= ~ECHOCTL;// Disable ECHOCTL to stop printing ^C
+	tcsetattr(STDIN_FILENO, TCSANOW, &new_termios); // Set the new attributes //TCSANOW: Changes are applied immediately
 }
 void	setup_signal_exe()
 {

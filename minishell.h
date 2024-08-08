@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/07 18:31:32 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 23:31:58 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <sys/wait.h>
+#include <termios.h>
 
 extern pid_t	child_pid;
 
@@ -57,11 +58,11 @@ typedef struct s_inout
 	int output;
 }	t_inout;
 
-typedef struct s_pwd
+typedef struct s_envexpo
 {
-	int temp_pwd;
-	int old_pwd;
-}	t_pwd;
+	t_env	**exe_env;
+	t_env	**exe_export;
+}	t_envexpo;
 
 typedef struct s_commands_list
 {
@@ -96,11 +97,12 @@ int		after_redirection_decision(char *line, int i, t_line_data **data);
 int		after_redi_len(char *line, int i);
 char	*expander_fill(char *line, int i, int j, t_env **mini_env);
 void	free_path(t_env *mini_env);
-int		init_linked_list(t_input **new_input_node,t_env **mini_env);
+int		init_linked_list(t_input **new_input_node,t_env **mini_env, int processes_num);
 int		split_pipes(char *whole_line, t_input **new_input_node);
 int		create_input_node(char *whole_line, int i,t_input **new_input_node, int k);
 void	add_path_to_list(t_env **mini_env, t_env *new_env);
 void	add_inputnode_tolist(t_input **data, t_input *new_line_data);
+int		after_heredoc_fill(char *line, int i, t_line_data **data);
 
 //execution:
 void	start_prompt(t_env **mini_env, t_env **new_export, t_inout inout_main);
@@ -110,7 +112,7 @@ int		exec_command(char **cmd_args, t_env **mini_env);
 int		process_execution(t_input *data, int **pipe_fd,t_env **mini_env, t_env **new_export);
 void	close_fds(int **pipe_fd);
 void	wait_for_children(int **pro_pid, int processes_num, t_env **mini_env);
-int		fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_env **mini_env, t_env **new_export);
+int		fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_envexpo exe_envexport);
 int		**pipes_init(int processes_num);
 int		**pid_init(int processes_num);
 int		handle_redirectors(t_input *data, t_env **mini_env);
@@ -136,7 +138,7 @@ int    ft_cd(t_env **mini_env, char **args, t_env **new_export, int i);
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args);
 int		check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
 void	create_old_pwd(t_env **mini_env, t_env **new_export);
-void	ft_exit(char **args, t_env **mini_env, t_env **new_export);
+int		ft_exit(char **args);
 void	change_other_envs(t_env **mini_env, t_env **new_export, char *line);
 char	*keep_old_pwd(t_env **mini_env);
 int		switch_directories(char *old_pwd);

@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 07:21:24 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/04 13:46:35 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:12:28 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	open_outfile(t_line_data *data, char c)
 int	open_infile(t_line_data *data, t_env **mini_env)
 {
 	int	fd;
-
 	fd = open(data->after_redirctor, O_RDONLY);
 	if (fd < 0)
 	{
@@ -47,6 +46,20 @@ int	open_infile(t_line_data *data, t_env **mini_env)
 	close(fd);
 	return (0);
 }
+int	check_next_node(t_line_data *next_node)
+{
+	if (!next_node)
+	{
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		return (1);
+	}
+	else if ( next_node->after_redirctor[0] == '\0')
+	{
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		return (1);
+	}
+	return (0);
+}
 
 int	handle_redirectors(t_input *data, t_env **mini_env)
 {
@@ -56,9 +69,11 @@ int	handle_redirectors(t_input *data, t_env **mini_env)
 	current_data = data->data_node;
 	while (current_data != NULL)
 	{
-
-		if (current_data->type == 5 || current_data->type == 4 || current_data->type == 3)
+		if (current_data->type == 5 || current_data->type == 4 || current_data->type == 3
+				|| current_data->type == 2)
 			next_data = current_data->next;
+		if (check_next_node(next_data) == 1)
+			return (1);
 		if (current_data->type == 5)
 		{
 			if (open_infile(next_data, mini_env) != 0)
@@ -68,6 +83,8 @@ int	handle_redirectors(t_input *data, t_env **mini_env)
 			open_outfile(next_data, 'T');
 		else if (current_data->type == 3)
 			open_outfile(next_data, 'A');
+		else if (current_data->type == 2)
+			open_infile(next_data, mini_env);
 		current_data = current_data->next;
 	}
 	return (0);

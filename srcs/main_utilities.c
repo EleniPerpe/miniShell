@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 22:23:47 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/07 14:12:15 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:14:09 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,37 @@ void	set_new_lvl(t_env **mini_env,int shlvl)
 	free(ch_shlvl);
 }
 
+int	handle_oldlvl(char *ch_shlvl, int shlvl)
+{
+	int	i;
 
-void	modify_shlvl(t_env **mini_env, char c)
+	i = 0;
+	while (ch_shlvl[i])
+	{
+		if (ch_shlvl[i] == '-')
+			i++;
+		if (!ft_isdigit(ch_shlvl[i]))
+		{
+			shlvl = 1;
+			break ;
+		}
+		i++;
+	}
+	if (ch_shlvl[i] == '\0')
+	{
+		if(shlvl < 0)
+			shlvl = 0;
+		else
+			shlvl++;
+	}
+	return shlvl;
+}
+
+int 	modify_shlvl(t_env **mini_env, char c)
 {
 	int		shlvl;
 	char	*ch_shlvl;
 	t_env	*tmp;
-	(void)mini_env;
-	tmp = NULL;
 
 	tmp = *mini_env;
 	while (tmp != NULL)
@@ -75,17 +98,14 @@ void	modify_shlvl(t_env **mini_env, char c)
 	ch_shlvl = get_lvl(tmp);
 	shlvl = ft_atoi(ch_shlvl);
 	if (c == '+')
-		shlvl++;
+		shlvl = handle_oldlvl(ch_shlvl, shlvl);
 	else if (c == '-')
 		shlvl--;
 	free(ch_shlvl);
 	set_new_lvl(mini_env, shlvl);
+	return (shlvl);
 }
-void	dup_inout(t_inout *inout_main)
-{
-	inout_main->input = dup(STDIN_FILENO);
-	inout_main->output = dup(STDOUT_FILENO);
-}
+
 void	reset_io(t_inout inout_main)
 {
 	dup2(inout_main.input, STDIN_FILENO);
