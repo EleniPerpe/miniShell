@@ -57,7 +57,7 @@ int check_pipe_syntax(const char *str)
 	prev_was_pipe = false;
 	len = strlen(str);
 	if (len == 0)
-		return (-1);
+		return (0);
 	while (i < len)
 	{
 		if (str[i] == '|')
@@ -110,6 +110,7 @@ int	init_linked_list(t_input **new_input_node,t_env **mini_env, int processes_nu
 {
 	t_input	*input_node;
 	char	*input_line;
+	(void)processes_num;
 
 	input_node = *new_input_node;
 	while (input_node != NULL)
@@ -118,8 +119,6 @@ int	init_linked_list(t_input **new_input_node,t_env **mini_env, int processes_nu
 		if((input_line == NULL) || !(is_empty(input_line)))
 		{
 			input_node = NULL;
-			if (processes_num > 1)
-				printf("minishell: syntax error near unexpected token `|'\n");
 			return (1);
 		}
 		if (input_line != NULL && (ft_strcmp(input_line, "") != 0))

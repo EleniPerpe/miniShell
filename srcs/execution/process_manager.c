@@ -60,7 +60,8 @@ void	handle_one_builtin(t_input **new_input_node,t_env **mini_env,t_env **new_ex
 
 	current_node = *new_input_node;
 	handle_redirectors(current_node, mini_env);
-	exit_buildin = execute_builtins(current_node->cmd_args, mini_env, new_export);
+	exit_buildin = execute_builtins(current_node->cmd_args, mini_env, new_export, new_input_node);
+	free_all(new_input_node, NULL, NULL);
 	change_status(mini_env, exit_buildin);
 }
 
@@ -85,6 +86,7 @@ void	start_prompt(t_env **mini_env, t_env **new_export, t_inout inout_main)
 				handle_one_builtin(&new_input_node, mini_env, new_export);
 			else if (check_builtin != 127)
 				execute_with_pipes(&new_input_node,processes_num,mini_env,new_export);
+			free_all(&new_input_node, NULL, NULL);
 			new_input_node = NULL;
 		}
 		else
@@ -109,7 +111,7 @@ int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **n
 	close_fds(pipe_fd);
 	if (check_for_builtins(data->cmd_args, mini_env, new_export) != -2)
 	{
-		exit_buildin = execute_builtins(data->cmd_args, mini_env, new_export);
+		exit_buildin = execute_builtins(data->cmd_args, mini_env, new_export, &data);
 		change_status(mini_env, exit_buildin);
 		exit (exit_buildin);
 	}
@@ -133,7 +135,7 @@ int	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_envexpo exe_
 	if ((data->cmd_args[0] != NULL) && (!ft_strncmp(data->cmd_args[0], "exit", 4)))
 	{
 		modify_shlvl(exe_envexport.exe_env, '-');
-		ft_exit(data->cmd_args);
+		ft_exit(data->cmd_args, &new_input_node);
 	}
 	cur_pro_pid[0] = fork();
 	if (cur_pro_pid[0] < 0)

@@ -12,10 +12,10 @@
 
 #include "../../minishell.h"
 
-int	execute_builtins2(char **args, t_env **mini_env, t_env **new_export);
-int execute_builtins3(char **args, t_env **mini_env, t_env **new_export);
+int	execute_builtins2(char **args, t_env **mini_env, t_env **new_export, t_input **free_input);
+int execute_builtins3(char **args, t_env **mini_env, t_env **new_export, t_input **free_input);
 
-int execute_builtins(char **args, t_env **mini_env, t_env **new_export)
+int execute_builtins(char **args, t_env **mini_env, t_env **new_export, t_input **free_input)
 {
 	int res;
 
@@ -35,11 +35,11 @@ int execute_builtins(char **args, t_env **mini_env, t_env **new_export)
 		return (res);
 	}
 	if (res == -2)
-		res = execute_builtins2(args, mini_env, new_export);
+		res = execute_builtins2(args, mini_env, new_export, free_input);
 	return (res);
 }
 
-int	execute_builtins2(char **args, t_env **mini_env, t_env **new_export)
+int	execute_builtins2(char **args, t_env **mini_env, t_env **new_export, t_input **free_input)
 {
 	int res;
 
@@ -59,11 +59,11 @@ int	execute_builtins2(char **args, t_env **mini_env, t_env **new_export)
 		return (res);
 	}
 	if (res == -2)
-		res = execute_builtins3(args, mini_env, new_export);
+		res = execute_builtins3(args, mini_env, new_export, free_input);
 	return (res);
 }
 
-int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export)
+int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export, t_input **free_input)
 {
 	int res;
 
@@ -86,7 +86,7 @@ int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export)
 	{
 		if (check_if_valid(args, mini_env, new_export, 4) == 127)
 			return (127);
-		res = ft_exit(args);
+		res = ft_exit(args, free_input);
 		return (res);
 	}
 	return (res);

@@ -21,9 +21,12 @@ void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd)
 	t_line_data *tmp2;
 	int k = 0;
 
+	(void)pro_pid;
+	(void)pipe_fd;
 	free_input_node = *input_node;
 	while (free_input_node != NULL)
 	{
+		// printf("free: %s\n", free_input_node->part_line);
 		free_node = free_input_node->data_node;
 		while (free_node != NULL)
 		{
@@ -31,30 +34,35 @@ void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd)
 			free_node = free_node->next;
 			free(tmp2);
 		}
+		// while (free_input_node->cmd_args)
+		// {
+		// 	free(free_input_node->cmd_args[k]);
+		// 	k++;
+		// }
 		tmp = free_input_node;
 		free_input_node = free_input_node->next;
 		free(tmp);
 	}
 	// if (input_node != NULL)
 	// 	free(input_node);
-	while (pro_pid[k] != NULL)
-	{
-		free(pro_pid[k]);
-		k++;
-	}
-	if (pro_pid != NULL)
-		free(pro_pid);
-	k = 0;
-	if(pipe_fd)
-	{
-		while (pipe_fd[k] != NULL)
-		{
-			free(pipe_fd[k]);
-			k++;
-		}
-		if (pipe_fd != NULL)
-			free(pipe_fd);
-	}
+	// while (pro_pid[k] != NULL)
+	// {
+	// 	free(pro_pid[k]);
+	// 	k++;
+	// }
+	// if (pro_pid != NULL)
+	// 	free(pro_pid);
+	// k = 0;
+	// if(pipe_fd)
+	// {
+	// 	while (pipe_fd[k] != NULL)
+	// 	{
+	// 		free(pipe_fd[k]);
+	// 		k++;
+	// 	}
+	// 	if (pipe_fd != NULL)
+	// 		free(pipe_fd);
+	// }
 }
 
 void free_env_list(t_env **env)
