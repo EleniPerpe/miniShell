@@ -108,7 +108,6 @@ void	check_for_new_pwd(t_env **mini_env, t_env **new_export,
 	int exit_code, char *temp_pwd)
 {
 	char *new_pwd;
-	
 	if (exit_code == 0 && temp_pwd[0] != '/')
 	{
 		new_pwd = join_the_pwd(mini_env, new_export, temp_pwd);
