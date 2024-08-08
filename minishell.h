@@ -135,11 +135,11 @@ char	*ft_strjoin_export(char const *s1, char const *s2, char c);
 int		ft_unset(char **args, t_env **mini_env, t_env **new_export);
 void	node_remove(t_env **node_remove, char *line, int i);
 char	*check_expander_and_rest(char *input_line, t_env **mini_env, int i);
-int    ft_cd(t_env **mini_env, char **args, t_env **new_export, int i);
+int		ft_cd(t_env **mini_env, char **args, t_env **new_export, int i);
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args);
 int		check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
 void	create_old_pwd(t_env **mini_env, t_env **new_export);
-int		ft_exit(char **args, t_env **mini_env, t_env **new_export);
+int		ft_exit(char **args, t_env **mini_env, t_env **new_export, t_input **free_input);
 void	change_other_envs(t_env **mini_env, t_env **new_export, char *line);
 char	*keep_old_pwd(t_env **mini_env);
 int		switch_directories(char *old_pwd);
@@ -153,7 +153,7 @@ char	*find_full_or_sub(char *args, char *old_pwd);
 // utilities
 void	ft_free(char **paths_spleted, char *cmd, char *path);
 void	free_path(t_env *mini_env);
-void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd);
+void	free_nodes(t_input **input_node);
 char	**minienv_to_env(t_env **mini_env);
 void	add_status(t_env **mini_env);
 void	change_status(t_env **mini_env, int status);
@@ -162,7 +162,8 @@ void	free_env_list(t_env **env);
 void	dup_inout(t_inout *inout_main);
 int		is_empty(char *str);
 void	free_split(char **args);
-void	free_nodes(t_input **input_node);
+// void	free_nodes(t_input **input_node);
+void	free_pid_pipe(int **pro_pid, int **pipe_fd);
 
 //signals
 void	setup_signal_init();
