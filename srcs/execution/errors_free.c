@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd)
+void	free_nodes(t_input **input_node)
 {
 
 	t_input *free_input_node;
@@ -20,9 +20,9 @@ void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd)
 	t_line_data *free_node;
 	t_line_data *tmp2;
 
-	(void)pro_pid;
-	(void)pipe_fd;
-	free_input_node = *input_node;
+	free_input_node = NULL;
+	if (input_node != NULL)
+		free_input_node = *input_node;
 	while (free_input_node != NULL)
 	{
 		free_node = free_input_node->data_node;
@@ -32,34 +32,12 @@ void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd)
 			free_node = free_node->next;
 			free(tmp2);
 		}
-		if (free_input_node->cmd_args != NULL)
-		{
+		if (free_input_node->cmd_args)
 			free_split(free_input_node->cmd_args);
-		}
 		tmp = free_input_node;
 		free_input_node = free_input_node->next;
 		free(tmp);
 	}
-	// if (input_node != NULL)
-	// 	free(input_node);
-	// while (pro_pid[k] != NULL)
-	// {
-	// 	free(pro_pid[k]);
-	// 	k++;
-	// }
-	// if (pro_pid != NULL)
-	// 	free(pro_pid);
-	// k = 0;
-	// if(pipe_fd)
-	// {
-	// 	while (pipe_fd[k] != NULL)
-	// 	{
-	// 		free(pipe_fd[k]);
-	// 		k++;
-	// 	}
-	// 	if (pipe_fd != NULL)
-	// 		free(pipe_fd);
-	// }
 }
 
 void free_env_list(t_env **env)
@@ -92,28 +70,52 @@ void free_split(char **args)
 	// args = NULL;
 }
 
-void free_nodes(t_input **input_node)
-{
-	t_input *free_input_node;
-	t_input *tmp;
-	t_line_data *free_node;
-	t_line_data *tmp2;
+// void free_nodes(t_input **input_node)
+// {
+// 	t_input *free_input_node;
+// 	t_input *tmp;
+// 	t_line_data *free_node;
+// 	t_line_data *tmp2;
 
-	if (input_node != NULL)
+// 	if (input_node != NULL)
+// 	{
+// 		free_input_node = *input_node;
+// 		while (free_input_node != NULL)
+// 		{
+// 			free_node = free_input_node->data_node;
+// 			while (free_node != NULL)
+// 			{
+// 				tmp2 = free_node;
+// 				free_node = free_node->next;
+// 				free(tmp2);
+// 			}
+// 			tmp = free_input_node;
+// 			free_input_node = free_input_node->next;
+// 			free(tmp);
+// 		}
+// 	}
+// }
+void	free_pid_pipe(int **pro_pid, int **pipe_fd)
+{
+	int	k;
+
+	k = 0;
+	if (pro_pid)
 	{
-		free_input_node = *input_node;
-		while (free_input_node != NULL)
+		while (pro_pid[k] != NULL)
+			free(pro_pid[k++]);
+		if (pro_pid != NULL)
+			free(pro_pid);
+	}
+	k = 0;
+	if (pipe_fd)
+	{
+		if(pipe_fd)
 		{
-			free_node = free_input_node->data_node;
-			while (free_node != NULL)
-			{
-				tmp2 = free_node;
-				free_node = free_node->next;
-				free(tmp2);
-			}
-			tmp = free_input_node;
-			free_input_node = free_input_node->next;
-			free(tmp);
+			while (pipe_fd[k] != NULL)
+				free(pipe_fd[k++]);
+			if (pipe_fd != NULL)
+				free(pipe_fd);
 		}
 	}
 }
