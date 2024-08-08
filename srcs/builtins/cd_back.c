@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:11:31 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/07 16:31:47 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/08 17:53:58 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char *check_for_available_old(char *old_pwd)
 		return (temp_pwd);
 	}
 }
+
 char *join_the_pwd(t_env **mini_env, t_env **new_export, char *temp_pwd)
 {
 	t_env *temp;

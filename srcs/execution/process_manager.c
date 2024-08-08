@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:27:07 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/08 17:05:34 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:32:45 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	handle_one_builtin(t_input **new_input_node,t_env **mini_env,t_env **new_ex
 	current_node = *new_input_node;
 	handle_redirectors(current_node, mini_env);
 	exit_buildin = execute_builtins(current_node->cmd_args, mini_env, new_export, new_input_node);
-	free_all(new_input_node, NULL, NULL);
+	// free_all(new_input_node, NULL, NULL);
 	change_status(mini_env, exit_buildin);
 }
 

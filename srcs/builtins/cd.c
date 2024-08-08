@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:23:28 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/07 19:18:11 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:25:36 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ int    ft_cd(t_env **mini_env, char **args, t_env **new_export, int i)
 	if (args[1] != NULL)
 	{
 		cd_args = ft_split(args[1], '/');
-		while (*cd_args != NULL)
+		while (cd_args[i] != NULL)
 		{
-			temp_pwd = handle_cd_args(mini_env, cd_args[i], old_pwd, &exit_code);
+			temp_pwd = handle_cd_args(mini_env, cd_args[i++], old_pwd, &exit_code);
 			if (exit_code == 0 && temp_pwd != NULL)
 				check_for_new_pwd(mini_env, new_export, exit_code, temp_pwd);
-			cd_args++;
 		}
 		free_split(cd_args);
 	}
@@ -49,7 +48,9 @@ int    ft_cd(t_env **mini_env, char **args, t_env **new_export, int i)
 			check_for_new_pwd(mini_env, new_export, exit_code, temp_pwd);
 		return (free(old_pwd), exit_code);
 	}
-    return (free(old_pwd), free(temp_pwd), exit_code);
+	if (old_pwd)
+		free(old_pwd);
+    return (exit_code);
 }
 
 void initialize_cd_variables(t_env **mini_env, t_env **new_export, char **old_pwd, int *exit_code)
@@ -118,5 +119,6 @@ void	check_for_new_pwd(t_env **mini_env, t_env **new_export,
     	new_pwd = ft_strjoin("PWD=", temp_pwd);
 		change_other_envs(mini_env, new_export, new_pwd);
 		free(new_pwd);
+		free(temp_pwd);
 	}
 }
