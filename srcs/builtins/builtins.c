@@ -87,7 +87,7 @@ int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export, t_input
 	{
 		if (check_if_valid(args, mini_env, new_export, 4) == 127)
 			return (127);
-		res = ft_exit(args, mini_env, new_export);
+		res = ft_exit(args, mini_env, new_export, free_input);
 		return (res);
 	}
 	return (res);
@@ -100,8 +100,6 @@ int	check_if_valid(char **args, t_env **mini_env, t_env **new_export, int i)
 	if (args[0][i] != '\0')
 	{
 		printf("minishell: %s: command not found\n", args[0]);
-		// free_env_list(mini_env);
-		// free_env_list(new_export); // we need them for the next command
 		change_status(mini_env, 127);
 		return (127);
 	}

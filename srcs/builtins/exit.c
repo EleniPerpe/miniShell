@@ -16,10 +16,11 @@
 void	ft_exit_now(int i, t_env **new_env, t_env **new_export);
 void	exit_conditions(char **args, int i, t_env **mini_env, t_env **new_export);
 
-int	ft_exit(char **args, t_env **mini_env, t_env **new_export)
+int	ft_exit(char **args, t_env **mini_env, t_env **new_export, t_input **free_input)
 {
 	int	i;
 
+	(void)free_input;
 	i = 0;
 	while (args[i])
 		i++;
