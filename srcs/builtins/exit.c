@@ -13,10 +13,10 @@
 #include "../../minishell.h"
 // #include <termios.h>
 
-void	ft_exit_now(int i);
-void	exit_conditions(char **args, int i);
+void	ft_exit_now(int i, t_input **free_input);
+void	exit_conditions(char **args, int i, t_input **free_input);
 
-int	ft_exit(char **args)
+int	ft_exit(char **args, t_input **free_input)
 {
 	int	i;
 
@@ -31,30 +31,34 @@ int	ft_exit(char **args)
 		return (1);
 	}
 	else
-		exit_conditions(args, i);
+		exit_conditions(args, i, free_input);
 	return (0);
 }
 
-void exit_conditions(char **args, int i)
+void exit_conditions(char **args, int i, t_input **free_input)
 {
 	if (i == 1)
-			ft_exit_now(0);
+			ft_exit_now(0, free_input);
 	i = 0;
 	while (args[1][i] != '\0')
 	{
 		if (!isdigit(args[1][i]) && !(i == 0 && (args[1][i] == '-' || args[1][i] == '+')))
 		{
 			printf("exit: %s: numeric argument required\n", args[1]);
-			ft_exit_now (255);
+			ft_exit_now (255, free_input);
 		}
 		i++;
 	}
 	i = ft_atoi(args[1]);
-	ft_exit_now(i);
+	ft_exit_now(i, free_input);
 }
 
-void	ft_exit_now(int i)
+void	ft_exit_now(int i, t_input **free_input)
 {
+	t_input *free_node;
+
+	free_node = *free_input;
 	printf("exit\n");
+	free_all(&free_node, NULL, NULL);
 	exit(i % 256);
 }
