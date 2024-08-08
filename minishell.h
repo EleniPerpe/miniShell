@@ -24,6 +24,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 #include <termios.h>
+#include <stdbool.h>
 
 extern pid_t	child_pid;
 
@@ -121,7 +122,7 @@ void	open_outfile(t_line_data *data, char c);
 
 //builtins
 int		check_for_builtins(char **args, t_env **mini_env, t_env **new_export);
-int		execute_builtins(char **args, t_env **mini_env, t_env **new_export);
+int		execute_builtins(char **args, t_env **mini_env, t_env **new_export, t_input **free_input);
 int		check_if_valid(char **args, t_env **mini_env, t_env **new_export, int i);
 int		ft_echo(char **args);
 int		ft_env(t_env **mini_env, char **args);
@@ -138,7 +139,7 @@ int    ft_cd(t_env **mini_env, char **args, t_env **new_export, int i);
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args);
 int		check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
 void	create_old_pwd(t_env **mini_env, t_env **new_export);
-int		ft_exit(char **args);
+int		ft_exit(char **args, t_env **mini_env, t_env **new_export);
 void	change_other_envs(t_env **mini_env, t_env **new_export, char *line);
 char	*keep_old_pwd(t_env **mini_env);
 int		switch_directories(char *old_pwd);
@@ -156,7 +157,7 @@ void	free_all(t_input **input_node, int **pro_pid, int **pipe_fd);
 char	**minienv_to_env(t_env **mini_env);
 void	add_status(t_env **mini_env);
 void	change_status(t_env **mini_env, int status);
-void	modify_shlvl(t_env **mini_env, char c);
+int		modify_shlvl(t_env **mini_env, char c);
 void	free_env_list(t_env **env);
 void	dup_inout(t_inout *inout_main);
 int		is_empty(char *str);
