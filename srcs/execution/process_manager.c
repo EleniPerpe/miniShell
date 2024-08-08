@@ -60,7 +60,8 @@ void	handle_one_builtin(t_input **new_input_node,t_env **mini_env,t_env **new_ex
 
 	current_node = *new_input_node;
 	handle_redirectors(current_node, mini_env);
-	exit_buildin = execute_builtins(current_node->cmd_args, mini_env, new_export);
+	exit_buildin = execute_builtins(current_node->cmd_args, mini_env, new_export, new_input_node);
+	free_all(new_input_node, NULL, NULL);
 	change_status(mini_env, exit_buildin);
 }
 
@@ -85,6 +86,7 @@ void	start_prompt(t_env **mini_env, t_env **new_export, t_inout inout_main)
 				handle_one_builtin(&new_input_node, mini_env, new_export);
 			else if (check_builtin != 127)
 				execute_with_pipes(&new_input_node,processes_num,mini_env,new_export);
+			free_all(&new_input_node, NULL, NULL);
 			new_input_node = NULL;
 		}
 		else
@@ -97,7 +99,6 @@ int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **n
 {
 	int processes_num;
 	t_input *tmp;
-	int		check_builtin;
 	int		exit_buildin;
 
 	tmp = data;
@@ -108,14 +109,13 @@ int	process_execution(t_input *data, int **pipe_fd , t_env **mini_env, t_env **n
 			data->cmd_args[0] == NULL)
 		return (1);
 	close_fds(pipe_fd);
-	check_builtin = check_for_builtins(data->cmd_args, mini_env, new_export);
-	if (check_builtin != -2)
+	if (check_for_builtins(data->cmd_args, mini_env, new_export) != -2)
 	{
-		exit_buildin = execute_builtins(data->cmd_args, mini_env, new_export);
+		exit_buildin = execute_builtins(data->cmd_args, mini_env, new_export, &data);
 		change_status(mini_env, exit_buildin);
 		exit (exit_buildin);
 	}
-	else if (check_builtin == -2)
+	else
 	{
 		if (exec_command(data->cmd_args, mini_env) != 0)
 			return (1);
