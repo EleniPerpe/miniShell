@@ -133,6 +133,13 @@
 # <"zi" wc | cat | cat >"ro" seg fault DONE
 
 # <<"af | cat >pm Eleni DONE
+
+# |   |
+# |
+# ls|
+# |ls
+# need to print "minishell: syntax error near unexpected token `|'"
+
 								STILL:
 
 create a function to free the envs.

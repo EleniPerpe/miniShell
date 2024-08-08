@@ -89,6 +89,16 @@ int	command_fill(char *line, int i, t_line_data **data)
 	return (i + j);
 }
 
+int	qoute_fill(char *line, int i, t_line_data **data)
+{
+	if ((line[i] == '"' && line[i + 1] == '"')
+		|| (line[i] == '\'' && line[i + 1] == '\''))
+		i = i + 2;
+	else
+		i = quote_token(line, i, data, 0);
+	return (i);
+}
+
 char	**ft_split_line(char *input_line,t_env **mini_env, t_input *input_node)
 {
 	int			i;
@@ -105,22 +115,13 @@ char	**ft_split_line(char *input_line,t_env **mini_env, t_input *input_node)
 		while (input_line[i] == ' ')
 			i++;
 		if (input_line[i] == '"' || input_line[i] == '\'')
-		{
-			if ((input_line[i] == '"' && input_line[i + 1] == '"')
-				|| (input_line[i] == '\'' && input_line[i + 1] == '\''))
-				i = i + 2;
-			else
-				i = quote_token(input_line, i, &line_data, 0);
-		}
+			i = qoute_fill(input_line, i, &line_data);
 		else if (input_line[i] == '<' || input_line[i] == '>')
 			i = redirection_fill(input_line, i, &line_data);
 		else
 			i = command_fill(input_line, i, &line_data);
 		if (i == -1)
-		{
-			change_status(mini_env, 127);
-			return (NULL);
-		}
+			return (change_status(mini_env, 127), NULL);
 	}
 	cmd_args = command_merge(&line_data);
 	input_node->data_node = line_data;

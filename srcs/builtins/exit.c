@@ -54,7 +54,7 @@ void exit_conditions(char **args, int i, t_env **mini_env, t_env **new_export)
 void	ft_exit_now(int i, t_env **mini_env, t_env **new_export)
 {
 	int shlvl;
-	
+
 	printf("exit\n");
 	shlvl = modify_shlvl(mini_env, '-');
 	if (shlvl == 1)
