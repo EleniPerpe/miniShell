@@ -28,3 +28,19 @@ int	ft_pwd(t_env **mini_env)
 	}
 	return (0);
 }
+
+char	*find_current_pwd(t_env **mini_env)
+{
+	t_env	*temp;
+	char	*res;
+
+	temp = *mini_env;
+	res = NULL;
+	while (temp != NULL)
+	{
+		if (ft_strncmp("PWD", temp->line, 3) == 0)
+			res = ft_strdup(temp->line + 4);
+		temp = temp->next;
+	}
+	return (res);
+}

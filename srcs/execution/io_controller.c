@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   standard_IO.c                                      :+:      :+:    :+:   */
+/*   io_controller.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/28 07:21:24 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/07 19:12:28 by eperperi         ###   ########.fr       */
+/*   Created: 2024/08/09 00:28:47 by rshatra           #+#    #+#             */
+/*   Updated: 2024/08/09 00:28:48 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,24 @@ void	open_outfile(t_line_data *data, char c)
 	}
 }
 
-int	open_infile(t_line_data *data, t_env **mini_env)
+int	open_infile(t_line_data *data)
 {
 	int	fd;
+
 	fd = open(data->after_redirctor, O_RDONLY);
 	if (fd < 0)
 	{
-		write(2,"minishell: ", 11);
-		write(2,data->after_redirctor,ft_strlen(data->after_redirctor));
-		write (2 ,": No such file or directory\n", ft_strlen(": No such file or directory\n"));
-		change_status(mini_env, 1);
+		write(2, "minishell: ", 11);
+		write(2, data->after_redirctor, ft_strlen(data->after_redirctor));
+		write (2, ": No such file or directory\n",
+			ft_strlen(": No such file or directory\n"));
 		return (1);
 	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 	return (0);
 }
+
 int	check_next_node(t_line_data *next_node)
 {
 	if (!next_node)
@@ -53,7 +55,7 @@ int	check_next_node(t_line_data *next_node)
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		return (1);
 	}
-	else if ( next_node->after_redirctor[0] == '\0')
+	else if (next_node->after_redirctor[0] == '\0')
 	{
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		return (1);
@@ -61,7 +63,7 @@ int	check_next_node(t_line_data *next_node)
 	return (0);
 }
 
-int	handle_redirectors(t_input *data, t_env **mini_env)
+int	handle_redirectors(t_input *data)
 {
 	t_line_data	*current_data;
 	t_line_data	*next_data;
@@ -69,14 +71,14 @@ int	handle_redirectors(t_input *data, t_env **mini_env)
 	current_data = data->data_node;
 	while (current_data != NULL)
 	{
-		if (current_data->type == 5 || current_data->type == 4 || current_data->type == 3
-				|| current_data->type == 2)
+		if (current_data->type == 5 || current_data->type == 4
+			|| current_data->type == 3 || current_data->type == 2)
 			next_data = current_data->next;
 		if (check_next_node(next_data) == 1)
 			return (1);
 		if (current_data->type == 5)
 		{
-			if (open_infile(next_data, mini_env) != 0)
+			if (open_infile(next_data) != 0)
 				return (1);
 		}
 		else if (current_data->type == 4)
@@ -84,12 +86,13 @@ int	handle_redirectors(t_input *data, t_env **mini_env)
 		else if (current_data->type == 3)
 			open_outfile(next_data, 'A');
 		else if (current_data->type == 2)
-			open_infile(next_data, mini_env);
+			open_infile(next_data);
 		current_data = current_data->next;
 	}
 	return (0);
 }
-int	standard_io(t_input *data, int **pipe_fd, int i, int processes_num, t_env **mini_env)
+
+int	standard_io(t_input *data, int **pipe_fd, int i, int processes_num)
 {
 	if (i == 0 && pipe_fd[i] != NULL)
 	{
@@ -105,14 +108,14 @@ int	standard_io(t_input *data, int **pipe_fd, int i, int processes_num, t_env **
 	}
 	else if (i > 0 && i < (processes_num - 1))
 	{
-			close(pipe_fd[i - 1][1]);
-			dup2(pipe_fd[i - 1][0], STDIN_FILENO);
-			close(pipe_fd[i - 1][0]);
-			close(pipe_fd[i][0]);
-			dup2(pipe_fd[i][1], STDOUT_FILENO);
-			close(pipe_fd[i][1]);
+		close(pipe_fd[i - 1][1]);
+		dup2(pipe_fd[i - 1][0], STDIN_FILENO);
+		close(pipe_fd[i - 1][0]);
+		close(pipe_fd[i][0]);
+		dup2(pipe_fd[i][1], STDOUT_FILENO);
+		close(pipe_fd[i][1]);
 	}
-	if (handle_redirectors(data, mini_env) != 0)
+	if (handle_redirectors(data) != 0)
 		return (1);
 	return (0);
 }
