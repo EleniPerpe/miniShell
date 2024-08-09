@@ -12,12 +12,15 @@
 
 #include "../../minishell.h"
 
-int	execute_builtins2(char **args, t_env **mini_env, t_env **new_export, t_input **free_input);
-int execute_builtins3(char **args, t_env **mini_env, t_env **new_export, t_input **free_input);
+int	execute_builtins2(char **args, t_env **mini_env, t_env **new_export,
+		t_input **free_input);
+int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export,
+		t_input **free_input);
 
-int execute_builtins(char **args, t_env **mini_env, t_env **new_export, t_input **free_input)
+int	execute_builtins(char **args, t_env **mini_env, t_env **new_export,
+		t_input **free_input)
 {
-	int res;
+	int	res;
 
 	res = -2;
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "echo", 4) == 0))
@@ -39,9 +42,10 @@ int execute_builtins(char **args, t_env **mini_env, t_env **new_export, t_input 
 	return (res);
 }
 
-int	execute_builtins2(char **args, t_env **mini_env, t_env **new_export, t_input **free_input)
+int	execute_builtins2(char **args, t_env **mini_env, t_env **new_export,
+		t_input **free_input)
 {
-	int res;
+	int	res;
 
 	res = -2;
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "env", 3) == 0))
@@ -63,11 +67,11 @@ int	execute_builtins2(char **args, t_env **mini_env, t_env **new_export, t_input
 	return (res);
 }
 
-int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export, t_input **free_input)
+int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export,
+		t_input **free_input)
 {
-	int res;
+	int	res;
 
-	(void)free_input;
 	res = -2;
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "unset", 5) == 0))
 	{

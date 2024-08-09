@@ -42,3 +42,13 @@ void	quotes_command(char *line, int j, t_line_data **data)
 	new_line_data->after_redirctor = NULL;
 	add_node_to_list(data, new_line_data);
 }
+
+int	qoute_fill(char *line, int i, t_line_data **data)
+{
+	if ((line[i] == '"' && line[i + 1] == '"')
+		|| (line[i] == '\'' && line[i + 1] == '\''))
+		i = i + 2;
+	else
+		i = quote_token(line, i, data, 0);
+	return (i);
+}

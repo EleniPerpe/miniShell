@@ -140,24 +140,14 @@
 # |ls
 # need to print "minishell: syntax error near unexpected token `|'"
 
+# create a function to free the envs.
+# have to fix the UNSET
+# Delete the fking file standard_IO.c
+# I have a function to clean the (char **) : void free_split(char **args)
+#
+# MEMORY LEAKS
 								STILL:
 
-create a function to free the envs.
 
-have to fix the UNSET
+cd_back.c line 49 : printf?
 
-
-Delete the fking file standard_IO.c
-
-
-
-
-
-MEMORY LEAKS
-
-I have a function to clean the (char **) : void free_split(char **args)
-
-in merge free command I don't understand what you are doing :P
-
-
-command not found doens't return 127 :/
