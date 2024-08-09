@@ -32,9 +32,11 @@ SIGNALS_DIR = ./srcs/signals/
 
 SRC = $(SRC_DIR)main.c \
       $(SRC_DIR)main_utilities.c \
-      $(EXECUTION_DIR)standard_io.c \
+      $(EXECUTION_DIR)io_controller.c \
       $(EXECUTION_DIR)exec.c \
+      $(EXECUTION_DIR)exec_utilities.c \
       $(EXECUTION_DIR)process_manager.c \
+      $(EXECUTION_DIR)commands_handler.c \
       $(PARSING_DIR)heredoc_handle.c \
       $(PARSING_DIR)init.c \
       $(PARSING_DIR)quotes.c \

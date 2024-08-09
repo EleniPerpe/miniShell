@@ -23,10 +23,8 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <sys/wait.h>
-#include <termios.h>
-#include <stdbool.h>
-
-extern pid_t	child_pid;
+# include <termios.h>
+# include <stdbool.h>
 
 // type:
 // command = 0;
@@ -55,8 +53,8 @@ typedef struct s_env
 
 typedef struct s_inout
 {
-	int input;
-	int output;
+	int	input;
+	int	output;
 }	t_inout;
 
 typedef struct s_envexpo
@@ -81,7 +79,8 @@ typedef struct s_input
 }	t_input;
 
 // parsing:
-char	**ft_split_line(char *input_line,/* t_line_data **line_data,*/ t_env **mini_env, t_input *input_node);
+char	**ft_split_line(char *input_line, t_env **mini_env,
+			t_input *input_node);
 int		redirection_fill(char *line, int i, t_line_data **data);
 int		after_redirection_fill(char *line, int i, t_line_data **data);
 void	init_nodes_redirctor(t_line_data **data, int type);
@@ -98,32 +97,39 @@ int		after_redirection_decision(char *line, int i, t_line_data **data);
 int		after_redi_len(char *line, int i);
 char	*expander_fill(char *line, int i, int j, t_env **mini_env);
 void	free_path(t_env *mini_env);
-int		init_linked_list(t_input **new_input_node,t_env **mini_env, int processes_num);
+int		init_linked_list(t_input **new_input_node, t_env **mini_env);
 int		split_pipes(char *whole_line, t_input **new_input_node);
-int		create_input_node(char *whole_line, int i,t_input **new_input_node, int k);
+int		create_input_node(char *whole_line, int i, t_input **new_input_node,
+			int k);
 void	add_path_to_list(t_env **mini_env, t_env *new_env);
 void	add_inputnode_tolist(t_input **data, t_input *new_line_data);
 int		after_heredoc_fill(char *line, int i, t_line_data **data);
+int		qoute_fill(char *line, int i, t_line_data **data);
 
 //execution:
 void	start_prompt(t_env **mini_env, t_env **new_export, t_inout inout_main);
-int		standard_io(t_input *data, int **pipe_fd, int i, int processes_num, t_env **mini_env);
+int		standard_io(t_input *data, int **pipe_fd, int i, int processes_num);
 void	reset_io(t_inout inout_main);
 int		exec_command(char **cmd_args, t_env **mini_env);
-int		process_execution(t_input *data, int **pipe_fd,t_env **mini_env, t_env **new_export);
+int		process_execution(t_input *data, int **pipe_fd, t_env **mini_env,
+			t_env **new_export);
 void	close_fds(int **pipe_fd);
 void	wait_for_children(int **pro_pid, int processes_num, t_env **mini_env);
-int		fork_and_exec(t_input *data, int *process_pid, int **pipe_fd, t_envexpo exe_envexport);
+int		fork_and_exec(t_input *data, int *process_pid, int **pipe_fd,
+			t_envexpo exe_envexport);
 int		**pipes_init(int processes_num);
 int		**pid_init(int processes_num);
-int		handle_redirectors(t_input *data, t_env **mini_env);
-int		open_infile(t_line_data *data, t_env **mini_env);
+int		handle_redirectors(t_input *data);
+int		open_infile(t_line_data *data);
 void	open_outfile(t_line_data *data, char c);
+char	*ft_readline(void);
 
 //builtins
 int		check_for_builtins(char **args, t_env **mini_env, t_env **new_export);
-int		execute_builtins(char **args, t_env **mini_env, t_env **new_export, t_input **free_input);
-int		check_if_valid(char **args, t_env **mini_env, t_env **new_export, int i);
+int		execute_builtins(char **args, t_env **mini_env, t_env **new_export,
+			t_input **free_input);
+int		check_if_valid(char **args, t_env **mini_env,
+			t_env **new_export, int i);
 int		ft_echo(char **args);
 int		ft_env(t_env **mini_env, char **args);
 int		ft_pwd(t_env **mini_env);
@@ -137,18 +143,20 @@ void	node_remove(t_env **node_remove, char *line, int i);
 char	*check_expander_and_rest(char *input_line, t_env **mini_env, int i);
 int		ft_cd(t_env **mini_env, char **args, t_env **new_export, int i);
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args);
-int		check_for_append(char **args, t_env **mini_env, t_env **new_export, int i);
+int		check_for_append(char **args, t_env **mini_env, t_env **new_export,
+			int i);
 void	create_old_pwd(t_env **mini_env, t_env **new_export);
-int		ft_exit(char **args, t_env **mini_env, t_env **new_export, t_input **free_input);
+int		ft_exit(char **args, t_env **mini_env, t_env **new_export,
+			t_input **free_input);
 void	change_other_envs(t_env **mini_env, t_env **new_export, char *line);
 char	*keep_old_pwd(t_env **mini_env);
 int		switch_directories(char *old_pwd);
-int	    check_and_change_dir(char *dir);
+int		check_and_change_dir(char *dir);
 char	*create_export_line(char *line);
 void	quotes_after_redireciton(char *line, int j, t_line_data **data);
 void	quotes_command(char *line, int j, t_line_data **data);
 char	*check_for_available_old(char *old_pwd);
-// char	*find_full_or_sub(char *args, char *old_pwd);
+char	*find_current_pwd(t_env **mini_env);
 
 // utilities
 void	ft_free(char **paths_spleted, char *cmd, char *path);
@@ -162,11 +170,11 @@ void	free_env_list(t_env **env);
 void	dup_inout(t_inout *inout_main);
 int		is_empty(char *str);
 void	free_split(char **args);
-// void	free_nodes(t_input **input_node);
 void	free_pid_pipe(int **pro_pid, int **pipe_fd);
+void	delete_node(t_line_data **data, t_line_data *tmp);
 
 //signals
-void	setup_signal_init();
-void	setup_signal_exe();
+void	setup_signal_init(void);
+void	setup_signal_exe(void);
 
 #endif

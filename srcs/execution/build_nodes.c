@@ -44,11 +44,10 @@ int	create_input_node(char *whole_line, int i,t_input **new_input_node, int k)
 	tmp->data_node = NULL;
 	tmp->i = k;
 	add_inputnode_tolist(new_input_node, tmp);
-	
 	return (i + j);
 }
 
-int check_pipe_syntax(const char *str)
+int	check_pipe_syntax(const char *str)
 {
 	int		len;
 	int		i;
@@ -77,7 +76,6 @@ int check_pipe_syntax(const char *str)
 		return (0);
 }
 
-
 int	split_pipes(char *whole_line, t_input **new_input_node)
 {
 	int		i;
@@ -92,7 +90,7 @@ int	split_pipes(char *whole_line, t_input **new_input_node)
 	if (check_pipe_syntax(whole_line) == -1)
 	{
 		printf("minishell: syntax error near unexpected token `|'\n");
-		return	(-1);
+		return (-1);
 	}
 	while (whole_line[i] != '\0')
 	{
@@ -104,45 +102,31 @@ int	split_pipes(char *whole_line, t_input **new_input_node)
 			i = create_input_node(whole_line, i, new_input_node, j++);
 		}
 	}
-return (processes_num);
+	return (processes_num);
 }
 
-int	init_linked_list(t_input **new_input_node,t_env **mini_env, int processes_num)
+int	init_linked_list(t_input **new_input_node, t_env **mini_env)
 {
 	t_input	*input_node;
 	char	*input_line;
-	(void)processes_num;
 
 	input_node = *new_input_node;
 	while (input_node != NULL)
 	{
 		input_line = input_node->part_line;
-		if((input_line == NULL) || !(is_empty(input_line)))
+		if ((input_line == NULL) || !(is_empty(input_line)))
 		{
 			input_node = NULL;
 			return (1);
 		}
 		if (input_line != NULL && (ft_strcmp(input_line, "") != 0))
 		{
-			input_node->cmd_args = ft_split_line(input_line, mini_env, input_node);
+			input_node->cmd_args = ft_split_line(input_line,
+					mini_env, input_node);
 			if (input_node->cmd_args == NULL)
 				return (1);
 		}
 		input_node = input_node->next;
-	}
-	return (0);
-}
-
-int is_empty(char *str)
-{
-	int	i;
-
-	i = 0;
-	while(str[i])
-	{
-		if(ft_isprint(str[i]) == 1)
-			return (1);
-		i++;
 	}
 	return (0);
 }

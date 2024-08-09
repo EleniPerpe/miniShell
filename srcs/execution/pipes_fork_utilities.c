@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-int **pipes_init(int processes_num)
+int	**pipes_init(int processes_num)
 {
 	int		**pipe_fd;
 	int		i;
@@ -21,7 +21,7 @@ int **pipes_init(int processes_num)
 	if (processes_num == 0)
 		return (0);
 	pipe_fd = (int **)ft_malloc(sizeof(int *) * (processes_num - 1 + 1));
-	pipe_fd[processes_num - 1] =NULL;
+	pipe_fd[processes_num - 1] = NULL;
 	while (i < (processes_num - 1))
 	{
 		pipe_fd[i] = (int *)ft_malloc(sizeof(int) * 2);
@@ -31,9 +31,9 @@ int **pipes_init(int processes_num)
 	return (pipe_fd);
 }
 
-void close_fds(int **pipe_fd)
+void	close_fds(int **pipe_fd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!pipe_fd)
@@ -48,16 +48,15 @@ void close_fds(int **pipe_fd)
 
 void	wait_for_children(int **pro_pid, int processes_num, t_env **mini_env)
 {
-	(void)mini_env;
-	int status;
-	int i;
+	int	status;
+	int	i;
 
 	i = 0;
 	while (i < processes_num)
 	{
-		waitpid(pro_pid[i][0] , &status, 0);
+		waitpid(pro_pid[i][0], &status, 0);
 		if (WIFEXITED(status))
-			change_status(mini_env , WEXITSTATUS(status));
+			change_status(mini_env, WEXITSTATUS(status));
 		if (WIFSIGNALED(status))
 			change_status (mini_env, (128 + WTERMSIG(status)));
 		i++;
@@ -65,7 +64,7 @@ void	wait_for_children(int **pro_pid, int processes_num, t_env **mini_env)
 	setup_signal_init();
 }
 
-int **pid_init(int processes_num)
+int	**pid_init(int processes_num)
 {
 	int	**pro_pid;
 	int	i;
@@ -73,7 +72,7 @@ int **pid_init(int processes_num)
 	i = 0;
 	pro_pid = (int **)ft_malloc(sizeof(int *) * (processes_num + 1));
 	pro_pid[processes_num] = NULL;
-	while ( i < processes_num)
+	while (i < processes_num)
 	{
 		pro_pid[i] = (int *)ft_malloc(sizeof(int) * 2);
 		pro_pid[i][1] = 0;
@@ -81,9 +80,9 @@ int **pid_init(int processes_num)
 	}
 	return (pro_pid);
 }
-char **minienv_to_env(t_env **mini_env)
+
+char	**minienv_to_env(t_env **mini_env)
 {
-	(void)mini_env;
 	char	**env;
 	int		counter;
 	int		i;
@@ -94,13 +93,13 @@ char **minienv_to_env(t_env **mini_env)
 	counter = 0;
 	tmp_count = *mini_env;
 	tmp = *mini_env;
-	while(tmp_count != NULL)
+	while (tmp_count != NULL)
 	{
 		counter++;
 		tmp_count = tmp_count->next;
 	}
 	env = (char **)ft_malloc(sizeof(char *) * (counter + 1));
-	while(i < counter)
+	while (i < counter)
 	{
 		env[i] = ft_strdup(tmp->line);
 		i++;

@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-void print_env(t_env **mini_env);
+void	print_env(t_env **mini_env);
 
 int	ft_env(t_env **mini_env, char **args)
 {
@@ -37,14 +37,14 @@ int	ft_env(t_env **mini_env, char **args)
 	return (0);
 }
 
-void print_env(t_env **mini_env)
+void	print_env(t_env **mini_env)
 {
 	t_env	*tmp;
-	
+
 	tmp = *mini_env;
 	while (tmp != NULL)
 	{
-		if (tmp->line[0] == '?' && tmp->line[1] == '=') // Do not print the status :D
+		if (tmp->line[0] == '?' && tmp->line[1] == '=')
 			tmp = tmp->next;
 		else
 		{

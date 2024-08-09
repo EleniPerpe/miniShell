@@ -12,12 +12,12 @@
 
 #include "../minishell.h"
 
-char *get_lvl(t_env *current_minienv)
+char	*get_lvl(t_env *current_minienv)
 {
 	char	*ch_shlvl;
-	int	len;
-	int	j;
-	int	i;
+	int		len;
+	int		j;
+	int		i;
 
 	i = 0;
 	j = 0;
@@ -26,7 +26,7 @@ char *get_lvl(t_env *current_minienv)
 		i++;
 	ch_shlvl = (char *)ft_malloc(len - i + 1);
 	i++;
-	while(i < len)
+	while (i < len)
 	{
 		ch_shlvl[j] = current_minienv->line[i];
 		j++;
@@ -36,14 +36,14 @@ char *get_lvl(t_env *current_minienv)
 	return (ch_shlvl);
 }
 
-void	set_new_lvl(t_env **mini_env,int shlvl)
+void	set_new_lvl(t_env **mini_env, int shlvl)
 {
 	char	*ch_shlvl;
 	t_env	*tmp;
 
 	tmp = *mini_env;
 	ch_shlvl = ft_itoa(shlvl);
-		while (tmp != NULL)
+	while (tmp != NULL)
 	{
 		if (!ft_strncmp(tmp->line, "SHLVL", 5))
 			break ;
@@ -51,7 +51,6 @@ void	set_new_lvl(t_env **mini_env,int shlvl)
 	}
 	if (tmp->line != NULL)
 		free(tmp->line);
-	// tmp->line = (char *)ft_malloc(ft_strlen("SHLVL=") + ft_strlen(ch_shlvl));
 	tmp->line = ft_strjoin("SHLVL=", ch_shlvl);
 	free(ch_shlvl);
 }
@@ -74,15 +73,15 @@ int	handle_oldlvl(char *ch_shlvl, int shlvl)
 	}
 	if (ch_shlvl[i] == '\0')
 	{
-		if(shlvl < 0)
+		if (shlvl < 0)
 			shlvl = 0;
 		else
 			shlvl++;
 	}
-	return shlvl;
+	return (shlvl);
 }
 
-int 	modify_shlvl(t_env **mini_env, char c)
+int	modify_shlvl(t_env **mini_env, char c)
 {
 	int		shlvl;
 	char	*ch_shlvl;

@@ -12,10 +12,10 @@
 
 #include "../../minishell.h"
 
-char *keep_old_pwd(t_env **mini_env)
+char	*keep_old_pwd(t_env **mini_env)
 {
-	t_env *temp;
-	char *temp_old_pwd;
+	t_env	*temp;
+	char	*temp_old_pwd;
 
 	temp = *mini_env;
 	while (temp != NULL)
@@ -30,10 +30,10 @@ char *keep_old_pwd(t_env **mini_env)
 	return (NULL);
 }
 
-int switch_directories(char *old_pwd)
+int	switch_directories(char *old_pwd)
 {
-	char *temp_pwd;
-	int exit_code;
+	char	*temp_pwd;
+	int		exit_code;
 
 	temp_pwd = NULL;
 	if (old_pwd == NULL)
@@ -45,7 +45,7 @@ int switch_directories(char *old_pwd)
 		temp_pwd = ft_substr(old_pwd, 3, ft_strlen(old_pwd) - 3);
 	if (temp_pwd != NULL)
 	{
-    	exit_code = check_and_change_dir(temp_pwd + 4);
+		exit_code = check_and_change_dir(temp_pwd + 4);
 		printf("%s\n", temp_pwd + 4);
 		return (exit_code);
 	}
@@ -53,14 +53,14 @@ int switch_directories(char *old_pwd)
 		return (0);
 }
 
-int    check_and_change_dir(char *dir)
+int	check_and_change_dir(char *dir)
 {
-    if (dir == NULL)
+	if (dir == NULL)
 	{
-        fprintf(stderr, "Cannot find environment variable\n");
+		fprintf(stderr, "Cannot find environment variable\n");
 		return (1);
 	}
-    if (chdir(dir) != 0)
+	if (chdir(dir) != 0)
 	{
 		printf("minishell: cd: %s: No such file or directory\n", dir);
 		return (1);
@@ -68,9 +68,9 @@ int    check_and_change_dir(char *dir)
 	return (0);
 }
 
-char *check_for_available_old(char *old_pwd)
+char	*check_for_available_old(char *old_pwd)
 {
-	char *temp_pwd;
+	char	*temp_pwd;
 
 	if (old_pwd == NULL)
 		return (NULL);
@@ -81,11 +81,11 @@ char *check_for_available_old(char *old_pwd)
 	}
 }
 
-char *join_the_pwd(t_env **mini_env, t_env **new_export, char *temp_pwd)
+char	*join_the_pwd(t_env **mini_env, t_env **new_export, char *temp_pwd)
 {
-	t_env *temp;
-	char *new_pwd;
-	char *temp_str;
+	t_env	*temp;
+	char	*new_pwd;
+	char	*temp_str;
 
 	temp = *mini_env;
 	new_pwd = NULL;

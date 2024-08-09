@@ -11,12 +11,13 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-// #include <termios.h>
 
 void	ft_exit_now(int i, t_env **new_env, t_env **new_export);
-void	exit_conditions(char **args, int i, t_env **mini_env, t_env **new_export);
+void	exit_conditions(char **args, int i, t_env **mini_env,
+			t_env **new_export);
 
-int	ft_exit(char **args, t_env **mini_env, t_env **new_export, t_input **free_input)
+int	ft_exit(char **args, t_env **mini_env, t_env **new_export,
+		t_input **free_input)
 {
 	int	i;
 
@@ -34,14 +35,16 @@ int	ft_exit(char **args, t_env **mini_env, t_env **new_export, t_input **free_in
 	return (0);
 }
 
-void exit_conditions(char **args, int i, t_env **mini_env, t_env **new_export)
+void	exit_conditions(char **args, int i, t_env **mini_env,
+			t_env **new_export)
 {
 	if (i == 1)
-			ft_exit_now(0, mini_env, new_export);
+		ft_exit_now(0, mini_env, new_export);
 	i = 0;
 	while (args[1][i] != '\0')
 	{
-		if (!isdigit(args[1][i]) && !(i == 0 && (args[1][i] == '-' || args[1][i] == '+')))
+		if (!isdigit(args[1][i]) && !(i == 0 &&
+			(args[1][i] == '-' || args[1][i] == '+')))
 		{
 			printf("exit: %s: numeric argument required\n", args[1]);
 			ft_exit_now (255, mini_env, new_export);
@@ -54,7 +57,7 @@ void exit_conditions(char **args, int i, t_env **mini_env, t_env **new_export)
 
 void	ft_exit_now(int i, t_env **mini_env, t_env **new_export)
 {
-	int shlvl;
+	int	shlvl;
 
 	printf("exit\n");
 	shlvl = modify_shlvl(mini_env, '-');

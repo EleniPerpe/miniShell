@@ -14,14 +14,14 @@
 
 void	print_export(t_env **new_export);
 void	fill_only_exp(t_env **new_export, char **args, int i, t_env **mini_env);
-int		check_and_fill(char **args, t_env **mini_env, t_env **new_export, int flag);
-int		return_flag(int flag);
+int		check_and_fill(char **args, t_env **mini_env,
+			t_env **new_export, int flag);
 
 int	ft_export(t_env **mini_env, char **args, t_env **new_export)
 {
 	int	i;
-	int exit_code;
-	int flag;
+	int	exit_code;
+	int	flag;
 
 	flag = 0;
 	i = 0;
@@ -33,7 +33,7 @@ int	ft_export(t_env **mini_env, char **args, t_env **new_export)
 	return (exit_code);
 }
 
-int		check_and_fill(char **args, t_env **mini_env, t_env **new_export, int flag)
+int	check_and_fill(char **args, t_env **mini_env, t_env **new_export, int flag)
 {
 	int	i;
 
@@ -60,7 +60,6 @@ int		check_and_fill(char **args, t_env **mini_env, t_env **new_export, int flag)
 	}
 	return (flag);
 }
-
 
 void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args)
 {

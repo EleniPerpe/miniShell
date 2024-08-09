@@ -15,9 +15,9 @@
 int	check_for_builtins2(char **args, t_env **mini_env, t_env **new_export);
 int	check_for_builtins3(char **args, t_env **mini_env, t_env **new_export);
 
-int check_for_builtins(char **args, t_env **mini_env, t_env **new_export)
+int	check_for_builtins(char **args, t_env **mini_env, t_env **new_export)
 {
-	int res;
+	int	res;
 
 	res = -2;
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "echo", 4) == 0))
@@ -41,7 +41,7 @@ int check_for_builtins(char **args, t_env **mini_env, t_env **new_export)
 
 int	check_for_builtins2(char **args, t_env **mini_env, t_env **new_export)
 {
-	int res;
+	int	res;
 
 	res = -2;
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "env", 3) == 0))
@@ -65,7 +65,7 @@ int	check_for_builtins2(char **args, t_env **mini_env, t_env **new_export)
 
 int	check_for_builtins3(char **args, t_env **mini_env, t_env **new_export)
 {
-	int res;
+	int	res;
 
 	res = -2;
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "unset", 5) == 0))
@@ -91,4 +91,3 @@ int	check_for_builtins3(char **args, t_env **mini_env, t_env **new_export)
 	}
 	return (res);
 }
-

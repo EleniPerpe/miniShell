@@ -52,16 +52,3 @@ void	*ft_malloc(size_t size)
 		exit (EXIT_FAILURE);
 	return (ptr);
 }
-
-// I have a seg fault if I use this instead :/
-// void	free_list(t_line_data *line_data)
-// {
-// 	t_line_data	*tmp;
-
-// 	while (line_data != NULL)
-// 	{
-// 		tmp = line_data;
-// 		line_data = line_data->next;
-// 		free(tmp);
-// 	}
-// }

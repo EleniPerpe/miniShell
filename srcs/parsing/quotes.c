@@ -12,7 +12,6 @@
 
 #include "../../minishell.h"
 
-void	quotes_after_redireciton(char *line, int j, t_line_data **data);
 void	quotes_command(char *line, int j, t_line_data **data);
 int		check_quotes_cases(char *line, int *i);
 int		check_for_flag(char *line, int i);
@@ -29,7 +28,7 @@ int	quote_token(char *line, int i, t_line_data **line_data, int j)
 		i++;
 	j = check_quotes_cases(line, &i);
 	if (j == -1)
-		return j;
+		return (j);
 	if (j > 0)
 	{
 		tmp = (char *)ft_malloc(j + 1);
@@ -55,7 +54,7 @@ int	check_for_flag(char *line, int i)
 		i--;
 	if (line[i] == '<' || line[i] == '>')
 	{
-		if(i > 0 && line[i - 1] == '<')
+		if (i > 0 && line[i - 1] == '<')
 			flag = 2;
 		else
 			flag = 7;
@@ -65,23 +64,6 @@ int	check_for_flag(char *line, int i)
 	i++;
 	return (flag);
 }
-
-// int	check_for_flag(char *line, int i)
-// {
-// 	int	flag;
-
-// 	flag = 0;
-// 	while (i > 0 && (line[i] == ' ' || line[i] == '"' || line[i] == '\''))
-// 		i--;
-// 	if (line[i] == '<' && line[i - 1] == '<')
-// 		flag = 2;
-// 	else if ((line[i] == '<' || line[i] == '>') && (line[i - 1] != '<'))
-// 		flag = 7;
-// 	else
-// 		flag = 0;
-// 	i++;
-// 	return (flag);
-// }
 
 int	check_quotes_cases(char *line, int *i)
 {
@@ -98,7 +80,7 @@ int	check_quotes_cases(char *line, int *i)
 	return (j);
 }
 
-int check_for_size(char *line, int j, int *i, char c)
+int	check_for_size(char *line, int j, int *i, char c)
 {
 	(*i)++;
 	while (line[*i] == ' ')
@@ -114,34 +96,3 @@ int check_for_size(char *line, int j, int *i, char c)
 	}
 	return (j);
 }
-
-// void	quotes_after_redireciton(char *line, int j, t_line_data **data)
-// {
-// 	t_line_data	*new_line_data;
-
-// 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
-// 	new_line_data->after_redirctor = (char *)ft_malloc(j + 1);
-// 	new_line_data->after_redirctor = ft_memcpy(new_line_data->after_redirctor,
-// 			line, j);
-// 	new_line_data->after_redirctor[j] = '\0';
-// 	new_line_data->type = 7;
-// 	new_line_data->next = NULL;
-// 	new_line_data->command = NULL;
-// 	new_line_data->redirctor = NULL;
-// 	add_node_to_list(data, new_line_data);
-// }
-
-// void	quotes_command(char *line, int j, t_line_data **data)
-// {
-// 	t_line_data	*new_line_data;
-
-// 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
-// 	new_line_data->command = (char *)ft_malloc(j + 1);
-// 	new_line_data->command = ft_memcpy(new_line_data->command, line, j);
-// 	new_line_data->command[j] = '\0';
-// 	new_line_data->type = 0;
-// 	new_line_data->next = NULL;
-// 	new_line_data->redirctor = NULL;
-// 	new_line_data->after_redirctor = NULL;
-// 	add_node_to_list(data, new_line_data);
-// }
