@@ -16,15 +16,15 @@ void	change_status(t_env **mini_env, int status)
 {
 	t_env	*current_env;
 	char	*status_ch;
-	char *temp;
+	char	*temp;
 
 	temp = ft_itoa(status);
-	status_ch =  ft_strjoin("?=", temp);
-
+	status_ch = ft_strjoin("?=", temp);
 	current_env = *mini_env;
 	while (current_env != NULL)
 	{
-		if (current_env->line[0] == '?' && current_env->line[1] == '=')
+		if ((current_env->line) && (current_env->line[0] == '?'
+				&& current_env->line[1] == '='))
 		{
 			free(current_env->line);
 			current_env->line = ft_strdup(status_ch);
@@ -38,6 +38,7 @@ void	change_status(t_env **mini_env, int status)
 void	add_status(t_env **mini_env)
 {
 	t_env	*new_env;
+
 	new_env = (t_env *)ft_malloc(sizeof(t_env));
 	new_env->line = ft_strdup("?=0");
 	if (!new_env->line)

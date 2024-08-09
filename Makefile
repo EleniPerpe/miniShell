@@ -6,7 +6,7 @@
 #    By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 14:16:08 by eperperi          #+#    #+#              #
-#    Updated: 2024/08/05 18:37:59 by eperperi         ###   ########.fr        #
+#    Updated: 2024/08/09 16:21:45 by eperperi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,9 +32,11 @@ SIGNALS_DIR = ./srcs/signals/
 
 SRC = $(SRC_DIR)main.c \
       $(SRC_DIR)main_utilities.c \
-      $(EXECUTION_DIR)standard_io.c \
+      $(EXECUTION_DIR)io_controller.c \
       $(EXECUTION_DIR)exec.c \
+      $(EXECUTION_DIR)exec_utilities.c \
       $(EXECUTION_DIR)process_manager.c \
+      $(EXECUTION_DIR)commands_handler.c \
       $(PARSING_DIR)heredoc_handle.c \
       $(PARSING_DIR)init.c \
       $(PARSING_DIR)quotes.c \

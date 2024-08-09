@@ -38,25 +38,13 @@ void	init_nodes_redirctor(t_line_data **data, int type)
 
 	new_line_data = *data;
 	if (type == 2)
-	{
-		new_line_data->redirctor = (char *)ft_malloc(3);
-		new_line_data->redirctor = "<<";
-	}
+		new_line_data->redirctor = ft_strdup("<<");
 	else if (type == 3)
-	{
-		new_line_data->redirctor = (char *)ft_malloc(3);
-		new_line_data->redirctor = ">>";
-	}
+		new_line_data->redirctor = ft_strdup(">>");
 	else if (type == 4)
-	{
-		new_line_data->redirctor = (char *)ft_malloc(2);
-		new_line_data->redirctor = ">";
-	}
+		new_line_data->redirctor = ft_strdup(">");
 	else if (type == 5)
-	{
-		new_line_data->redirctor = (char *)ft_malloc(2);
-		new_line_data->redirctor = "<";
-	}
+		new_line_data->redirctor = ft_strdup("<");
 	new_line_data->next = NULL;
 	new_line_data->command = NULL;
 }
@@ -89,17 +77,7 @@ int	command_fill(char *line, int i, t_line_data **data)
 	return (i + j);
 }
 
-int	qoute_fill(char *line, int i, t_line_data **data)
-{
-	if ((line[i] == '"' && line[i + 1] == '"')
-		|| (line[i] == '\'' && line[i + 1] == '\''))
-		i = i + 2;
-	else
-		i = quote_token(line, i, data, 0);
-	return (i);
-}
-
-char	**ft_split_line(char *input_line,t_env **mini_env, t_input *input_node)
+char	**ft_split_line(char *input_line, t_env **mini_env, t_input *input_node)
 {
 	int			i;
 	char		**cmd_args;
@@ -125,10 +103,10 @@ char	**ft_split_line(char *input_line,t_env **mini_env, t_input *input_node)
 	}
 	cmd_args = command_merge(&line_data);
 	input_node->data_node = line_data;
-	return (free (input_line), cmd_args);
+	return (free(input_line), cmd_args);
 }
 
-char *check_expander_and_rest(char *input_line, t_env **mini_env, int i)
+char	*check_expander_and_rest(char *input_line, t_env **mini_env, int i)
 {
 	if (!input_line)
 		return (NULL);

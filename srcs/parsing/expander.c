@@ -38,12 +38,12 @@ char	*expander_fill(char *line, int i, int j, t_env **mini_env)
 	}
 	env_line = find_expander(expander, mini_env);
 	if (env_line == NULL)
-		return (NULL);
+		env_line = ft_strdup("= ");
 	env_value = create_final_env(env_line);
 	final = final_string(env_value, line, i, j);
 	free(expander);
 	free(env_value);
-	return (final);
+	return (free(env_line), final);
 }
 
 char	*seperate_expander(char *line, int i, int *j)
@@ -57,14 +57,14 @@ char	*seperate_expander(char *line, int i, int *j)
 		while ((line[i + (*j)] != ' ' && line[i + (*j)] != '\''
 				&& line[i + (*j)] != '"') && line[i + (*j)] != '\0'
 			&& line[i + (*j)] != '$')
+		{
+			if (line[i + (*j)] == ';' || line[i + (*j)] == '\\')
 			{
-				if (line[i + (*j)] == ';' || line[i + (*j)] == '\\')
-				{
-					printf("The program can not interpret '\\' or ';'\n");
-					return (NULL);
-				}
-				(*j)++;
+				printf("The program can not interpret '\\' or ';'\n");
+				return (NULL);
 			}
+			(*j)++;
+		}
 	}
 	expander = (char *)ft_malloc(*j + 1);
 	ft_strlcpy(expander, &line[i], *j + 1);
@@ -123,6 +123,7 @@ char	*find_expander(char *expander, t_env **mini_env)
 {
 	size_t	len;
 	t_env	*temp;
+	char	*res;
 
 	temp = *mini_env;
 	len = strlen(expander);
@@ -131,7 +132,8 @@ char	*find_expander(char *expander, t_env **mini_env)
 		if (ft_strncmp(expander, temp->line, len) == 0
 			&& temp->line[len] == '=')
 		{
-			return (temp->line);
+			res = ft_strdup(temp->line);
+			return (res);
 		}
 		temp = temp->next;
 	}

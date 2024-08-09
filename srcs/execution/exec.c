@@ -12,79 +12,42 @@
 
 #include "../../minishell.h"
 
-void	ft_free(char **paths_spleted, char *cmd, char *path)
-{
-	int	i;
-
-	i = 0;
-	if (cmd != 0)
-		free (cmd);
-	if (path != 0)
-		free (path);
-	while (paths_spleted[i] != 0)
-	{
-		free (paths_spleted[i]);
-		i++;
-	}
-	if (paths_spleted != 0)
-		free (paths_spleted);
-}
-
-void	delete_node(t_line_data **data, t_line_data *tmp)
-{
-	t_line_data	*tmp2;
-
-	tmp2 = *data;
-	if (tmp == *data)
-	{
-		*data = tmp->next;
-		free(tmp);
-	}
-	else
-	{
-		while (tmp2->next != tmp)
-			tmp2 = tmp2->next;
-		tmp2->next = tmp->next;
-		free(tmp);
-	}
-}
-
 char	*find_path(char *cmd, char **env)
 {
 	char	*paths;
-	char	**paths_spleted;
+	char	**path_splitted;
 	char	*path;
 	int		i;
 
 	i = 0;
-	if(env != NULL)
+	if (!env)
+		return (NULL);
+	while ((*env) && (ft_strnstr(*env, "PATH", 4) == NULL))
+		env++;
+	if (*env)
 	{
-		while ((*env) && (ft_strnstr(*env, "PATH", 4) == NULL))
-			env++;
-		if (*env)
+		paths = (*env + 5);
+		path_splitted = ft_split(paths, ':');
+		cmd = ft_strjoin("/", cmd);
+		while (path_splitted[i])
 		{
-			paths = (*env + 5);
-			paths_spleted = ft_split(paths, ':');
-			cmd = ft_strjoin("/", cmd);
-			while (paths_spleted[i])
-			{
-				path = ft_strjoin(paths_spleted[i++], cmd);
-				if (access(path, F_OK | X_OK | R_OK) == 0)
-					return (ft_free(paths_spleted, cmd, NULL),path);
-			}
-			ft_free(paths_spleted, cmd, path);
+			path = ft_strjoin(path_splitted[i++], cmd);
+			if (access(path, F_OK | X_OK | R_OK) == 0)
+				return (ft_free(path_splitted, cmd, NULL), path);
+			free(path);
 		}
+		ft_free(path_splitted, cmd, NULL);
 	}
 	return (NULL);
 }
 
 void	create_cmd(char **cmd_args)
 {
-	char *cmd;
-	char *cmd_only;
-	int	len;
-	int	i;
-	int	j;
+	char	*cmd;
+	char	*cmd_only;
+	int		len;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -97,17 +60,17 @@ void	create_cmd(char **cmd_args)
 		i--;
 	cmd_only = (char *)ft_malloc(len - i + 1);
 	i++;
-	while(cmd[i] != '\0')
+	while (cmd[i] != '\0')
 		cmd_only[j++] = cmd[i++];
 	cmd_only[j] = '\0';
 	free(*cmd_args);
 	*cmd_args = cmd_only;
 }
 
-char *handle_path_cmd(char **cmd_args)
+char	*handle_path_cmd(char **cmd_args)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
 	char	*cmd;
 	char	*path;
 
@@ -116,13 +79,24 @@ char *handle_path_cmd(char **cmd_args)
 	len = ft_strlen(cmd);
 	while (cmd[i] != '\0' && cmd[i] != '/')
 		i++;
-	if ( i != len)
+	if (i != len)
 	{
 		path = ft_strdup(*cmd_args);
 		create_cmd(cmd_args);
 		return (path);
 	}
 	return (NULL);
+}
+
+void	ft_execve(char *path, char **cmd_args, t_env **mini_env, char **env)
+{
+	if (execve(path, cmd_args, env) == -1)
+	{
+		free(path);
+		printf("minishell: %s: command not found\n", cmd_args[0]);
+		change_status(mini_env, 127);
+		exit (127);
+	}
 }
 
 int	exec_command(char **cmd_args, t_env **mini_env)
@@ -138,73 +112,8 @@ int	exec_command(char **cmd_args, t_env **mini_env)
 			path = find_path(cmd_args[0], env);
 		if (path == NULL && cmd_args[0] != NULL)
 			path = ft_strjoin("./", cmd_args[0]);
-		if (execve(path, cmd_args, env) == -1)
-		{
-			printf("minishell: %s: command not found\n", cmd_args[0]);
-			change_status(mini_env, 127);
-			exit (127);
-		}
+		ft_execve(path, cmd_args, mini_env, env);
 	}
-	if (execve(path, cmd_args, env) == -1)
-	{
-		printf("minishell: %s: No such file or directory\n", path);
-		change_status(mini_env, 127);
-		exit (127);
-	}
+	ft_execve(path, cmd_args, mini_env, env);
 	return (0);
-}
-
-char	**merge_free_command(t_line_data **data, int len)
-{
-	t_line_data	*tmp;
-	int			i;
-	char		**cmd_args;
-	t_line_data	*tmp_delete;
-
-	i = 0;
-	tmp = *data;
-	cmd_args = (char **)ft_malloc(sizeof(char *) * (len + 1));
-	while (tmp != NULL)
-	{
-		if (tmp->type == 0)
-		{
-			cmd_args[i] = ft_strdup(tmp->command);
-			i++;
-			tmp_delete = tmp;
-			tmp = tmp->next;
-			free(tmp_delete->command);
-			delete_node(data, tmp_delete);
-		}
-		else
-			tmp = tmp->next;
-	}
-	cmd_args[i] = NULL;
-	i = 0;
-	return (cmd_args);
-}
-
-int	cmd_args_counter(t_line_data **data)
-{
-	int			counter;
-	t_line_data	*tmp;
-
-	counter = 0;
-	tmp = *data;
-	while (tmp != NULL)
-	{
-		if (tmp->type == 0)
-			counter++;
-		tmp = tmp->next;
-	}
-	return (counter);
-}
-
-char	**command_merge(t_line_data **data)
-{
-	char		**cmd_args;
-	// t_line_data	*tmp;
-
-	// tmp = *data;
-	cmd_args = merge_free_command(data, cmd_args_counter(data));
-	return (cmd_args);
 }
