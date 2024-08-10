@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:09:26 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/09 17:02:58 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/08 17:54:08 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,6 @@ void	create_old_pwd(t_env **mini_env, t_env **new_export)
 		pwd_env->line = ft_strjoin("OLDPWD=", oldpwd);
 		pwd_env->next = NULL;
 		add_path_to_list(mini_env, pwd_env);
-		
-		
-		if (pwd_export != NULL)
-		{
-			if (pwd_export->line != NULL)
-				free(pwd_export->line);
-			free(pwd_export);
-		}
-
-		if (pwd_env != NULL)
-		{
-			if (pwd_env->line != NULL)
-				free(pwd_env->line);
-			free(pwd_env);
-		}
 	}
 	else
 		perror("getcwd() error");

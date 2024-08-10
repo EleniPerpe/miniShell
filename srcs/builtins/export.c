@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:57:54 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/09 17:05:16 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:07:06 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ void	fill_env_and_export(t_env **new_export, t_env **mini_env, char *args)
 	t_env	*new_env;
 	t_env	*new_export_line;
 
+	find_if_exists(new_export, args, mini_env);
 	new_env = (t_env *)ft_malloc(sizeof(t_env));
 	new_env->line = ft_strdup(args);
-	find_if_exists(new_export, args, mini_env);
 	if (!new_env->line)
 	{
 		free(new_env);

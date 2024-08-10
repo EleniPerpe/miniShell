@@ -149,5 +149,29 @@
 								STILL:
 
 
-cd_back.c line 49 : printf?
+Important:
 
+cd_back.c line 49 : I don't know what it is printing
+
+export x=43
+export x1+=aaa :double free
+
+>< :leak
+<a>b :leak
+<<hi :leak
+all these leaks are from the same place if we fix it it's done
+------------------------------------------------------------------
+if too many enough time: :D
+
+LS or PWD or CAT must work: change only input_node->cmd_arg to lowercase characters eaaaaaaasy
+
+
+export x="zo"
+our gives:
+declare -x x=""
+declare -x zo
+it must gives:	declare -x x="zo"
+
+
+
+before final push remember to delete .DS folder and temp_file from Libft and maybe readline!?

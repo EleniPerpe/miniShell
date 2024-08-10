@@ -32,6 +32,8 @@ int	ft_cd_arg(t_env **mini_env, char **args, t_env **new_export,
 	temp_pwd = handle_cd_args(mini_env, args[1], old_pwd, &exit_code);
 	if (exit_code == 0 && temp_pwd != NULL)
 		check_for_new_pwd(mini_env, new_export, exit_code, temp_pwd);
+	else
+		free(temp_pwd);
 	return (free(old_pwd), exit_code);
 }
 
