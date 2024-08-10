@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands_handler.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 00:57:19 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/09 15:48:15 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/09 00:57:20 by rshatra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ char	**merge_free_command(t_line_data **data, int len)
 
 	i = 0;
 	tmp = *data;
-	cmd_args = (char **)ft_malloc(sizeof(char *) * (len + 1));
-	while (tmp != NULL)
+	if (len > 0)
+		cmd_args = (char **)ft_malloc(sizeof(char *) * (len + 1));
+	while (len > 0 && tmp != NULL)
 	{
 		if (tmp->type == 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:10:54 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/09 16:57:40 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:37:25 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	append_export_and_env(t_env **mini_env, t_env **new_export,
 	}
 	if (new_env == NULL)
 	{
-		new_append_addition(new_export, mini_env, line, j);
 		free(temp);
+		new_append_addition(new_export, mini_env, line, j);
 	}
 	else
 		append_export(temp, line, new_export, j);
@@ -73,27 +73,33 @@ void	append_export(char *temp, char *line, t_env **new_export, int j)
 {
 	t_env	*export;
 	char	*cmp_temp;
-	char	*temp_line1;
-	char	*temp_line2;
+	char	*line1;
+	char	*line2;
 
+
+	line1 = NULL;
+	line2 = NULL;
 	cmp_temp = ft_strjoin(temp, "=");
 	export = *new_export;
 	while (export != NULL)
 	{
 		if (ft_strncmp(export->line + 11, cmp_temp, ft_strlen(cmp_temp)) == 0)
 		{
-			temp_line1 = ft_substr(export->line, 0,
+			line1 = ft_substr(export->line, 0,
 					ft_strlen(export->line) - 1);
-			temp_line2 = ft_strjoin(temp_line1, line + j + 1);
-			export->line = ft_strjoin(temp_line2, "\"");
+			line2 = ft_strjoin(line1, line + j + 1);
+			free(export->line);
+			export->line = ft_strjoin(line2, "\"");
 			break ;
 		}
 		export = export->next;
 	}
 	free(temp);
-	// free(line);
-	free(temp_line2);
-	free(temp_line1);
+	if (line1)
+		free(line1);
+	if (line2)
+		free(line2);
+
 	free(cmp_temp);
 }
 

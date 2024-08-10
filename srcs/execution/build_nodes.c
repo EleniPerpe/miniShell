@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:45:17 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/09 15:48:42 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:51:36 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	add_inputnode_tolist(t_input **data, t_input *new_line_data)
 	}
 }
 
-int	create_input_node(char *whole_line, int i,t_input **new_input_node, int k)
+int	create_input_node(char *whole_line, int i, t_input **new_input_node, int k)
 {
 	t_input	*tmp;
 	int		j;

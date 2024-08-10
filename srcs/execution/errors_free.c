@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:24:48 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/09 15:53:41 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:31:19 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	free_linked_list(t_line_data *free_it)
 
 void	free_nodes(t_input **input_node)
 {
+	(void)input_node;
 	t_input		*free_input_node;
 	t_input		*tmp;
 	t_line_data	*free_node;
