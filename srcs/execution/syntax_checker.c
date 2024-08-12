@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rshatra <rshatra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 03:23:46 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/12 03:23:47 by rshatra          ###   ########.fr       */
+/*   Updated: 2024/08/12 19:09:03 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,22 @@ int	check_qoute_syntax(char *str)
 {
 	int	i;
 	int	counter;
+	int	counter2;
 
 	i = 0;
 	counter = 0;
+	counter2 = 0;
 	while (str[i])
 	{
-		if (str[i++] == '"')
+		if (str[i] == '"' && (counter2 % 2 == 0))
 			counter++;
+		if (str[i] == '\'' && (counter % 2 == 0))
+			counter2++;
+		i++;
 	}
 	if (counter % 2 != 0)
+		return (-1);
+	if (counter2 % 2 != 0)
 		return (-1);
 	return (0);
 }

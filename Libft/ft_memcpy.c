@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:48:19 by eperperi          #+#    #+#             */
-/*   Updated: 2024/03/09 18:32:40 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/12 18:28:16 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 		d[i] = s[i];
 		i++;
 	}
+	d[i] = '\0';
 	return (dst);
 }

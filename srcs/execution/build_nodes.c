@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 20:45:17 by rshatra           #+#    #+#             */
-/*   Updated: 2024/08/07 18:51:36 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/12 19:01:45 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,29 @@ int	create_input_node(char *whole_line, int i, t_input **new_input_node, int k)
 {
 	t_input	*tmp;
 	int		j;
+	char	*res;
 
 	j = 0;
 	tmp = (t_input *)ft_malloc(sizeof(t_input));
-	while (whole_line[i + j] != '\0' && whole_line[i + j] != '|')
+	while (whole_line[i + j] != '\0')
+	{
+		if (whole_line[i + j] == '|')
+		{
+			res = ft_substr(whole_line, i, i + j);
+			if (check_qoute_syntax(res) == -1)
+				;
+			else
+				break ;
+			free(res);
+		}
 		j++;
+	}
 	tmp->part_line = (char *)ft_malloc(j + 1);
 	tmp->part_line = ft_memcpy(tmp->part_line, &whole_line[i], j);
-	tmp->part_line[j] = '\0';
 	tmp->next = NULL;
 	tmp->data_node = NULL;
 	tmp->i = k;
-	add_inputnode_tolist(new_input_node, tmp);
-	return (i + j);
+	return (add_inputnode_tolist(new_input_node, tmp), i + j);
 }
 
 int	split_pipes(char *whole_line, t_input **new_input_node, t_env **mini_env)
@@ -55,6 +65,7 @@ int	split_pipes(char *whole_line, t_input **new_input_node, t_env **mini_env)
 
 	i = 0;
 	j = 0;
+	(void)mini_env;
 	processes_num = 0;
 	if (!whole_line)
 		return (0);
