@@ -53,46 +53,10 @@ void	handle_one_builtin(t_input **new_input_node, t_env **mini_env,
 	change_status(mini_env, exit_buildin);
 }
 
-int	init_both_linked_lists(t_input **data, t_env **mini_env, int *processes_num,
-		t_inout inout_main)
+void	free_nul(t_input **new_input_node)
 {
-	char	*whole_line;
-	int		return_value;
-
-	reset_io(inout_main);
-	whole_line = ft_readline();
-	*processes_num = split_pipes(whole_line, data);
-	return_value = init_linked_list(data, mini_env);
-	return (return_value);
-}
-
-void	start_prompt(t_env **mini_env, t_env **new_export, t_inout inout_main)
-{
-	t_input		*new_input_node;
-	int			processes_num;
-	int			check_builtin;
-
-	new_input_node = NULL;
-	while (1)
-	{
-		if (init_both_linked_lists(&new_input_node, mini_env,
-				&processes_num, inout_main) == 0 && processes_num != -1)
-		{
-			if ((new_input_node) && (new_input_node->cmd_args[0] != NULL))
-				check_builtin = check_for_builtins(new_input_node->cmd_args,
-						mini_env, new_export);
-			if (processes_num == 1 && check_builtin != -2
-				&& check_builtin != 127)
-				handle_one_builtin(&new_input_node, mini_env, new_export);
-			else if (check_builtin != 127)
-				execute_with_pipes(&new_input_node, processes_num,
-					mini_env, new_export);
-			free_nodes(&new_input_node);
-			new_input_node = NULL;
-		}
-		else
-			new_input_node = NULL;
-	}
+	free_nodes(new_input_node);
+	*new_input_node = NULL;
 }
 
 int	process_execution(t_input *data, int **pipe_fd,
@@ -149,8 +113,7 @@ int	fork_and_exec(t_input *data, int *process_pid, int **pipe_fd,
 	{
 		return_value = process_execution(new_input_node, pipe_fd,
 				exe_envexport.exe_env, exe_envexport.exe_export);
-		if (return_value != 0)
-			return (return_value);
+		return (return_value);
 	}
 	return (0);
 }

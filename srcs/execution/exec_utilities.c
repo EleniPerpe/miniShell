@@ -30,7 +30,7 @@ void	ft_free(char **paths_spleted, char *cmd, char *path)
 		free (paths_spleted);
 }
 
-void	delete_node(t_line_data **data, t_line_data *tmp)
+void	delete_node(t_line_data **data, t_line_data *tmp, char *str)
 {
 	t_line_data	*tmp2;
 
@@ -47,6 +47,8 @@ void	delete_node(t_line_data **data, t_line_data *tmp)
 		tmp2->next = tmp->next;
 		free(tmp);
 	}
+	if (str)
+		free (str);
 }
 
 char	*ft_readline(void)
@@ -76,4 +78,14 @@ int	is_empty(char *str)
 		i++;
 	}
 	return (0);
+}
+
+void	free_str(char *temp, char *line1, char *line2, char *cmp_temp)
+{
+	free(temp);
+	if (line1)
+		free(line1);
+	if (line2)
+		free(line2);
+	free(cmp_temp);
 }

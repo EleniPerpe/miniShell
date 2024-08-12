@@ -54,7 +54,7 @@ void	append_export_and_env(t_env **mini_env, t_env **new_export,
 	{
 		if (ft_strncmp(new_env->line, cmp_temp, ft_strlen(cmp_temp)) == 0)
 		{
-			new_env->line = ft_strjoin(new_env->line, line + j + 1);
+			new_env->line = ft_strjoin_free_s1(new_env->line, line + j + 1);
 			break ;
 		}
 		new_env = new_env->next;
@@ -76,7 +76,6 @@ void	append_export(char *temp, char *line, t_env **new_export, int j)
 	char	*line1;
 	char	*line2;
 
-
 	line1 = NULL;
 	line2 = NULL;
 	cmp_temp = ft_strjoin(temp, "=");
@@ -94,13 +93,7 @@ void	append_export(char *temp, char *line, t_env **new_export, int j)
 		}
 		export = export->next;
 	}
-	free(temp);
-	if (line1)
-		free(line1);
-	if (line2)
-		free(line2);
-
-	free(cmp_temp);
+	free_str(temp, line1, line2, cmp_temp);
 }
 
 void	new_append_addition(t_env **new_export, t_env **mini_env,

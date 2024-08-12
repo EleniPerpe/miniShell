@@ -66,5 +66,6 @@ void	ft_exit_now(int i, t_env **mini_env, t_env **new_export)
 		free_env_list(mini_env);
 		free_env_list(new_export);
 	}
+	unlink("Libft/tmp_file");
 	exit(i % 256);
 }

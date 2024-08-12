@@ -175,3 +175,15 @@ it must gives:	declare -x x="zo"
 
 
 before final push remember to delete .DS folder and temp_file from Libft and maybe readline!?
+
+
+
+cd ..
+leak in getcwd()
+
+ls"
+The program does not interpret unclosed quotes
+leak
+
+spaces
+leak

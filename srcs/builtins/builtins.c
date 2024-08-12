@@ -25,15 +25,11 @@ int	execute_builtins(char **args, t_env **mini_env, t_env **new_export,
 	res = -2;
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "echo", 4) == 0))
 	{
-		if (check_if_valid(args, mini_env, new_export, 4) == 127)
-			return (127);
 		res = ft_echo(args);
 		return (res);
 	}
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "pwd", 3) == 0))
 	{
-		if (check_if_valid(args, mini_env, new_export, 3) == 127)
-			return (127);
 		res = ft_pwd(mini_env);
 		return (res);
 	}
@@ -50,15 +46,11 @@ int	execute_builtins2(char **args, t_env **mini_env, t_env **new_export,
 	res = -2;
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "env", 3) == 0))
 	{
-		if (check_if_valid(args, mini_env, new_export, 3) == 127)
-			return (127);
 		res = ft_env(mini_env, args);
 		return (res);
 	}
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "export", 6) == 0))
 	{
-		if (check_if_valid(args, mini_env, new_export, 6) == 127)
-			return (127);
 		res = ft_export(mini_env, args, new_export);
 		return (res);
 	}
@@ -75,22 +67,16 @@ int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export,
 	res = -2;
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "unset", 5) == 0))
 	{
-		if (check_if_valid(args, mini_env, new_export, 5) == 127)
-			return (127);
 		res = ft_unset(args, mini_env, new_export);
 		return (res);
 	}
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "cd", 2) == 0))
 	{
-		if (check_if_valid(args, mini_env, new_export, 2) == 127)
-			return (127);
 		res = ft_cd(mini_env, args, new_export, 0);
 		return (res);
 	}
 	if ((args[0] != NULL) && (ft_strncmp(args[0], "exit", 4) == 0))
 	{
-		if (check_if_valid(args, mini_env, new_export, 4) == 127)
-			return (127);
 		res = ft_exit(args, mini_env, new_export, free_input);
 		return (res);
 	}
@@ -99,7 +85,6 @@ int	execute_builtins3(char **args, t_env **mini_env, t_env **new_export,
 
 int	check_if_valid(char **args, t_env **mini_env, t_env **new_export, int i)
 {
-	(void)mini_env;
 	(void)new_export;
 	if (args[0][i] != '\0')
 	{

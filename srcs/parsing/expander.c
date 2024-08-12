@@ -43,7 +43,7 @@ char	*expander_fill(char *line, int i, int j, t_env **mini_env)
 	final = final_string(env_value, line, i, j);
 	free(expander);
 	free(env_value);
-	return (free(env_line), final);
+	return (free(env_line), free(line), final);
 }
 
 char	*seperate_expander(char *line, int i, int *j)

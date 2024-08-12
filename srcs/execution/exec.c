@@ -90,10 +90,16 @@ char	*handle_path_cmd(char **cmd_args)
 
 void	ft_execve(char *path, char **cmd_args, t_env **mini_env, char **env)
 {
+	char	*error_message;
+
 	if (execve(path, cmd_args, env) == -1)
 	{
+		error_message = ft_strjoin("minishell: ", cmd_args[0]);
+		error_message = ft_strjoin_free_s1(error_message,
+				": command not found\n");
 		free(path);
-		printf("minishell: %s: command not found\n", cmd_args[0]);
+		write(2, error_message, ft_strlen(error_message));
+		free(error_message);
 		change_status(mini_env, 127);
 		exit (127);
 	}

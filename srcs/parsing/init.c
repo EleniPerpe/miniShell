@@ -83,6 +83,7 @@ char	**ft_split_line(char *input_line, t_env **mini_env, t_input *input_node)
 	char		**cmd_args;
 	t_line_data	*line_data;
 
+	cmd_args = NULL;
 	line_data = NULL;
 	input_line = check_expander_and_rest(input_line, mini_env, 0);
 	if (input_line == NULL)
@@ -102,8 +103,7 @@ char	**ft_split_line(char *input_line, t_env **mini_env, t_input *input_node)
 			return (change_status(mini_env, 127), NULL);
 	}
 	cmd_args = command_merge(&line_data);
-	input_node->data_node = line_data;
-	return (free(input_line), cmd_args);
+	return (free(input_line), input_node->data_node = line_data, cmd_args);
 }
 
 char	*check_expander_and_rest(char *input_line, t_env **mini_env, int i)

@@ -20,6 +20,7 @@ char	**merge_free_command(t_line_data **data, int len)
 	t_line_data	*tmp_delete;
 
 	i = 0;
+	cmd_args = NULL;
 	tmp = *data;
 	if (len > 0)
 		cmd_args = (char **)ft_malloc(sizeof(char *) * (len + 1));
@@ -27,18 +28,16 @@ char	**merge_free_command(t_line_data **data, int len)
 	{
 		if (tmp->type == 0)
 		{
-			cmd_args[i] = ft_strdup(tmp->command);
-			i++;
+			cmd_args[i++] = ft_strdup(tmp->command);
 			tmp_delete = tmp;
 			tmp = tmp->next;
-			free(tmp_delete->command);
-			delete_node(data, tmp_delete);
+			delete_node(data, tmp_delete, tmp_delete->command);
 		}
 		else
 			tmp = tmp->next;
 	}
-	cmd_args[i] = NULL;
-	i = 0;
+	if (cmd_args)
+		cmd_args[i] = NULL;
 	return (cmd_args);
 }
 

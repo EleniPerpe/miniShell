@@ -20,13 +20,13 @@ int	redirection_fill(char *line, int i, t_line_data **data)
 
 	new_line_data = (t_line_data *)ft_malloc(sizeof(t_line_data));
 	i = check_redirection_cases(line, i, new_line_data);
-	add_node_to_list(data, new_line_data);
 	while (line[i] == ' ')
 		i++;
 	if (line[i] == '\'' || line[i] == '"')
 		i = quote_token(line, i, &new_line_data, 0);
 	else
 		i = after_redirection_decision(line, i, &new_line_data);
+	add_node_to_list(data, new_line_data);
 	return (i);
 }
 
