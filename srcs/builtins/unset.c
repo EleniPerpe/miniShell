@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:12:10 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/08 17:53:29 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/12 18:27:30 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	args_and_fill(char **args, t_env **mini_env, t_env **new_export, int i);
 int	count_arg_size(char **args, int i, int *flag);
-int	if_invalid(char **args, int i,  int *exit_code);
+int	if_invalid(char **args, int i, int *exit_code);
 
 int	ft_unset(char **args, t_env **mini_env, t_env **new_export)
 {

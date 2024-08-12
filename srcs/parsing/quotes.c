@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:28:05 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/05 18:36:52 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/12 18:58:10 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	quote_token(char *line, int i, t_line_data **line_data, int j)
 
 	flag = -1;
 	flag = check_for_flag(line, i);
-	while (line[i] == '"' || line[i] == '\'')
+	if (line[i] == '"' || line[i] == '\'')
 		i++;
 	j = check_quotes_cases(line, &i);
 	if (j == -1)

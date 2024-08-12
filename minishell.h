@@ -6,7 +6,7 @@
 /*   By: eperperi <eperperi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:35:18 by eperperi          #+#    #+#             */
-/*   Updated: 2024/08/08 17:07:33 by eperperi         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:04:23 by eperperi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ void	handle_one_builtin(t_input **new_input_node, t_env **mini_env,
 void	execute_with_pipes(t_input **input_node, int processes_num,
 			t_env **mini_env, t_env **new_export);
 void	free_nul(t_input **new_input_node);
+int		check_qoute_syntax(char *str);
 
 //builtins
 int		check_for_builtins(char **args, t_env **mini_env, t_env **new_export);
