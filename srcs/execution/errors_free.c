@@ -32,7 +32,6 @@ void	free_linked_list(t_line_data *free_it)
 
 void	free_nodes(t_input **input_node)
 {
-	(void)input_node;
 	t_input		*free_input_node;
 	t_input		*tmp;
 	t_line_data	*free_node;
@@ -72,15 +71,16 @@ void	free_split(char **args)
 {
 	int	i;
 
-	if (args == NULL || *args == NULL)
+	if (args == NULL)
 		return ;
 	i = 0;
-	while (args[i] != NULL)
+	while (args && args[i] != NULL)
 	{
 		free(args[i]);
 		i++;
 	}
 	free(args);
+	args = NULL;
 }
 
 void	free_pid_pipe(int **pro_pid, int **pipe_fd)

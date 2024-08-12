@@ -39,3 +39,12 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ptr[s1len + s2len] = '\0';
 	return (ptr);
 }
+
+char	*ft_strjoin_free_s1(char *s1, char const *s2)
+{
+	char	*res;
+
+	res = ft_strjoin(s1, s2);
+	free(s1);
+	return (res);
+}

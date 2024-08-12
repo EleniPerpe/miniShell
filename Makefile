@@ -37,6 +37,8 @@ SRC = $(SRC_DIR)main.c \
       $(EXECUTION_DIR)exec_utilities.c \
       $(EXECUTION_DIR)process_manager.c \
       $(EXECUTION_DIR)commands_handler.c \
+      $(EXECUTION_DIR)syntax_checker.c \
+      $(EXECUTION_DIR)minishell_core.c \
       $(PARSING_DIR)heredoc_handle.c \
       $(PARSING_DIR)init.c \
       $(PARSING_DIR)quotes.c \

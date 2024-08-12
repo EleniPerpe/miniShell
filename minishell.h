@@ -98,7 +98,8 @@ int		after_redi_len(char *line, int i);
 char	*expander_fill(char *line, int i, int j, t_env **mini_env);
 void	free_path(t_env *mini_env);
 int		init_linked_list(t_input **new_input_node, t_env **mini_env);
-int		split_pipes(char *whole_line, t_input **new_input_node);
+int		split_pipes(char *whole_line, t_input **new_input_node,
+			t_env **mini_env);
 int		create_input_node(char *whole_line, int i, t_input **new_input_node,
 			int k);
 void	add_path_to_list(t_env **mini_env, t_env *new_env);
@@ -123,6 +124,11 @@ int		handle_redirectors(t_input *data);
 int		open_infile(t_line_data *data);
 void	open_outfile(t_line_data *data, char c);
 char	*ft_readline(void);
+void	handle_one_builtin(t_input **new_input_node, t_env **mini_env,
+			t_env **new_export);
+void	execute_with_pipes(t_input **input_node, int processes_num,
+			t_env **mini_env, t_env **new_export);
+void	free_nul(t_input **new_input_node);
 
 //builtins
 int		check_for_builtins(char **args, t_env **mini_env, t_env **new_export);
@@ -171,7 +177,10 @@ void	dup_inout(t_inout *inout_main);
 int		is_empty(char *str);
 void	free_split(char **args);
 void	free_pid_pipe(int **pro_pid, int **pipe_fd);
-void	delete_node(t_line_data **data, t_line_data *tmp);
+void	delete_node(t_line_data **data, t_line_data *tmp, char *str);
+void	free_str(char *temp, char *line1, char *line2, char *cmp_temp);
+void	free_linked_list(t_line_data *free_it);
+int		check_syntax(char *str, t_env **mini_env);
 
 //signals
 void	setup_signal_init(void);
