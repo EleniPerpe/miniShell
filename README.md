@@ -1,0 +1,3 @@
+minishell is a simple, custom-built shell application written in C that replicates many features of a Unix shell like Bash. The goal of this project is to implement basic shell functionalities, such as handling commands, redirections, piping, environment variable expansion, signal handling, and built-in shell commands like echo, cd, pwd, exit, and more.
+
+This shell application supports both interactive and non-interactive modes, with a working history mechanism and careful handling of environment variables. It provides a prompt to the user, processes commands entered, and allows for complex features like input/output redirection and command piping.
